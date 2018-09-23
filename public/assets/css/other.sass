@@ -1,0 +1,388 @@
+// header
+header a
+  display: inline-block
+
+// info
+#_info
+  background: rgb(176, 99, 161)
+  color: rgb(251, 251, 251)
+  p
+    text-align: center
+
+// markAsRead Notification
+.marked
+  text-decoration: line-through
+
+// clearfix 
+.clearfix::after
+  display: table
+  clear: both
+  content: ''
+
+// profile menu
+#_profile_menu
+  background:  rgba(199, 199, 199, 0.65)
+  color: rgba(37, 37, 37, 0.7)
+  padding-bottom: 10px
+  ul
+   margin: 10px 0 0 20px
+   padding: 0
+  li
+   display: block
+  a
+   color: rgba(37, 37, 37, 0.7)
+   margin: 10px 0
+   display: inline-block
+
+#_profile_menu img
+   display: block
+   margin: 18px 0 0 20px
+
+#_profile_menu h2
+  word-break: break-all
+  margin: 20px 12px 0 12px
+
+// wrapper board price
+
+#_board_price_img
+  height: 30px
+
+#_wrapper_price
+  position: relative
+
+#_desc_price
+  position: absolute
+  top: 0.5%
+  left: 12%
+  word-break: break-all
+  font-weight: bold
+
+#_header_admin 
+  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
+  padding: 16px
+  margin-top: 20px
+
+ul#_menu_admin 
+  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
+  padding: 16px
+
+ul#_menu_admin li a 
+  color: rgba(37, 37, 37, 0.7)
+  margin: 12px 0
+
+ul#_menu_admin li a:hover,
+ul#_menu_admin li a:focus
+  color: rgba(232, 232, 232, 0.7)
+
+._wrapper_menu_admin 
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+#_admin_login
+  padding: 16px
+  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
+  color: rgba(37, 37, 37, 0.7)
+
+// admin icon
+#_dashboard
+  content: url('../../icon/dashboard.png')
+  width: 25px
+  height: 25px
+#_product
+  content: url('../../icon/product.png')
+  width: 25px
+  height: 25px
+#_logout
+  content: url('../../icon/logout.png')
+  width: 25px
+  height: 25px
+ 
+
+// like & unlike  icon
+#_like
+  content: url('../../icon/like.png')
+  width: 25px
+  height: 25px
+#_unlike
+  content: url('../../icon/unlike.png')
+  width: 25px
+  height: 25px
+
+// eye icon
+  
+._wrapper_input_password
+  display: flex
+  position: relative
+
+._eye_icon
+  content: url('../../icon/eye-icon.png')
+  position: absolute
+  top: 12px
+  right: 12px
+  width: 26px
+  height: 26px
+
+._eye_icon:hover
+  cursor: pointer
+
+._eye_icon_slash
+  content: url('../../icon/eye-icon-slash.png')
+  position: absolute
+  top: 12px
+  right: 12px
+  width: 26px
+  height: 26px
+ 
+// search
+
+._search
+  content: url('../../icon/search.png')
+  width: 40px
+  height: 40px
+
+// banner
+._banner
+  max-width: 600px
+
+// Google and Facebook
+#google_wrapper
+  position: relative
+#facebook_wrapper
+  position: relative
+#google_icon
+  content: url('../../icon/google.png')
+  width: 30px
+  height: 30px
+#facebook_icon
+  content: url('../../icon/facebook.png')
+  width: 30px
+  height: 30px
+
+// header
+header
+  border-bottom: 1px dashed rgb(209, 139, 82) !important
+// nav
+nav
+  background: rgba(199, 199, 199, 0.65)
+  padding: 8px !important
+  a
+   text-decoration: none
+
+// cart
+#_cart
+  position: relative
+  display: block
+  background: #A3CFC5
+  padding: 8px
+  margin: 0 0 8px 0
+  width: auto
+  height: auto
+  border-radius: 7px
+
+#_cart h2
+  display: inline-block
+  padding: 8px
+  background: rgba(210, 0, 0, 0.65)
+  color: rgba(232, 232, 232, 0.7)
+
+#_cart_wrapper
+  position: relative
+
+#_fill_of_cart
+  position: absolute
+  left: 30px
+  transform: translate(8px, -125px) /*kanan (atas bawah) kiri (kanan kiri)*/
+  width: 40px
+
+#_cart:hover
+  box-shadow: 2.5px 2.5px 2.5px rgb(199, 199, 199)
+  cursor: pointer
+
+#_login_wrapper
+  display: flex
+  height: 500px
+  justify-content: center
+  align-items: center
+
+#_add_Product_Form
+  color: rgba(37, 37, 37, 0.7)
+  padding-top: 8px
+
+#_toggle_add_Product
+  background: rgb(250, 250, 250)
+  color: rgba(37, 37, 37, 0.7)
+  text-align: center
+  display: block
+  margin-top: 8px
+  padding: 8px
+  width: 150px
+
+._loggedIn
+  background: rgb(104, 194, 67)
+  color: rgba(232, 232, 232, 0.7)
+  display: inline-block
+  padding: 8px
+
+._loggedOut
+  background: rgb(194, 67, 67)
+  color: rgba(232, 232, 232, 0.7)
+  display: inline-block
+  padding: 8px
+
+// form login
+#_form_login
+  a
+   margin-top: 8px
+  #_remember_label
+   color: rgba(37, 37, 37, 0.7)
+
+// form JQUERY DIALOG
+  
+.ui-widget-header
+  background: rgba(199, 199, 199, 0.65) !important
+
+.ui-dialog .ui-dialog-title
+  color: rgba(37, 37, 37, 0.7) !important
+
+.ui-button
+  color: rgba(37, 37, 37, 0.7) !important
+
+._highlight
+  border: 3px solid yellow
+
+.ui-state-active,
+.ui-widget-content,
+.ui-state-active,
+.ui-widget-header
+.ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover
+  border: none !important
+  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137)) !important
+  font-weight: normal
+  color: rgba(37, 37, 37, 0.7) !important
+
+// table cart wrapper
+#_table_cart th
+  border: none
+#_table_cart td
+  background: white
+  border: none
+
+// Flag int-tel-input
+.iti-flag
+  background-image: url("../../icon/flags.png")
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+  .iti-flag
+  background-image: url("../../icon/flags@2x.png")
+
+// product
+._product
+  border: 1px solid rgba(152, 152, 152, 0.5)
+  background: rgb(240, 240, 240)
+  box-shadow: 0px 2px 4px rgb(142, 142, 142)
+
+._product h1
+  font-weight: bold
+  padding: 8px
+
+._product > div + span
+  padding: 5px
+  margin: 4px 6px
+  display: inline-block
+  border-radius: 7px
+  border: 1px solid rgb(125, 91, 56)
+  background: rgb(185, 185, 185)
+  color: rgb(238, 238, 238)
+
+._product div
+  word-break: break-all
+  display: block
+  padding: 8px
+ 
+._product p 
+  text-align: justify
+  padding: 8px
+  line-height: 1.5rem
+
+._product a,
+._product input[type="submit"] 
+  margin-left: 8px
+  margin-bottom: 8px
+
+// blog
+._blog
+  color: rgba(37, 37, 37, 0.7)
+
+._blog h2
+  margin: 8px 0
+
+._blog img
+  margin: 12px 0 
+  width: 300px
+
+._blog p 
+  text-align: justify
+  margin-top: 16px
+  line-height: 30px
+
+._blog > span:nth-of-type(1) 
+  padding: 5px
+  display: inline-block
+  border-radius: 7px
+  border: 1px solid rgb(125, 91, 56)
+  background: rgb(185, 185, 185)
+  color: rgb(238, 238, 238) 
+
+._blog figure figcaption
+  font-size: 16px
+  text-indent: 40px 
+
+._blog input[type="submit"]
+  margin: 8px 0
+
+// blog comment
+
+#_textarea_comment
+  color: rgba(37, 37, 37, 0.7)
+
+#_textarea_comment:focus,
+#_textarea_comment:hover
+  outline: none
+  border: 1px solid rgba(37, 37, 37, 0.7) 
+
+// blog emotions
+
+#_emotions
+  color: rgba(37, 37, 37, 0.7)
+  float: left
+
+#_emotions img
+  width: 80px
+  height: 80px
+
+#_emotions img:hover
+  cursor: pointer
+  padding: 5px
+
+// blog comments
+
+#commentBox
+  float: left
+  
+
+// footer
+._footer 
+  text-align: center
+  padding: 16px
+
+// pagination
+
+.pagination 
+  background: transparent !important 
+  display: flex !important
+
+
+

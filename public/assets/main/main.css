@@ -1,0 +1,89 @@
+._container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+._columns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+._columns ._column {
+  display: block;
+  padding: 2%;
+  margin: 1%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+._columns ._column._is_half {
+  width: 50%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_one_third {
+  width: 33.3333333333%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_one_quarter {
+  width: 25%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_one_fifth {
+  width: 20%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_two_thirds {
+  width: 66.6666666667%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_two_fifths {
+  width: 40%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_three_quarters {
+  width: 75%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_three_fifths {
+  width: 60%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+._columns ._column._is_four_fifths {
+  width: 80%;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+

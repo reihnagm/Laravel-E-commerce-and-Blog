@@ -1,0 +1,52 @@
+$container-size: 960px
+$default-padding: 2%
+$default-margin: 1%
+
+._container
+  max-width: $container-size
+  margin: 0 auto
+
+._columns
+  display: flex
+  &._is_multiline
+      flex-wrap: wrap
+  ._column
+      padding: $default-padding
+      margin: $default-margin
+      flex-grow: 1
+      flex-shrink: 1
+      flex-basis: 0
+      &:_first_child
+      margin-left: 0
+      &:_last_child
+      margin-right: 0
+      &._is_half
+          width: 50%
+          flex: none
+      &._is_one_third
+          width: 33.3333333333%
+          flex: none
+      &._is_one_quarter
+          width: 25%
+          flex: none
+      &._is_one_fifth
+          width: 20%
+          flex: none
+      &._is_two_thirds
+          width: 66.6666666667%
+          flex: none
+      &._is_two_fifths
+          width: 40%
+          flex: none
+      &._is_three_quarters
+          width: 75%
+          flex: none
+      &._is_three_fifths
+          width: 60%
+          flex: none
+      &._is_four_fifths
+          width: 80%
+          flex: none
+      &._is_fullWidth
+          width: 100%
+          flex: none
