@@ -21,28 +21,38 @@ class LikeController extends Controller
      $type = $results['0'];
      $model  = $results['1'];
 
-    if($model->is_liked() == null) {
-
-       Like::create([
-           'user_id' => auth()->user()->id,
-           'likeable_id' => $model_id,
-           'likeable_type' => $type
-       ]);
-
-        return json_encode([
-            'message' => 'like'
+     if($model->is_liked() == null) {
+          
+        Like::create([
+        'user_id' => auth()->user()->id,
+        'likeable_id' => $model_id,
+        'likeable_type' => $type
         ]);
 
-     } else {
+        return json_encode(['message' => 'like']);
+
+     }
+  
+    }
+
+    public function unlike($model_id, $type)
+    {
+        
+     $results = $this->check_type($type, $model_id);
+     $type = $results['0'];
+     $model  = $results['1'];
+
+       if($model->is_liked()) {
 
         Like::where('user_id', Auth::user()->id)
         ->where('likeable_id', $model_id)
         ->where('likeable_type', $type)->delete();
 
-        return json_encode(['message' => 'unlike']);
-        
-     }
+         return json_encode(['message' => 'unlike']);
 
+       }
+
+       
     }
     
      public function check_type($type, $model_id)
@@ -61,6 +71,8 @@ class LikeController extends Controller
         }
 
         return array($type, $model);
+
     }
+
 
 }

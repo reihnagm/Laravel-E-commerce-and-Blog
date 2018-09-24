@@ -98,16 +98,28 @@ ul#_menu_admin li a:focus
   width: 25px
   height: 25px
  
+// like & unlike
 
-// like & unlike  icon
-#_like
+._before_liked
   content: url('../../icon/like.png')
   width: 25px
   height: 25px
-#_unlike
+
+._after_liked
+  content: url('../../icon/like.png')
+  width: 25px
+  height: 25px
+
+._before_unliked
   content: url('../../icon/unlike.png')
   width: 25px
   height: 25px
+
+._after_unliked
+  content: url('../../icon/unlike.png')
+  width: 25px
+  height: 25px
+
 
 // eye icon
   
@@ -342,17 +354,7 @@ a.ui-button:active,
 
 ._blog input[type="submit"]
   margin: 8px 0
-
-// blog comment
-
-#_textarea_comment
-  color: rgba(37, 37, 37, 0.7)
-
-#_textarea_comment:focus,
-#_textarea_comment:hover
-  outline: none
-  border: 1px solid rgba(37, 37, 37, 0.7) 
-
+  
 // blog emotions
 
 #_emotions
@@ -369,9 +371,33 @@ a.ui-button:active,
 
 // blog comments
 
-#commentBox
-  float: left
-  
+._textareaComment 
+    color: grey
+
+._textareaComment:focus,
+._textareaComment:hover 
+    outline: none
+    border: 1px solid rgba(37, 37, 37, 0.7)
+
+#_wrapperComment 
+    margin: 25px 0
+    color: grey
+
+#_imgComment 
+    float: left
+    margin: 0 5px 8px 0
+    width: 80px
+
+#_descComment 
+    width: 70%
+    margin-bottom: 16px
+    line-height: 25px
+    word-break: break-all
+    text-align: justify
+
+#_optionCommentBtn
+    display: inline-block
+    margin: 5px 0
 
 // footer
 ._footer 

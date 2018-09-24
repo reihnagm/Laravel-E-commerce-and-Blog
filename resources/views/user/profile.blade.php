@@ -93,15 +93,13 @@
            
     {{-----------------------------------------------------------------------------------}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-   
-   {{--  <emotion
-     :blog_id="{{$blog['id']}}"
-    ></emotion> --}}
- 
-    <div id="emotionBox">
-     <div class="_columns _is_multiline">
+      @push('scripts')
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+      @endpush
+  
+     <div id="emotionBox">
+      <div class="_columns _is_multiline">
 
          @forelse($emotions as $emotion) 
           <div class="_column _is_one_third">
@@ -131,105 +129,112 @@
           @empty
          @endforelse
         
-      </div>
-    </div> 
+       </div>
+      </div> 
 
-   <script>
 
-    new Vue({
-      el: "#emotionBox",
-      data: {
-        total: 0,
-        happy: 0,
-        sad: 0,
-        amazing: 0,
-        doubt: 0,
-        fear: 0,
-        angry: 0,
+         <script>
+      new Vue({
+          el: "#emotionBox",
+          data: {
+            total: 0,
+            happy: 0,
+            sad: 0,
+            amazing: 0,
+            doubt: 0,
+            fear: 0,
+            angry: 0,
 
-        blog_id: @php echo $blog->id; @endphp
-      },
-      computed: {
-        totalIsZero: function() {
-          if (this.total == 0) {
-            return true
-          } else {
-            return false 
+            blog_id: @php echo $blog->id; @endphp
+          },
+          computed: {
+            totalIsZero: function() {
+              if (this.total == 0) {
+                return true
+              } else {
+                return false 
+              }
+            },
+          },
+          created: function () {    
+            this.$http({
+              url : '/emotion/' + this.blog_id,
+              method: 'GET'
+            }).then(function(response) {
+              res = response.body;
+              if (res.total != 0 ) {
+                this.total = res.total;
+                this.happy = res.happy;
+                this.sad = res.sad;
+                this.amazing = res.amazing;
+                this.doubt = res.doubt;
+                this.fear = res.fear;
+                this.angry = res.angry;
+              }
+            })
+          },
+          methods: {
+            vote(emotionid) {
+              this.$http({
+                url: '/emotion/emotionid/' + emotionid + '/blogid/' + this.blog_id,
+                method: 'GET'
+              }).then(function(response) {
+                res = response.body
+            
+                if(res.message == 'success') {
+                  this.total++;
+                  this.modify(emotionid, 1);
+                } else if(res.message == 'unvote') {
+                  this.total--;
+                  this.modify(emotionid, -1)
+                } else {
+                  this.modify(parseInt(res.old_emotion), -1);
+                  this.modify(emotionid, 1);
+                }
+
+              })
+            },
+          modify(val, point) {
+            switch (val) {
+              case 1: this.happy = this.happy + point; break;
+              case 2: this.sad = this.sad + point; break;
+              case 3: this.amazing = this.amazing + point; break;
+              case 4: this.doubt = this.doubt + point; break;
+              case 5: this.fear = this.fear + point; break;
+              case 6: this.angry = this.angry + point; break;
+              
+              default:
+              break;
+            }
           }
-        },
-      },
-       created: function () {
-        this.$http({
-          url : '/emotion/' + this.blog_id,
-          method: 'GET'
-        }).then(function(response) {
-           res = response.body;
-          if (res.total != 0 ) {
-            this.total = res.total;
-            this.happy = res.happy;
-            this.sad = res.sad;
-            this.amazing = res.amazing;
-            this.doubt = res.doubt;
-            this.fear = res.fear;
-            this.angry = res.angry;
-          }
-        })
-      },
-      methods: {
-        vote(emotionid) {
-          this.$http({
-            url: '/emotion/emotionid/' + emotionid + '/blogid/' + this.blog_id,
-            method: 'GET'
-          }).then(function(response) {
-             res = response.body
-        
-             if(res.message == 'success') {
-               this.total++;
-               this.modify(emotionid, 1);
-             } else if(res.message == 'unvote') {
-               this.total--;
-               this.modify(emotionid, -1)
-             } else {
-               this.modify(parseInt(res.old_emotion), -1);
-               this.modify(emotionid, 1);
-             }
-
-          })
-        },
-      modify(val, point) {
-        switch (val) {
-          case 1: this.happy = this.happy + point; break;
-          case 2: this.sad = this.sad + point; break;
-          case 3: this.amazing = this.amazing + point; break;
-          case 4: this.doubt = this.doubt + point; break;
-          case 5: this.fear = this.fear + point; break;
-          case 6: this.angry = this.angry + point; break;
-          
-          default:
-          break;
         }
-      }
-     }
-    })
-    </script>
+        })
+     </script> 
+
+    
+ 
+    {{-- <emotion
+     v-for='emotion in emotions'
+     :emotion_id="emotion.id"
+     :emotion_name="emotion.name"
+     :blog_id="{{$blog['id']}}"
+    ></emotion> --}}
 
     {{-------------------------------------------------------------------}}
 
-    <comment
+    {{-- <comment
      v-for='comment in comments'
      :username="comment.user.username"
      :subject="comment.subject"
      :like="comment.likes.length"
      :unlike="comment.unlikes.length"
-     :user_id="{{ Auth::user()->id }}"
      :blog_id="comment.blog.id"
      :comment_id="comment.id"
      :key="comment.id"
      ></comment>
    
-     {{-- <commenttextarea
+     <commenttextarea
      :blog_id="{{ $blog['id'] }}"
-     :user_id="{{ Auth::user()->id }}"
      ></commenttextarea> --}}
     
 
@@ -272,20 +277,89 @@
               <a @click.prevent="deleteComment(comment.id)" class="_button" href=""> delete </a> 
             </div>
 
-           </div>
+              <textarea ref="subject" class="_textareaComment"></textarea>
+              <input id="_commentBtn" @click.prevent="submitComment()" class="_button" type="submit" value="Comment">
+
+            </div>
      
        </div> 
 
-
-        <textarea ref="subject" class="_textareaComment"></textarea>
-        <input id="_commentBtn" @click.prevent="submitComment()" class="_button" type="submit" value="Comment">
-     
       </div>
     </div> --}}
 
+    <div id="commentBox">
+      @foreach($blogcomments as $comment)
+       <div class="_column">
+         <div id="_userComment">
+              <img id="_imgComment" src="https://picsum.photos/200">
+                 {{ $comment->user->username }}
+                 <div id="_descComment">
+                 
+                   {{ $comment->subject }}
+               
+                  <div>
+                  <span class="_option_like_unlike_wrapper">
+                  <a class="{{ $comment->is_liked() ? '_after_liked' : '_before_liked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
+                    {{ $comment->is_liked() }}
+                  </a>         
+                    <span class="_total_like">
+                      <span class="_like_number"> {{ $comment->likes->count() }} </span>
+                    </span>
+                  </span>
+                  </div>
+              
+                 <div>
+                  <span class="_option_unlike_wrapper">
+                  <a class="{{ $comment->is_unliked() ? '_after_unliked' : '_before_unliked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
+                    {{ $comment->is_unliked() }}
+                  </a>         
+                    <span class="_total_unlike">
+                      <span class="_unlike_number"> {{ $comment->unlikes->count() }} </span>
+                    </span>
+                  </span>
+                  </div>
+                
+              
+                @if(Auth::user()->id == $comment->user->id)
+                <div id="_optionCommentBtn">
+                  <a class="_button" href="{{ route('blog.comment.edit', $comment->id)}}"> edit </a>
+                  <a class="_button" href="{{ route('blog.comment.destroy', $comment->id)}}"> delete </a> 
+                </div>
+                @endif
+              </div>
+          </div>
+        @endforeach
+      </div>
+
+      {{-- <div id="_comment_content">
+
+      </div> --}}
+
+       {{ $blogcomments->links() }}
+
+      <div class="_column">
+        @if ($errors->has('subject'))
+            <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
+        @endif
+        <br>
+        <form method="post" action="{{ route('blog.comment.store', $blog->id)}}">
+          @csrf
+          <textarea name="subject" class="_textareaComment"></textarea>
+          <input id="_commentBtn"class="_button" type="submit" value="Comment">  
+        </form>  
+{{--         
+        <textarea id="subject" cols="4" rows="4"></textarea>
+      <input class="submitComment" type="submit" blog-id="{{ $blog->id }}" blog-comments="{{ $blogcomments }}"> --}}
+      </div>
+             
       @endforeach  
+
+     
+     
     </div> {{-- end of BLOG --}}
    </div> 
+
+
 
       {{-- <script>
          new Vue ({
@@ -294,7 +368,7 @@
             subject: '',
   
             edit: false,
-            comments: []
+            comments: [],
             blog_id: @php echo $blog->id; @endphp
           },
            mounted() {
@@ -365,6 +439,8 @@
         })
       </script> --}}
 
+    
+    
     {{--------------------------------------------------------------------------------------}}
     
     <div style="width: 100%; flex:none;">
@@ -375,7 +451,7 @@
           <img src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}"> <br>
           <h2> <a class="_text_gray" href="{{ route('blog.show', $blog->id)}}"> {{ title_case($blog->title) }} </a></h2>
 
-          </div> {{-- end of COLUMN --}}
+          </div>
         @empty
         @endforelse
       </div>{{-- end of COLUMNS --}}

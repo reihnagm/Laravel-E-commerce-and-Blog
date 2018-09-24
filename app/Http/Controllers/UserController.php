@@ -53,11 +53,11 @@ class UserController extends Controller
         
         $products = $user->products()->paginate(4);
 
-        $blog = Blog::with('user','tags')->latest()->first();
+        $blog = Blog::with('user','tags','comments.user')->latest()->first();
 
         $blogs = $user->blogs()->paginate(3, ['*'], 'blog-page'); 
 
-        $comments = Blog::with('comments.likes')->get();
+        $blogcomments = BlogComment::with('user','likes')->paginate(2, ['*'], 'comment-page'); 
 
         $categories = DB::table('categories')->select('name', 'id')->get();
 
@@ -65,7 +65,7 @@ class UserController extends Controller
 
         $notifications = Notification::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
 
-        return view('user/profile', ['user' => $user, 'comments' => $comments, 'products' => $products, 'categories' => $categories, 'tags' => $tags, 'blog' => $blog, 'emotions' => $emotions, 'blogs' => $blogs, 'notifications' => $notifications]);
+        return view('user/profile', ['user' => $user, 'products' => $products, 'blogcomments' => $blogcomments, 'categories' => $categories, 'tags' => $tags, 'blog' => $blog, 'emotions' => $emotions, 'blogs' => $blogs, 'notifications' => $notifications]);
            
      }
 

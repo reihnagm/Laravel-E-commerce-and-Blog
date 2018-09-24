@@ -16,8 +16,12 @@
                 {{ unlikeCount }}
                 </div> 
             </div>
-        </div>
+        </div>   
      </div>
+
+      <textarea ref="subject" class="_textareaComment"></textarea>
+      <input id="_commentBtn" class="_button" type="submit" value="Comment">
+
               
    </div>
 </template>
@@ -74,37 +78,5 @@
     }
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0;
-    }
-    ._textareaComment {
-        color: grey;
-    }
-    ._textareaComment:focus,
-    ._textareaComment:hover {
-        outline: none;
-        border: 1px solid rgba(37, 37, 37, 0.7); 
-    }
-    #_wrapperComment {
-        margin: 25px 0;
-        color: grey;
-    }
-    #_imgComment {
-        float: left; 
-        margin: 0 5px 8px 0;
-        width: 80px;
-    }
-    #_descComment {
-        width: 70%;
-        margin-bottom: 16px;
-        line-height: 25px;
-        word-break: break-all;
-        text-align: justify;
-    }
-    #_optionCommentBtn {
-        clear: both;
-        display: inline-block;
-        margin: 5px 0;
-    }
-    #_optionLikeUnlike {
-        float: left;
     }
 </style>

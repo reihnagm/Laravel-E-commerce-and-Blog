@@ -9,12 +9,12 @@ class BlogComment extends Model
 
      use LikesTrait, UnlikesTrait;
           
-     protected $guarded = ['id'];
+     protected $guarded = [];
 
      public function user()
     {
        
-        return $this->belongsTo('App\Models\User')->withDefault();
+        return $this->belongsTo('App\Models\User');
     
     }
 

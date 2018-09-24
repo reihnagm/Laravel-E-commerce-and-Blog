@@ -23,22 +23,36 @@ class UnlikeController extends Controller
      $model = $results['1'];
 
     if($model->is_unliked() == null) {
+
        Unlike::create([
            'user_id' => auth()->user()->id,
            'unlikeable_id' => $model_id,
            'unlikeable_type' => $type
        ]);
 
-       return json_encode(['message' => 'unlike']);
+      return json_encode(['message' => 'unlike']);
+
+     }
      
-     } else {
+    }
+
+    public function cancel_unlike($model_id, $type)
+    {
+        
+     $results = $this->check_type($type, $model_id);
+     $type  = $results['0'];
+     $model = $results['1'];
+
+    if($model->is_unliked()) {
+
         Unlike::where('user_id', Auth::user()->id)
         ->where('unlikeable_id', $model_id)
         ->where('unlikeable_type', $type)->delete();
+
+      return json_encode(['message' => 'cancel_unlike']);
+
      }
-
-       return json_encode(['message' => 'cancelUnlike']);
-
+     
     }
 
      public function check_type($type, $model_id)

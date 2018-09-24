@@ -1,36 +1,29 @@
 <template>
     <div>
-       <div id="emotionBox">
-         <div class="_columns _is_multiline">
-           <div class="_column _is_one_third" v-for="emotion in emotions">
-
+    
           
            <div id="_emotions" class="clearfix">
 
-              <img style="float: left;" @click="vote(emotion.id)" :src.literal="'assets/emotions/' + emotion.name + '.png'">  
+              <img style="float: left;" @click="vote(emotion_id)" :src="'assets/emotions/' + emotion_name + '.png'">  
 
-              <span v-if="totalIsZero">
                 <span style="float: left; margin: 15px 0 0 10px; display: inline-block;"> 
                   0 %
                 <div style="margin: 8px 0 0 0;">
-                  total {{  emotion.name  }}
+                 {{ emotion_name }}
                 </div> 
                </span>
-              </span>
-              <span v-else>
+  
+             
                 <span style="float: left; margin: 15px 0 0 10px; display: inline-block;">
-                 {{ parseInt(emotion.name/total*100) }} % 
+             
                   <div style="margin: 8px 0 0 0;">
-                    total  {{  parseInt(emotion.name)  }}
+                  
                   </div> 
-               </span>
-              </span>
+               </span>            
               
             </div>
         
-        </div>
-        </div>
-      </div>
+    
     </div>
 </template>
 
@@ -40,7 +33,6 @@ export default {
   props:['emotion_id','emotion_name','blog_id'],
   data() {
     return {
-      emotions:[],
         total: 0,
         happy: 0,
         sad: 0,
@@ -52,24 +44,17 @@ export default {
   },
    computed: {
     totalIsZero: function() {
-      if (this.total == 0) {
-        return true
-      } else {
-        return false 
-      }
     },
   },
   mounted() {
   this.getEmotion()
-  
   },
   created() {
    axios({
       url : '/emotion/' + this.blog_id,
       method: 'GET'
     }).then(function(response) {
-        res = response.data;
-      if (res.total != 0 ) {
+        let res = response.data;
         this.total = res.total;
         this.happy = res.happy;
         this.sad = res.sad;
@@ -77,7 +62,6 @@ export default {
         this.doubt = res.doubt;
         this.fear = res.fear;
         this.angry = res.angry;
-      }
     }).catch((err) => {
       console.log(err)
     })

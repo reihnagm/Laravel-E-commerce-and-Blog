@@ -22,7 +22,7 @@
   @yield('css')
 
   {{-- intl-tel-input css --}}
-  <link rel="stylesheet" href="{{ asset('assets/css/intTelInput/intlTelInput.min.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('assets/css/intTelInput/intlTelInput.min.css') }}"> --}}
 
   {{-- slick theme css --}}
   <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
@@ -42,8 +42,9 @@
   {{-- favicon --}}
   <link rel="icon" href="{{ asset('assets/logo/logo.png') }}">
 
-</head>
-<script>
+  @stack('scripts')
+
+  <script>
     window.Laravel = @php echo json_encode([
         'token' => csrf_token(),
         'user' => [
@@ -51,18 +52,25 @@
           'id' => auth()->check() ? auth()->user()->id : null,
         ]
     ]); @endphp;
- </script>
+  </script>
+
+</head>
+
 <body>
+
   <div id="app">
 
     @include('_partials/header')
 
     @yield('content')
-
+    
   </div>
 
-  {{-- Main js --}}
+  {{-- App js --}}
   <script src="{{ asset('assets/js/app.js') }}"></script>
+
+  {{-- Main js --}}
+  <script src="{{ asset('assets/js/main.js') }}"></script>
 
   {{-- Toaster render --}}
   {!! Toastr::render() !!}
@@ -70,64 +78,16 @@
   {{-- summernote lite js --}}
    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 
-  {{-- Jquey dialog --}}
-  <script src="{{ asset('assets/js/jquery-dialog.js') }}"></script>
-
   {{-- Jquey mask money --}}
   <script src="{{ asset('assets/js/jquery-mask-money.js') }}"></script>
 
   {{-- ChartJs --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 
-
   {{-- Stripe --}}
   {{-- <script src="https://js.stripe.com/v3/"></script> --}}
-
-  <script>
    
-    $(document).ready(function() {
-
-    $("#phone").intlTelInput()
-    
-    // summernote
-    $('#summernote').summernote();
-
-    // banner
-    $("._banner").slick({
-      dots: true,
-      adaptiveHeight: true
-    });
-
-    // password eye
-    $("._eye_icon").click(function() {
-      $(this).toggleClass("_eye_icon _eye_icon_slash");
-      var input = $($(this).attr("toggle"));
-      if (input.attr("type") == "password") {
-        input.attr("type", "text");
-      } 
-      else 
-      {
-        input.attr("type", "password");
-      }
-    });
-
-    // mode price money input text
-    $("input[class='_inputfile']").change(function() {
-      $(this).html($(this).val());
-    });
-
-    // config jquery mask money
-    $("#_price").maskMoney({
-        thousands:',',
-        decimal:'.',
-        affixesStay: false
-      });
-
-    });
-
-  </script>
- 
   @yield('js')
 
-</body>
+ </body>
 </html>

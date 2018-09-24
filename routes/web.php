@@ -54,6 +54,16 @@ Route::get('/product/filter/{id}','AppController@productFilter')->name('product.
 // Blog
 Route::resource('/blog', 'BlogController');
 
+Route::get('/blog-comment','BlogCommentController@index')->name('blog.comment.index');
+
+Route::post('/blog-comment/{id}', 'BlogCommentController@store')->name('blog.comment.store');
+
+Route::get('/blog-comment/{id}', 'BlogCommentController@edit')->name('blog.comment.edit');
+
+Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
+
+Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
+
 // Address
 Route::group(['middleware' => 'auth'], function() {
   Route::resource('/address', 'AddressController');
@@ -69,7 +79,10 @@ Route::post('/notification/{id}', 'NotificationController@markAsRead');
 
 // Like & Unlike
 Route::get('/like/{model}/{type}', 'LikeController@like');
+Route::get('/cancel_like/{model}/{type}', 'LikeController@unlike');
+
 Route::get('/unlike/{model}/{type}', 'UnlikeController@unlike');
+Route::get('/cancel_unlike/{model}/{type}', 'UnlikeController@cancel_unlike');
 
 // Emotion
 Route::get('/emotion', 'EmotionController@index');
