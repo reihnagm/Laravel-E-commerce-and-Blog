@@ -46,7 +46,7 @@ class SocialAuthController extends Controller
 
             return $authUser;
 
-        }
+        } else {
 
         $slug = str_slug($user->name, '-');
 
@@ -55,7 +55,6 @@ class SocialAuthController extends Controller
         if ($user_check_slug != null) {
             $slug = $slug . '-' .time();
        
-
         return User::create([
             'username' => $user->name,
             'email'    => $user->email,
@@ -67,8 +66,7 @@ class SocialAuthController extends Controller
 
          }
 
-        
-
+      }
     }
 
     public function logout()
