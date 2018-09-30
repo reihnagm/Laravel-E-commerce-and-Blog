@@ -162,7 +162,7 @@
 
           @if(Auth::check()) 
 
-            @if(Auth::user()->provider == null) 
+            @if(!Auth::user()->provider) 
             
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
@@ -263,8 +263,6 @@
                   <input class="_button" type="submit" value="Submit Register">
             </div>
 
-            
-              
             </form>
           </div>
 
@@ -332,31 +330,31 @@
                 <div class="_column _is_one_quarter">
 
                   <div class="_products">
-                      <img src="{{ asset('storage/products/images/'. $product->img) }}" alt="{{ $product->name }}">
+                      <img src="{{ asset('storage/products/images/'. $product['img']) }}" alt="{{ $product['name'] }}">
                       
                       <div class="_products_wrapper_price">
                         <img class="_products_img_price" src="{{ asset('/assets/icon/board-price.jpg')}}">
-                        <p class="_products_desc_price"> {{ money($product->price, 'IDR') }}</p>
+                        <p class="_products_desc_price"> {{ money($product['price'], 'IDR') }}</p>
                       </div> <br>
 
-                      <h1 class="_products_name"> {{ title_case($product->name) }} </h1> <br> 
+                      <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
                   
-                      <span class="_products_users_username"> Owner :  {{ $product->user->username }} </span> <br> <br>
+                      <span class="_products_users_username"> Owner :  {{ $product['user']['username'] }} </span> <br> <br>
                       <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product->created_at))  }} </span> <br> <br>
                     
                       @foreach ($product->categories as $category)
-                      <span class="_products_categories"> {{ $category->name }} </span> <br> <br>
+                      <span class="_products_categories"> {{ $category['name'] }} </span> <br> <br>
                       @endforeach 
 
-                      <p class="_products_desc"> {{ $product->desc }} </p> <br>
+                      <p class="_products_desc"> {{ $product['desc'] }} </p> <br>
 
-                      <a class="_button _products_add_to_cart" href="{{ route('cart.add', $product->id) }}"> add to cart </a> <br> <br> 
+                      <a class="_button _products_add_to_cart" href="{{ route('cart.add', $product['id']) }}"> add to cart </a> <br> <br> 
                   
                   @auth
-                    @if(Auth::user()->id === $product->user->id)
-                      <a class="_button _products_edit" href="{{ route('product.edit', $product->id) }}" target="_blank" href="#!">edit</a> <br> <br> 
+                    @if(Auth::user()->id === $product['user']['id'])
+                      <a class="_button _products_edit" href="{{ route('product.edit', $product['id']) }}" target="_blank" href="#!">edit</a> <br> <br> 
                   
-                      <form class="_form_products_delete" action="{{ route('product.update', $product->id) }}" method="post">
+                      <form class="_form_products_delete" action="{{ route('product.update', $product['id']) }}" method="post">
                         {{-- CSRF --}}
                         @csrf
 
