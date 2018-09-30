@@ -1,2 +1,2 @@
-window.Vue = require('vue');
+import Vue from 'Vue'
 export default new Vue()

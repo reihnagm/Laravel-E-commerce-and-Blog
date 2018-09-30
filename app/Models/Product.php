@@ -27,14 +27,6 @@ class Product extends Model
 
     }
 
-    public function productOwner()
-    {
-
-        if(Auth::guest()) return false;
-          return Auth::user()->id == $this->user->id;
-
-    }
-
     public function orders()
     {
 

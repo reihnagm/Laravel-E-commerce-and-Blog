@@ -20,7 +20,6 @@ use App\Models\BlogComment;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Notification;
-use App\Models\Emotion;
 use App\Models\Like;
 
 class UserController extends Controller
@@ -32,40 +31,35 @@ class UserController extends Controller
       if($id == null) {
 
            if(Auth::check()) {
-              
-              $user = User::with('products.categories','blogs.tags','blogs.emotions','likes')->where('slug', Auth::user()->slug)->first();  
-              
-            }
-           else 
-            {
-            abort(404);
+              $user = User::where('slug', Auth::user()->slug);                
+            } 
+            else {
+              abort(404);
             }
 
         }
       else 
+
         {
-          
-        $user = User::with('products.categories', 'blogs.tags','blogs.emotions','likes')->where('slug', $id)->first();
-      
+          if(Auth::check()) {
+        $user = User::where('slug', $id);
+            } 
+          else {
+            abort(404);
+          }
+
         }
 
-        $emotions = Emotion::all();
-        
-        $products = $user->products()->paginate(4);
+        $products = Product::with(['user','categories'])->paginate(3, ['*'], 'product-page');
 
-        $blog = Blog::with('user','tags','comments.user')->latest()->first();
+        $blog = Blog::with(['user','tags','comments.user'])->latest();
 
-        $blogs = $user->blogs()->paginate(3, ['*'], 'blog-page'); 
+        $blogs = Blog::paginate(3, ['*'], 'blog-page'); 
 
-        $blogcomments = BlogComment::with('user','likes')->paginate(2, ['*'], 'comment-page'); 
+        // paginate 2 for DEMO 
+        $comments = BlogComment::with(['user','likes','unlikes'])->paginate(2, ['*'], 'comment-page'); 
 
-        $categories = DB::table('categories')->select('name', 'id')->get();
-
-        $tags = Tag::all();
-
-        $notifications = Notification::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
-
-        return view('user/profile', ['user' => $user, 'products' => $products, 'blogcomments' => $blogcomments, 'categories' => $categories, 'tags' => $tags, 'blog' => $blog, 'emotions' => $emotions, 'blogs' => $blogs, 'notifications' => $notifications]);
+        return view('user/profile', ['products' => $products, 'comments' => $comments, 'blog' => $blog, 'blogs' => $blogs]);
            
      }
 

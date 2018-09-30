@@ -1,14 +1,49 @@
-// header
-header a
-  display: inline-block
+// hide animate left
+._mobile_nav_menu
+  position: absolute
+  left: -100%
+  z-index: 1
+  display: none
+
+// animate show to left
+.lft
+  left: 0
+
+// trigger mobile menu
+._hamburger_menu
+  display: none
+
+// hamburger menu 
+.bar1, .bar2, .bar3
+  width: 35px
+  height: 5px
+  background-color: grey
+  margin: 3px 0
+  transition: 0.5s
+  display: block
+
+// animate hamburger menu
+.change .bar1 
+  transform: rotate(-45deg) translate(-9px, 6px)
+
+.change .bar2 
+  opacity: 0
+
+.change .bar3 
+  transform: rotate(45deg) translate(-8px, -8px)
+
+// -----------------------------------------------------------
 
 // info
 #_info
+  display: inline-block
+  width: 100%
+  padding: 8px 0
   background: rgb(176, 99, 161)
   color: rgb(251, 251, 251)
   p
-    text-align: center
-
+  text-align: center
+  
 // markAsRead Notification
 .marked
   text-decoration: line-through
@@ -17,13 +52,13 @@ header a
 .clearfix::after
   display: table
   clear: both
-  content: ''
+  content: ""
 
 // profile menu
-#_profile_menu
+._profile_menu
   background:  rgba(199, 199, 199, 0.65)
   color: rgba(37, 37, 37, 0.7)
-  padding-bottom: 10px
+  padding: 8px
   ul
    margin: 10px 0 0 20px
    padding: 0
@@ -34,66 +69,29 @@ header a
    margin: 10px 0
    display: inline-block
 
-#_profile_menu img
-   display: block
-   margin: 18px 0 0 20px
-
-#_profile_menu h2
+._profile_menu ._profile_menu_users_username
   word-break: break-all
-  margin: 20px 12px 0 12px
 
-// wrapper board price
+._profile_menu ._profile_menu_ava
+  width: 120px
+  padding: 5px 5px 
 
-#_board_price_img
-  height: 30px
-
-#_wrapper_price
-  position: relative
-
-#_desc_price
-  position: absolute
-  top: 0.5%
-  left: 12%
-  word-break: break-all
-  font-weight: bold
-
-#_header_admin 
+// admin 
+._admin_header 
   background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
   padding: 16px
   margin-top: 20px
 
-ul#_menu_admin 
-  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
-  padding: 16px
-
-ul#_menu_admin li a 
-  color: rgba(37, 37, 37, 0.7)
-  margin: 12px 0
-
-ul#_menu_admin li a:hover,
-ul#_menu_admin li a:focus
-  color: rgba(232, 232, 232, 0.7)
-
-._wrapper_menu_admin 
-  display: flex
-  align-items: center
-  justify-content: space-between
-
-#_admin_login
-  padding: 16px
-  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
-  color: rgba(37, 37, 37, 0.7)
-
 // admin icon
-#_dashboard
+._admin_dashboard_icon
   content: url('../../icon/dashboard.png')
   width: 25px
   height: 25px
-#_product
+._admin_product_icon
   content: url('../../icon/product.png')
   width: 25px
   height: 25px
-#_logout
+._admin_logout_icon
   content: url('../../icon/logout.png')
   width: 25px
   height: 25px
@@ -106,6 +104,7 @@ ul#_menu_admin li a:focus
   height: 25px
 
 ._after_liked
+  background: #71bc78
   content: url('../../icon/like.png')
   width: 25px
   height: 25px
@@ -116,6 +115,7 @@ ul#_menu_admin li a:focus
   height: 25px
 
 ._after_unliked
+  background: #71bc78
   content: url('../../icon/unlike.png')
   width: 25px
   height: 25px
@@ -154,8 +154,6 @@ ul#_menu_admin li a:focus
   height: 40px
 
 // banner
-._banner
-  max-width: 600px
 
 // Google and Facebook
 #google_wrapper
@@ -175,41 +173,40 @@ ul#_menu_admin li a:focus
 header
   border-bottom: 1px dashed rgb(209, 139, 82) !important
 // nav
-nav
+.nav
   background: rgba(199, 199, 199, 0.65)
-  padding: 8px !important
+  padding: 8px
   a
    text-decoration: none
 
 // cart
-#_cart
+._cart
   position: relative
   display: block
   background: #A3CFC5
   padding: 8px
-  margin: 0 0 8px 0
-  width: auto
-  height: auto
   border-radius: 7px
+  cursor: pointer
 
-#_cart h2
+._cart:hover
+  box-shadow: 2.5px 2.5px 2.5px rgb(199, 199, 199)
+
+._cart ._cart_count
   display: inline-block
   padding: 8px
   background: rgba(210, 0, 0, 0.65)
   color: rgba(232, 232, 232, 0.7)
 
-#_cart_wrapper
+._cart_wrapper
   position: relative
 
-#_fill_of_cart
+._fill_of_cart
   position: absolute
   left: 30px
   transform: translate(8px, -125px) /*kanan (atas bawah) kiri (kanan kiri)*/
   width: 40px
 
-#_cart:hover
-  box-shadow: 2.5px 2.5px 2.5px rgb(199, 199, 199)
-  cursor: pointer
+// --------------------------------------------------------------------------------
 
 #_login_wrapper
   display: flex
@@ -249,33 +246,6 @@ nav
   #_remember_label
    color: rgba(37, 37, 37, 0.7)
 
-// form JQUERY DIALOG
-  
-.ui-widget-header
-  background: rgba(199, 199, 199, 0.65) !important
-
-.ui-dialog .ui-dialog-title
-  color: rgba(37, 37, 37, 0.7) !important
-
-.ui-button
-  color: rgba(37, 37, 37, 0.7) !important
-
-._highlight
-  border: 3px solid yellow
-
-.ui-state-active,
-.ui-widget-content,
-.ui-state-active,
-.ui-widget-header
-.ui-state-active,
-a.ui-button:active,
-.ui-button:active,
-.ui-button.ui-state-active:hover
-  border: none !important
-  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137)) !important
-  font-weight: normal
-  color: rgba(37, 37, 37, 0.7) !important
-
 // table cart wrapper
 #_table_cart th
   border: none
@@ -290,57 +260,81 @@ a.ui-button:active,
   .iti-flag
   background-image: url("../../icon/flags@2x.png")
 
-// product
-._product
+// products
+
+._products
   border: 1px solid rgba(152, 152, 152, 0.5)
   background: rgb(240, 240, 240)
   box-shadow: 0px 2px 4px rgb(142, 142, 142)
 
-._product h1
-  font-weight: bold
-  padding: 8px
+._products ._products_name
+  font-weight: 800 
+  margin-left: 6px
 
-._product > div + span
+._products ._products_users_username
+  display: inline-block
+  margin-left: 6px  
+
+._products ._products_date
+  margin-left: 6px
+
+._products ._products_categories
   padding: 5px
-  margin: 4px 6px
+  margin-left: 6px
   display: inline-block
   border-radius: 7px
   border: 1px solid rgb(125, 91, 56)
   background: rgb(185, 185, 185)
   color: rgb(238, 238, 238)
 
-._product div
+._products ._products_desc
+  padding: 0 5px
+  text-align: justify
   word-break: break-all
-  display: block
-  padding: 8px
- 
-._product p 
-  text-align: justify
-  padding: 8px
-  line-height: 1.5rem
+  line-height: 25px
 
-._product a,
-._product input[type="submit"] 
-  margin-left: 8px
-  margin-bottom: 8px
+._products_add_to_cart,
+._products_edit,
+._products_delete 
+  margin-left: 6px
 
-// blog
-._blog
-  color: rgba(37, 37, 37, 0.7)
+._products_wrapper_price
+  position: relative
 
-._blog h2
-  margin: 8px 0
+._products_desc_price
+  position: absolute
+  top: 5%
+  left: 25%
 
-._blog img
+// blog in homepage
+
+._blogs_homepage 
+  background: #f7f7f7
+  padding: 10px
+  
+._blogs_homepage_tags
+  padding: 5px
+  display: inline-block
+  border-radius: 7px
+  border: 1px solid rgb(125, 91, 56)
+  background: rgb(185, 185, 185)
+  color: rgb(238, 238, 238) 
+
+._blogs_homepage_desc
+  font-size: 16px !important
+
+// blog in profile
+
+._blog ._blog_img
   margin: 12px 0 
-  width: 300px
+  width: 250px
 
-._blog p 
+._blog ._blog_desc
   text-align: justify
-  margin-top: 16px
   line-height: 30px
+  word-wrap: break-word
 
-._blog > span:nth-of-type(1) 
+._blog ._blog_tags
   padding: 5px
   display: inline-block
   border-radius: 7px
@@ -349,11 +343,9 @@ a.ui-button:active,
   color: rgb(238, 238, 238) 
 
 ._blog figure figcaption
+  color: rgba(37, 37, 37, 0.7)
   font-size: 16px
   text-indent: 40px 
-
-._blog input[type="submit"]
-  margin: 8px 0
   
 // blog emotions
 
@@ -371,33 +363,24 @@ a.ui-button:active,
 
 // blog comments
 
-._textareaComment 
+._comments_textarea 
     color: grey
 
-._textareaComment:focus,
-._textareaComment:hover 
+._comments_textarea:focus,
+._comments_textarea:hover 
     outline: none
-    border: 1px solid rgba(37, 37, 37, 0.7)
+    border: 1px solid rgba(37, 37, 37, 0.7) 
 
-#_wrapperComment 
-    margin: 25px 0
-    color: grey
-
-#_imgComment 
+._comments_ava 
     float: left
-    margin: 0 5px 8px 0
-    width: 80px
+    margin: 0 5px !important
+    width: 80px !important
 
-#_descComment 
+._comments_subject 
     width: 70%
-    margin-bottom: 16px
     line-height: 25px
-    word-break: break-all
+    word-wrap: break-word
     text-align: justify
-
-#_optionCommentBtn
-    display: inline-block
-    margin: 5px 0
 
 // footer
 ._footer 
@@ -410,5 +393,37 @@ a.ui-button:active,
   background: transparent !important 
   display: flex !important
 
+// notif
+
+._mark_as_readed
+  text-decoration: line-through
+
+._box_Notif 
+  background: whitesmoke
+  color: black
+  float: left
+  opacity: 1
+  border: 3px dotted grey
+  padding: 8px
+  width: 50%
+  p 
+   margin: 5px 0
+
+// blog in profile
+
+._blog div span 
+  margin: 6px 0
+  display: inline-block
+
+// panel register
+
+.panel 
+  padding: 0 5px
+  max-height: 0
+  overflow: hidden
+  transition: max-height 0.5s ease-out
 
 
+
+
+ 

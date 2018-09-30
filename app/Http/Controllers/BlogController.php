@@ -15,7 +15,6 @@ use App\Http\Resources\BlogResource as BlogCollection;
 
 use App\Models\User;
 use App\Models\Blog;
-use App\Models\Emotion;
 use App\Models\Product;
 use App\Models\Tag;
 use App\Models\Category;
@@ -69,9 +68,17 @@ class BlogController extends Controller
 
     }
 
-
     public function store(BlogRequest $request)
     {
+
+        $slug = str_slug($request->title, '-');
+
+        $blog = Blog::where('slug', $slug)->first();
+
+        if ($blog != null) {
+            $slug = $slug . '-' .time();
+        }
+
 
         $blog = Blog::create([
          "title"  => $request->title,
@@ -79,6 +86,7 @@ class BlogController extends Controller
          "caption" => $request->caption,
          "desc"   => $request->desc,
          "user_id" => Auth::user()->id,
+          "slug"    => $slug
        ]);
        
         if ($request->hasFile('img')) {
@@ -109,22 +117,18 @@ class BlogController extends Controller
 
      public function show($id)
     {
-
-     $emotions = Emotion::all();
-
-     $user = User::first();
       
-     $blog = Blog::with('user', 'tags')->findOrFail($id);
+     $blog = Blog::with(['user', 'tags'])->where('slug', $id)->first();
 
-     $blogs = $user->blogs()->paginate(3, ['*'], 'blog-page');
+     $blogs = Blog::where('slug', $id)->paginate(3, ['*'], 'blog-page');
     
-     $products = $user->products()->paginate(4);
+     $products = auth()->user()->products()->paginate(4);
 
      $categories = DB::table('categories')->select('name', 'id')->get();
  
      $tags = DB::table('tags')->select('name', 'id')->get();
  
-     return view('blog/show', [ 'user' => $user,'blog' => $blog, 'blogs' => $blogs, 'emotions' => $emotions, 'user' => $user, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
+     return view('blog/show', ['blog' => $blog, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
 
     }
     
@@ -136,7 +140,7 @@ class BlogController extends Controller
 
      $tags = Tag::all();
 
-     $blog = Blog::findOrFail($id)->first();
+     $blog = Blog::where('slug', $id)->first();
 
      return view('blog/edit',  ['user' => $user,'blog' => $blog, 'tags' => $tags]);
         
@@ -146,13 +150,15 @@ class BlogController extends Controller
     {
     
       $blog = Blog::findOrFail($id);
-
+      
       $blog->update([
         "title"  => $request->title,
+        "slug" => str_slug($request->title, '-'),
         "img"   => str_replace('data:image/png;base64,', '', $request->img),
         "caption" => $request->caption,
         "desc"  => $request->desc,
-        "user_id" => auth()->user()->id
+        "user_id" => auth()->user()->id,
+       
       ]);
 
       if ($request->hasFile('img')) {
@@ -166,6 +172,7 @@ class BlogController extends Controller
           $blog->img = $filename;
 
       }
+   
 
       $blog->tags()->sync($request->tags);
 
@@ -180,7 +187,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
 
-        $blog = Blog::where('id', $id)->first();
+       $blog = Blog::findOrFail($id);
 
         $blogImg = public_path("storage/blogs/images/{$blog->img}");
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use DB;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
@@ -13,25 +12,24 @@ use App\Models\Notification;
 class NotificationController extends Controller
 {
 
-    public function get()
+    public function index() 
     {
 
-        $user = auth()->user();
-        
-        $notifications = Notification::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+        // grab all data user notifications // paginate 3 fore demo
+        $notifications = auth()->user()->notifications()->with('blog')->orderBy('id', 'desc')->paginate(3, ['*'], 'notification-page');
 
-        return view('user/profile', ['notifications' => $notifications, 'user' => $user]);
+        return view('notifications/index', ['notifications' => $notifications, 'user' => auth()->user()]);
 
     }
 
-    public function markAsRead(Request $request, $id)
+  public function mark_As_Read(Request $request, $id)
     {
 
-        $user = Auth::user();
-
-        $notif = DB::table('notifications')->where('id', $id)->where('user_id', $user->id)->update(['seen' => 1]);
+        Notification::findOrFail($id)->where('id', $id)->where('user_id', Auth::user()->id)->update([
+            'seen' => 1
+        ]);
  
-        return $notif;
+        return json_encode(['message' => 'notification readed']);
 
     }
 

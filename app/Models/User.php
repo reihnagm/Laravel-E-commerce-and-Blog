@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     use Notifiable;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $hidden = [
 
@@ -59,6 +59,11 @@ class User extends Authenticatable
       public function notifications()
     {
         return $this->hasMany('App\Models\Notification');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Message');
     }
 
     public function addresses()

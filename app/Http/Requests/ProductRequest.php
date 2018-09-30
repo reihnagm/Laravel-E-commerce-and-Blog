@@ -21,7 +21,7 @@ class ProductRequest extends FormRequest
         $rules = [
         'name' => 'required|max:100',
         'desc'  => 'required',
-        'img' => 'required|image|max:1024',
+        'img' => 'required|file|max:1024',
         'categories' => 'required|min:1|max:3',
         'price' => 'required',
         ];
@@ -38,9 +38,9 @@ class ProductRequest extends FormRequest
         'name.max'      => 'Maximal Character 100',
         'desc.required' => 'Description Required',
         'categories.required' => 'Category Required',
+        'img.uploaded'  => 'Image failed to upload / image too large',
         'img.required'  => 'Image Required',
         'img.max'       => 'Maximal Size 1GB',
-        'img.image'     => 'File Must be an Image',
         'price.required'=> 'Price Required',
         ];
    

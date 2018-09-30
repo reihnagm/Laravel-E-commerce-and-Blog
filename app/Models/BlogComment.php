@@ -9,7 +9,7 @@ class BlogComment extends Model
 
      use LikesTrait, UnlikesTrait;
           
-     protected $guarded = [];
+     protected $guarded = ['id'];
 
      public function user()
     {
@@ -24,5 +24,12 @@ class BlogComment extends Model
         return $this->belongsTo('App\Models\Blog');
      
      }
+
+       public function notifications()
+    {
+
+        return $this->hasMany('App\Models\Notification');
+    
+    }
 
 }

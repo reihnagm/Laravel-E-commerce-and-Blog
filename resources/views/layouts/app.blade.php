@@ -42,16 +42,14 @@
   {{-- favicon --}}
   <link rel="icon" href="{{ asset('assets/logo/logo.png') }}">
 
-  @stack('scripts')
 
   <script>
-    window.Laravel = @php echo json_encode([
-        'token' => csrf_token(),
-        'user' => [
-          'username' => auth()->check() ? auth()->user()->username : null,
-          'id' => auth()->check() ? auth()->user()->id : null,
-        ]
-    ]); @endphp;
+      window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'user' => [
+                'username' => auth()->check() ? auth()->user()->username : null
+            ]
+        ]) !!};
   </script>
 
 </head>
@@ -59,7 +57,7 @@
 <body>
 
   <div id="app">
-
+ 
     @include('_partials/header')
 
     @yield('content')
@@ -80,6 +78,11 @@
 
   {{-- Jquey mask money --}}
   <script src="{{ asset('assets/js/jquery-mask-money.js') }}"></script>
+
+  
+  {{-- Jquey Ticker --}}
+  <script src="{{ asset('assets/js/jquery.ticker.min.js') }}"></script>
+
 
   {{-- ChartJs --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>

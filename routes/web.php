@@ -73,10 +73,6 @@ Route::group(['middleware' => 'auth'], function() {
 Route::get('/payment', 'PaymentController@index')->name('payment.index');
 Route::post('/payment/store', 'PaymentController@store')->name('payment.store');
 
-// Notification Blog
-Route::get('/notification', 'NotificationController@get');
-Route::post('/notification/{id}', 'NotificationController@markAsRead');
-
 // Like & Unlike
 Route::get('/like/{model}/{type}', 'LikeController@like');
 Route::get('/cancel_like/{model}/{type}', 'LikeController@unlike');
@@ -85,9 +81,26 @@ Route::get('/unlike/{model}/{type}', 'UnlikeController@unlike');
 Route::get('/cancel_unlike/{model}/{type}', 'UnlikeController@cancel_unlike');
 
 // Emotion
-Route::get('/emotion', 'EmotionController@index');
-Route::get('/emotion/{id}', 'EmotionController@create');
-Route::get('/emotion/emotionid/{emotionid}/blogid/{blogid}','EmotionController@saveEmotion');
+// Route::get('/emotion', 'EmotionController@index');
+// Route::get('/emotion/{id}', 'EmotionController@create');
+// Route::get('/emotion/emotionid/{emotionid}/blogid/{blogid}','EmotionController@saveEmotion');
+
+// Polls
+Route::get('/getPolls','PollController@getPolls');
+Route::get('/polls','PollController@show');
+Route::post('/polls','PollController@store');
+
+// Notification 
+Route::get('/notification','NotificationController@index')->name('notifications.index');
+Route::get('/mark_as_read/{id}', 'NotificationController@mark_As_Read');
+
+// Chat
+
+  Route::get('/chat', 'ChatController@index');
+
+Route::get('/messages', 'ChatController@getMessages');
+Route::post('/messages', 'ChatController@postMessage');
+
 
 // Route::get('/{checkout?}', function() {
 //   return view('homepage/home');

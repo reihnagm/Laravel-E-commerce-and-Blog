@@ -24,4 +24,5 @@ class Admin extends Authenticatable
     {
         return $this->notify(new AdminResetPasswordNotification($token));
     }
+    
 }

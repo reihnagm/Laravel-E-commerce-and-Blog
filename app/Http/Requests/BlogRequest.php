@@ -20,7 +20,8 @@ class BlogRequest extends FormRequest
         return [
             'title' => 'required|max:100',
             'desc'  => 'required',
-            'img' => 'required',
+            'img' => 'required|file|max:1024',
+            'caption' => 'required',
             'tags' => 'required|min:1|max:3',
         ];
 
@@ -35,6 +36,8 @@ class BlogRequest extends FormRequest
             'desc.required' => 'Description Required',
             'tags.required' => 'Tags Required',
             'img.required'  => 'Image Required',
+            'img.max'  => 'Image too large, max 1GB',
+            'img.uploaded'  => 'Image failed to upload / image too large',
         ];
 
     }

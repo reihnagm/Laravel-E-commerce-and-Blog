@@ -60,7 +60,8 @@ class BlogCommentController extends Controller
             ]);
         }
 
-        return json_encode(['message' => 'sentComment']);
+        return back();
+        // return json_encode(['message' => 'sentComment']);
 
     }
 
@@ -85,7 +86,7 @@ class BlogCommentController extends Controller
 
       Toastr::info('Comment was updated!');
 
-     return back();
+      return back();
       
     }
    
@@ -93,11 +94,12 @@ class BlogCommentController extends Controller
     {
 
      $blogcomment = BlogComment::findOrFail($id);
+
      $blogcomment->delete();
 
      Toastr::info('Comment was deleted!');
 
-     return $blogcomment;
+     return back();
         
     }
 

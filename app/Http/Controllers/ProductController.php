@@ -143,21 +143,22 @@ class ProductController extends Controller
      public function destroy($id)
      {
 
-        $product = Product::where('id', $id)->first();
+        $product = Product::findOrFail($id);
 
-        $productImg = public_path("storage/products/images/{$product->img}");
+        // $productImg = public_path("storage/products/images/{$product->img}");
 
-        if (File::exists($productImg)) {
+        // if (File::exists($productImg)) {
 
-            unlink($productImg);
+        //     unlink($productImg);
 
-        }
+        // }
+
+        
+        $product->categories()->detach();
 
         $product->delete();
 
-        $product->categories()->detach();
-
-        Toastr::info('Product has been deleted !');
+        Toastr::info('Product has been removed !');
 
         return back();
 

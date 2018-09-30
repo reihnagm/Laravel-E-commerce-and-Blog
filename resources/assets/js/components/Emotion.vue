@@ -2,18 +2,18 @@
     <div>
     
           
-           <div id="_emotions" class="clearfix">
+           <div id="_emotions" class="clearfix" v-for="emotion in emotions" :key="emotion.id">
 
-              <img style="float: left;" @click="vote(emotion_id)" :src="'assets/emotions/' + emotion_name + '.png'">  
+              <img style="float: left;" @click="vote(emotion.id)" :src="'assets/emotions/' + emotion.name + '.png'">  
 
                 <span style="float: left; margin: 15px 0 0 10px; display: inline-block;"> 
                   0 %
                 <div style="margin: 8px 0 0 0;">
-                 {{ emotion_name }}
+                 {{ emotion.name }}
                 </div> 
                </span>
-  
-             
+              
+            
                 <span style="float: left; margin: 15px 0 0 10px; display: inline-block;">
              
                   <div style="margin: 8px 0 0 0;">
@@ -30,9 +30,11 @@
 <script>
 
 export default {
-  props:['emotion_id','emotion_name','blog_id'],
+  props: ['blog_id', 'emotions'],
   data() {
     return {
+      // emotions: [],
+      //  totalEmotions: [],
         total: 0,
         happy: 0,
         sad: 0,
@@ -40,28 +42,36 @@ export default {
         doubt: 0,
         fear: 0,
         angry: 0,
+
     }
   },
    computed: {
     totalIsZero: function() {
+      
+        // let newTotal = []
+        // Object.entries(this.emotions).forEach(([key, val]) => {
+        //     newTotal.push(val.name)
+        // });
+
+        // return newTotal = this.totalEmotions
+
     },
   },
   mounted() {
-  this.getEmotion()
-  },
-  created() {
+   this.getEmotion()
    axios({
       url : '/emotion/' + this.blog_id,
       method: 'GET'
-    }).then(function(response) {
-        let res = response.data;
-        this.total = res.total;
-        this.happy = res.happy;
-        this.sad = res.sad;
-        this.amazing = res.amazing;
-        this.doubt = res.doubt;
-        this.fear = res.fear;
-        this.angry = res.angry;
+    }).then((res) => {
+       if (res.total != 0 ) {
+        this.total = res.data.total;
+        this.happy = res.data.happy;
+        this.sad = res.data.sad;
+        this.amazing = res.data.amazing;
+        this.doubt = res.data.doubt;
+        this.fear = res.data.fear;
+        this.angry = res.data.angry;
+      }
     }).catch((err) => {
       console.log(err)
     })

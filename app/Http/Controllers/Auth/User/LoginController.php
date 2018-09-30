@@ -24,7 +24,7 @@ class LoginController extends Controller
     public function __construct()
     {
 
-      $this->middleware('guest')->except('logout', 'getUserAuth', 'delUserAuth'); // if not fillable except then redirect back getUserAuth
+      $this->middleware('guest')->except('logout', 'getUserAuth', 'delUserAuth'); // if not fillable will redirect back getUserAuth
 
     }
 

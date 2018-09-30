@@ -75,7 +75,6 @@ $(document).ready(function() {
 
     });
 
-
     $(document).on('click touchstart','.submitComment', function() {
         let html = '';
         let subject  = $('#subject').val();
@@ -140,15 +139,43 @@ $(document).ready(function() {
         console.log(error)
     });
   }
+ 
 
+    // $(document).on('click touchstart','._see_Notif', function() {
+    //     $('._wrapper_box_Notif').show(500)
+    // })
+
+    // $(document).on('click touchstart', '._exit_Notif', function () {
+    //     $('._wrapper_box_Notif').hide(500)
+    // });
+
+    $(document).on('click touchstart', '._mark_as_read', function () {
+        let _this = $(this)
+        let id = _this.attr('notif-id')
+        markAsRead(id)
+    });
+
+    function markAsRead(id) {  
+        $.ajax({
+            url: '/mark_as_read/' + id,
+            method: "GET",
+        }).done(function (success) {
+            console.log(success)
+        }).fail(function (error) {
+            console.log(error)
+        })
+    }
 
     // summernote
     $('#summernote').summernote();
 
-    // banner
-    $("._banner").slick({
+    // slick
+    $("._slick").slick({
         dots: true,
-        adaptiveHeight: true
+        infinite: false,
+        fade: true,
+        speed: 500,
+        cssEase: 'linear'
     });
 
     // password eye
@@ -175,4 +202,29 @@ $(document).ready(function() {
         affixesStay: false
     });
 
+    // Jquery Ticker 
+    $('.ticker').ticker();
+    
+    // Accordion
+    let accordion = $(".accordion");
+    for (i = 0; i < accordion.length; i++) {
+        accordion[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            if (this.previousElementSibling.style.maxHeight) {
+                this.previousElementSibling.style.maxHeight = null;
+            } else {
+                this.previousElementSibling.style.maxHeight = this.previousElementSibling.scrollHeight + "px";
+            }
+        });
+    }
+
+    // Mobile menu
+    $(document).on('click', '._hamburger_menu', function(e) {
+        $('._hamburger_menu').toggleClass('change')
+         $('._mobile_nav_menu').toggleClass('lft')
+    })
+
 })
+
+
+  

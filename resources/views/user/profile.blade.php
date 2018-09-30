@@ -6,7 +6,7 @@
   <div class="_columns">
 
   @component('components/menu_in_profile_user/content',[
-    'user' => $user
+    'user' => auth()->user()
   ]); 
   @endcomponent
 
@@ -16,38 +16,48 @@
   @forelse ($products->chunk(4) as $chunk)
     @foreach ($chunk as $product)
       <div class="_column _is_one_quarter">
-        <div class="_product">
+
+        <div class="_products">
             <img src="{{ asset('storage/products/images/'. $product->img) }}" alt="{{ $product->name }}">
-            <div id="_wrapper_price">
-              <img id="_board_price_img" src="{{ asset('/assets/icon/board-price.jpg')}}">
-              <p id="_desc_price"> {{ money($product->price, 'USD') }}</p>
-            </div>
-            <h1> {{ title_case($product->name) }} </h1>
-            <div>
-              <span> {{ $user->username }} </span>
-            </div>
-            <div>
-              <span> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product->created_at))  }} </span>
-            </div>
-            @foreach ($product->categories as $category)
-            <span> {{ $category->name }} </span>
-            @endforeach
-            <p>{{ $product->desc }}</p>
-            <a class="_button" href="{{ route('cart.add', $product->id) }}"> add to cart </a>
             
-            <a href="{{ route('product.edit', $product->id) }}" target="_blank" class="_button" href="#!">edit</a>
+            <div class="_products_wrapper_price">
+              <img class="_products_img_price" src="{{ asset('/assets/icon/board-price.jpg')}}">
+              <p class="_products_desc_price"> {{ money($product->price, 'IDR') }}</p>
+            </div> <br>
+
+            <h1 class="_products_name"> {{ title_case($product->name) }} </h1> <br> 
+        
+            <span class="_products_users_username"> Owner :  {{ $product->user->username }} </span> <br> <br>
+            <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product->created_at))  }} </span> <br> <br>
+          
+            @foreach ($product->categories as $category)
+            <span class="_products_categories"> {{ $category->name }} </span> <br> <br>
+            @endforeach 
+
+            <p class="_products_desc"> {{ $product->desc }} </p> <br>
+
+            <a class="_button _products_add_to_cart" href="{{ route('cart.add', $product->id) }}"> add to cart </a> <br> <br> 
+            
+          @if(Auth::user()->id === $product->user->id)
+            <a class="_button _products_edit" href="{{ route('product.edit', $product->id) }}" target="_blank" href="#!">edit</a> <br> <br> 
          
-            <form action="{{ route('product.update', $product->id) }}" method="post">
+            <form action="{{ route('product.destroy', $product->id) }}" method="post">
               {{-- CSRF --}}
               @csrf
 
               {{-- METHOD_FIELD --}}
               {{ method_field('DELETE') }}
-              
-              <input class="_button" type="submit" value="delete">
-              
+
+              <input type="submit" value="Delete">
             </form>
+
+            {{-- <a onclick="event.preventDefault(); document.getElementsByClassName('_form_products_delete')[0].click();" class="_button _products_delete" href="#!"> Delete</a> <br> <br> 
+              error delete not based on id
+            --}}
+          @endif
+
           </div>
+
         </div>
         @endforeach 
       @empty
@@ -68,35 +78,38 @@
       <div class="_column">
          <div class="_blog">
 
-        @foreach ($user->blogs()->orderBy('id', 'desc')->limit(1)->get() as $blog) 
-            <h2> {{ title_case($blog->title) }} </h2>
-              @foreach ($blog->tags as $tag)
-                <span> {{ $tag->name }} </span>
-              @endforeach
-              <span> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog->created_at)) }} </span> / 
-              <span> Author : {{ $blog->user->username }} </span>
-                <figure>
-                  <img src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}">
-                  <figcaption> {{ $blog->caption }} </figcaption>
-                </figure>
-          
-                <p> {!! $blog->desc !!} </p>
+        @foreach (auth()->user()->blogs()->orderBy('id', 'desc')->limit(1)->get() as $blog) 
+          <h2 class="_blog_title"> {{ title_case($blog->title) }} </h2> <br>
+            @foreach ($blog->tags as $tag)
+              <span class="_blog_tags"> {{ $tag->name }} </span>
+            @endforeach
+            <span class="_blog_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog->created_at)) }} </span> / 
+            <span class="_blog_author"> Author : {{ $blog->user->username }} </span>
+              <figure>
+                <img class="_blog_img" src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}">
+                <figcaption> {{ $blog->caption }} </figcaption>
+              </figure> <br>
+        
+              <p class="_blog_desc"> {!! $blog->desc !!} </p>
 
-                <form action="{{ route('blog.destroy', $blog->id) }}" method="post">
-                  {{-- CSRF --}}
-                  @csrf 
-                  {{-- METHOD_FIELD --}}
-                  {{ method_field('DELETE') }}
-                  <input class="_button" type="submit" value="delete">
-                </form>
-                <a class="_button" target="_blank" href="{{ route('blog.edit', $blog->id) }}">edit</a>
-           
+              <form class="_form_blog_delete" action="{{ route('blog.destroy', $blog->id) }}" method="post">
+                {{-- CSRF --}}
+                @csrf 
+                {{-- METHOD_FIELD --}}
+                {{ method_field('DELETE') }}
+              </form>
+              <br>
+             @if(Auth::user()->id == $blog->user->id)
+              <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_blog_delete')[0].submit();" href="#!"> Delete </a>
+              <br> <br>
+              <a class="_button" target="_blank" href="{{ route('blog.edit', $blog->slug) }}">Edit</a>
+             @endif
     {{-----------------------------------------------------------------------------------}}
 
-      @push('scripts')
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+      
+      {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-      @endpush
+    
   
      <div id="emotionBox">
       <div class="_columns _is_multiline">
@@ -134,7 +147,7 @@
 
 
          <script>
-      new Vue({
+          new Vue({
           el: "#emotionBox",
           data: {
             total: 0,
@@ -196,12 +209,12 @@
             },
           modify(val, point) {
             switch (val) {
-              case 1: this.happy = this.happy + point; break;
-              case 2: this.sad = this.sad + point; break;
-              case 3: this.amazing = this.amazing + point; break;
-              case 4: this.doubt = this.doubt + point; break;
-              case 5: this.fear = this.fear + point; break;
-              case 6: this.angry = this.angry + point; break;
+              case 1: this.happy += point; break;
+              case 2: this.sad += point; break;
+              case 3: this.amazing += point; break;
+              case 4: this.doubt += point; break;
+              case 5: this.fear += point; break;
+              case 6: this.angry += point; break;
               
               default:
               break;
@@ -209,16 +222,12 @@
           }
         }
         })
-     </script> 
+     </script>  --}}
 
-    
- 
-    {{-- <emotion
-     v-for='emotion in emotions'
-     :emotion_id="emotion.id"
-     :emotion_name="emotion.name"
-     :blog_id="{{$blog['id']}}"
-    ></emotion> --}}
+    {{-- <emotion-icon 
+    :emotions="{{ $emotions }}"
+    :blog_id="{{ $blog->id }}"
+    ></emotion-icon> --}}
 
     {{-------------------------------------------------------------------}}
 
@@ -287,79 +296,78 @@
       </div>
     </div> --}}
 
-    <div id="commentBox">
-      @foreach($blogcomments as $comment)
-       <div class="_column">
-         <div id="_userComment">
-              <img id="_imgComment" src="https://picsum.photos/200">
-                 {{ $comment->user->username }}
-                 <div id="_descComment">
-                 
-                   {{ $comment->subject }}
-               
-                  <div>
+        @foreach($comments as $comment)
+        <div class="clearfix">     
+          <div class="_column">
+        
+                   <img class="_comments_ava" src="https://picsum.photos/200">
+                   <span class="_comments_username"> {{ $comment->user->username }}  </span>
+                   <p class="_comments_subject"> {{ $comment->subject }} </p>
+           
+                              
                   <span class="_option_like_unlike_wrapper">
                   <a class="{{ $comment->is_liked() ? '_after_liked' : '_before_liked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
                     {{ $comment->is_liked() }}
                   </a>         
-                    <span class="_total_like">
                       <span class="_like_number"> {{ $comment->likes->count() }} </span>
-                    </span>
-                  </span>
-                  </div>
-              
-                 <div>
+                  </span>            
+               
                   <span class="_option_unlike_wrapper">
                   <a class="{{ $comment->is_unliked() ? '_after_unliked' : '_before_unliked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
                     {{ $comment->is_unliked() }}
                   </a>         
-                    <span class="_total_unlike">
                       <span class="_unlike_number"> {{ $comment->unlikes->count() }} </span>
-                    </span>
-                  </span>
-                  </div>
-                
+                  </span>   
               
                 @if(Auth::user()->id == $comment->user->id)
-                <div id="_optionCommentBtn">
-                  <a class="_button" href="{{ route('blog.comment.edit', $comment->id)}}"> edit </a>
-                  <a class="_button" href="{{ route('blog.comment.destroy', $comment->id)}}"> delete </a> 
-                </div>
+                  <div class="_comments_options">
+                    <a class="_button" href="{{ route('blog.comment.edit', $comment->id)}}"> edit </a>
+                    <a class="_button" href="{{ route('blog.comment.destroy', $comment->id)}}"> delete </a> 
+                  </div>
                 @endif
-              </div>
-          </div>
-        @endforeach
-      </div>
+          
+             </div>
+           </div>
+          @endforeach
 
-      {{-- <div id="_comment_content">
+        {{ $comments->links() }}
 
-      </div> --}}
+       {{----------------------------------------------------------------------------}}
 
-       {{ $blogcomments->links() }}
-
-      <div class="_column">
         @if ($errors->has('subject'))
             <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
         @endif
-        <br>
-        <form method="post" action="{{ route('blog.comment.store', $blog->id)}}">
+       
+        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog->id)}}">
+          {{-- CSRF --}}
           @csrf
-          <textarea name="subject" class="_textareaComment"></textarea>
-          <input id="_commentBtn"class="_button" type="submit" value="Comment">  
+
+           <br>
+          <textarea name="subject" class="_comments_textarea"></textarea>
         </form>  
-{{--         
-        <textarea id="subject" cols="4" rows="4"></textarea>
+           <br>
+         <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();" href="#!"> Comment </a>  
+
+      {{------------------------------------------------------------------------------------------}}
+
+          <vote></vote>
+
+      {{------------------------------------------------------------------------------------------}}
+      
+
+      {{-- AJAX COMMENT --}}
+      {{-- <div id="_comment_content">
+      </div> --}}
+      
+       {{-- AJAX COMMENR --}}
+      {{-- <textarea id="subject" cols="4" rows="4"></textarea>
       <input class="submitComment" type="submit" blog-id="{{ $blog->id }}" blog-comments="{{ $blogcomments }}"> --}}
-      </div>
+      
              
       @endforeach  
 
-     
-     
     </div> {{-- end of BLOG --}}
    </div> 
-
-
 
       {{-- <script>
          new Vue ({
@@ -439,8 +447,6 @@
         })
       </script> --}}
 
-    
-    
     {{--------------------------------------------------------------------------------------}}
     
     <div style="width: 100%; flex:none;">
@@ -449,20 +455,21 @@
           <div class="_column _is_one_third">
           
           <img src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}"> <br>
-          <h2> <a class="_text_gray" href="{{ route('blog.show', $blog->id)}}"> {{ title_case($blog->title) }} </a></h2>
+          <h2> <a class="_text_gray" target="_blank" href="{{ route('blog.show', $blog->slug)}}"> {{ title_case($blog->title) }} </a></h2>
 
           </div>
         @empty
         @endforelse
-      </div>{{-- end of COLUMNS --}}
+      </div>
     </div>
 
       {{-- PAGINATION --}}
       <div style="width: 100%; flex:none;">
         {{ $blogs->links() }}
       </div>
-  
+
    </div> {{-- end of COLUMNS --}}
+
   </div> {{-- end of COLUMNS --}}
 </div> {{-- end of CONTAINER --}}
 

@@ -1,15 +1,15 @@
 import Bus from './bus'
 
-Echo.join('channel-user')
+Echo.join('channel-chat')
     .here((users) => {
-      Bus.$emit('user.here', users)
+        Bus.$emit('chat.here', users)
     })
     .joining((user) => {
-      Bus.$emit('user.joining', users)
+        Bus.$emit('chat.joining', user)
     })
     .leaving((user) => {
-      Bus.$emit('user.leaving', users)
+        Bus.$emit('chat.leaving', user)
     })
-    .listen('UserOnline', (e) => {
-      Bus.$emit('user.data', e.data)
+    .listen('ChatCreated', (e) => {
+        Bus.$emit('chat.sent', e.message)
     })

@@ -13,7 +13,7 @@
     {{--------------------------------------------------------------------------------------------}}
 
  <div class="_column">
-    <form action="{{ route('blog.update', $blog->id)}}" method="post" enctype="multipart/form-data">  
+    <form action="/blog/{{ $blog->id }}" method="post" enctype="multipart/form-data">  
         {{-- CSRF --}}
         @csrf
 

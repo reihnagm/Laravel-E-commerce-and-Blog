@@ -1,70 +1,134 @@
-  <div class="_column _is_one_quarter">
-      <a href="{{ route('cart.index') }}" id="_cart">
-        @if($user->isOwner()) 
-        <h2>{{ Cart::count() }}</h2>
-        @elseif(!$user->isOwner())
-        <h2>{{ Cart::count() }}</h2>
+ <div class="_column _is_one_quarter">
+
+         <div class="_hamburger_menu">
+          <span class="bar1"></span> 
+          <span class="bar2"></span>
+          <span class="bar3"></span>
+        </div>
+
+       <div class="_mobile_nav_menu">
+         <ul>
+           <li>
+
+             <a href="{{ route('cart.index') }}" class="_cart">
+                @if($user->id === Auth::user()->id) 
+                <h2 class="_cart_count">{{ Cart::count() }}</h2>
+                @elseif(!$user->isOwner())
+                <h2 class="_cart_count">{{ Cart::count() }}</h2>
+                @endif
+
+                <div class="_cart_wrapper">
+                    <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                    @if(!empty(Cart::count()))
+                    <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+                    @endif
+                </div>
+              </a> 
+
+           @if ($user->provider == null)
+
+            {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
+
+            <div class="_is_left">
+              <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
+              <h2 class="_profile_menu_users_username">{{ $user->username }}</h2>
+            </div>  
+
+            <ul>
+              @if($user->id === Auth::user()->id) 
+              <li><a href="/chat" target="_blank"> Chat </a></li> 
+              <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+              <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>   
+              <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+              @endif
+              <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
+              <li><a href="/social/account/logout/"> Logout </a></li> 
+            </ul>
+
+            @endif
+
+            {{-- LOGIN WITH SOCIAL MEDIA  --}}
+
+            @if($user->provider)
+            <div class="_is_left">
+                <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
+                <h2  class="_profile_menu_users_username">{{ $user->username }}</h2>
+            </div>
+
+            <ul>
+              @if($user->id === Auth::user()->id)
+              <li><a href="/chat" target="_blank"> Chat </a></li>
+              <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+              <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
+              <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+              @endif
+              <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+              <li><a href="/social/account/logout/"> Logout </a></li>
+            </ul>
+           @endif 
+               
+           </li>
+         </ul>
+       </div>
+
+      <div class="_profile_menu">
+
+           <a href="{{ route('cart.index') }}" class="_cart">
+                @if($user->id === Auth::user()->id) 
+                <h2 class="_cart_count">{{ Cart::count() }}</h2>
+                @elseif(!$user->isOwner())
+                <h2 class="_cart_count">{{ Cart::count() }}</h2>
+                @endif
+
+                <div class="_cart_wrapper">
+                    <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                    @if(!empty(Cart::count()))
+                    <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+                    @endif
+                </div>
+              </a>
+
+        @if ($user->provider == null)
+
+          {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
+
+          <div class="_is_left">
+            <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
+            <h2 class="_profile_menu_users_username">{{ $user->username }}</h2>
+          </div>
+
+          <ul>
+            @if($user->id === Auth::user()->id) 
+            <li><a href="/chat" target="_blank"> Chat </a></li>
+            <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+            <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
+            <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+            @endif
+            <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+            <li><a href="/social/account/logout/"> Logout </a></li>
+          </ul>
+
         @endif
 
-        <div id="_cart_wrapper">
-            <img src="{{ asset('assets/icon/cart.png')}}">
-            @if(!empty(Cart::count()))
-            <img id="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+          {{-- LOGIN WITH SOCIAL MEDIA  --}}
+
+          @if($user->provider)
+          <div class="_is_left">
+              <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
+              <h2  class="_profile_menu_users_username">{{ $user->username }}</h2>
+          </div>
+
+          <ul>
+            @if($user->id === Auth::user()->id)
+            <li><a href="/chat" target="_blank"> Chat </a></li>
+            <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+            <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
+            <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
             @endif
-        </div>
-      </a>
+            <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+            <li><a href="/social/account/logout/"> Logout </a></li>
+          </ul>
+        @endif 
 
-      <div id="_profile_menu">
-
-      @if (!$user->provider)
-
-      {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
-
-      <div class="_is_left">
-          <img src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
-          <h2>{{ $user->username }}</h2>
-      </div>
-
-      <ul>
-      @if($user->isOwner()) 
-      <li><a href="#"> Messages (0)</a></li>
-      @forelse ($user->notifications as $notification)
-      <li><a href="#"> Notification ({{ $notification->count() }})</a></li>
-      @empty
-      <li><a href="#"> Notification (0)</a></li>
-      @endforelse
-      <li><a  target="_blank" href="{{ route('product.create') }}"> Make a Product </a></li>     
-      <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-      @endif
-      <li><a href="{{route('app.index')}}"> Back to homepage </a></li>
-      <li><a href="/social/account/logout/"> Logout </a></li>
-      </ul>
-
-      @else
-
-      {{-- LOGIN WITH SOCIAL MEDIA  --}}
-
-      <div class="_is_left">
-          <img src="{{ $user->avatar}}" alt="{{ $user->username}}">
-          <h2>{{ $user->username }}</h2>
-      </div>
-
-      <ul>
-        @if($user->isOwner())
-        <li><a href="#!"> Messages (0)</a></li>
-         @forelse ($notifications as $notification)
-         <li><a href="#"> Notification ({{ $notification->count() }})</a></li>
-         @empty
-         <li><a href="#"> Notification (0)</a></li>
-         @endforelse 
-         <li><a target="_blank" href="{{ route('product.create') }}"> Make a Product </a></li>     
-         <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-         @endif
-         <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
-         <li><a href="/social/account/logout/"> Logout </a></li>
-      </ul>
-
-      @endif 
-
-   </div> {{-- end of PROFILE MENU --}}
+      </div> {{-- end of PROFILE MENU --}}
   </div> {{-- end of COLUMN --}}

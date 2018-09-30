@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
@@ -46,14 +48,26 @@ class SocialAuthController extends Controller
 
         }
 
+        $slug = str_slug($user->name, '-');
+
+        $user_check_slug = User::where('slug', $slug)->first();
+
+        if ($user_check_slug != null) {
+            $slug = $slug . '-' .time();
+       
+
         return User::create([
             'username' => $user->name,
             'email'    => $user->email,
             'provider' => $service,
             'provider_id' => $user->id,
             'avatar' => str_replace('data:image/png;base64,', '', $user->avatar),
-            'slug' => str_slug($user->name, '-')
+            'slug' => $slug
         ]);
+
+         }
+
+        
 
     }
 
