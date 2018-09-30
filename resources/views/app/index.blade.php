@@ -4,11 +4,278 @@
 
 @section('content')
 
-  @if(Auth::check()) 
-    <p>tet</p>
-  @endif
+  <div class="_container clearfix">
+    <div class="_columns _is_multiline">
 
- 
+      <div class="_column _is_one_quarter">
+
+        <div class="_hamburger_menu">
+          <span class="bar1"></span> 
+          <span class="bar2"></span>
+          <span class="bar3"></span>
+        </div>
+
+        <div class="_mobile_nav_menu">
+          
+             <a class="_cart" href="{{ route('cart.index') }}">
+              <h2 class="_cart_count"> {{ Cart::count() }}</h2>
+
+              <div class="_cart_wrapper">
+                  <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                @if(!empty(Cart::count()))
+                  <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+                @endif
+              </div>
+             </a>
+             
+              @if(Auth::check()) 
+
+                @if(empty($user['provider'])) 
+
+                {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
+
+                <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" text="{{ $user['name'] }}" alt="{{ $user->['name'] }}"> 
+              
+                  <div>
+                    <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
+                  </div>
+                    <div>
+                    <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
+                  </div>
+              
+                @else 
+
+                {{-- LOGIN WITH SOCIAL MEDIA --}}
+
+                <img style="padding: 5px 5px;" src="{{ $user['avatar'] }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}"> 
+
+                  <div>
+                    <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
+                  </div>
+                  <div>
+                    <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
+                  </div>
+
+                @endif 
+
+              @else  
+
+              <form id="_form_login_desktop" action="{{ route('login') }}" method="POST">
+                {{-- CSRF --}}
+                @csrf
+
+                <div class="_field">
+                  {{-- email address  --}}
+                  <input type="text" name="email" placeholder="E-Mail Address">
+
+                  @if ($errors->has('email'))
+                  <span class="_is_invalid">{{ $errors->first('email') }}</span>
+                  @endif
+
+                  {{-- password --}}
+                  <div class="_wrapper_input_password">
+                    <input id="password_field_desktop" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field_desktop" class="_eye_icon"> </i>
+                  </div>
+
+                  @if ($errors->has('password'))
+                  <span class="_is_invalid">{{ $errors->first('password') }}</span>
+                  @endif
+
+                  {{-- event trigger submit --}}
+                  <a onclick="event.preventDefault(); document.getElementById('_form_login_desktop').submit();" class="_button">Login </a>
+                </div> {{-- end of FIELD --}}
+
+                {{-- remmember me  --}}
+                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                <label id="_remember_label" for="remember"> Remember Me </label>
+
+              </form> 
+
+              <div class="_text_gray _has_range_top"> don't have a account? </div>
+
+            <div class="panel">
+              <form action="{{ route('register')}}" method="POST">
+                  {{-- CSRF --}}
+                  @csrf
+
+                  <div class="_field">
+                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
+                    
+                    @if ($errors->has('username'))
+                      <span class="_is_invalid">{{ $errors->first('username') }}</span>
+                    @endif
+
+                    <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
+            
+                    @if ($errors->has('email'))
+                      <span class="_is_invalid">{{ $errors->first('email') }}</span>
+                    @endif
+
+                    <div class="_wrapper_input_password">
+                      <input id="password_field_register_desktop" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_desktop" class="_eye_icon"> </i>
+                    </div>
+
+                    @if ($errors->has('password'))
+                      <span class="_is_invalid">{{ $errors->first('password') }}</span>
+                    @endif
+
+                    <div class="_wrapper_input_password">
+                      <input id="password_field_confirmation_desktop" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_desktop" class="_eye_icon"> </i>
+                    </div>
+
+                    @if ($errors->has('password_confirmation'))
+                    <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+
+                      <input class="_button" type="submit" value="Submit Register">
+                 </div>
+
+                </form>
+              </div>
+
+                <a id="trigger-button-register" class="accordion _button _has_range_top _has_range_bottom"> Register </a>
+                <br>
+                {{-- login use Gmail  --}}
+                <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
+
+                {{-- login use Facebook --}}
+                <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
+
+                @endif
+
+        
+        </div>
+
+        <nav class="nav">
+
+            {{-- CART --}}
+            {{-- <a class="_cart" href="{{ route('cart.index') }}">
+              <h2 class="_cart_count"> {{ Cart::count() }}</h2>
+
+              <div class="_cart_wrapper">
+                      <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                    @if(!empty(Cart::count()))
+                      <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+                    @endif
+              </div>
+             </a>  --}}
+
+          @if(Auth::check()) 
+
+            @if(empty($user['provider'])) 
+            
+            {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
+
+            <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}">
+           
+            <div>
+              <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
+            </div>
+            <div>
+              <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
+            </div>
+
+            @else 
+
+            {{-- LOGIN WITH SOCIAL MEDIA --}}
+
+            <img style="padding: 5px 5px;" src="{{ $user['avatar'] }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}"> 
+
+            <div>
+              <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
+            </div>
+            <div>
+              <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
+            </div>
+             
+            @endif 
+
+          @else  
+
+          <form id="_form_login_mobile" action="{{ route('login') }}" method="POST">
+            {{-- CSRF --}}
+            @csrf
+
+            <div class="_field">
+              {{-- email address  --}}
+              <input type="text" name="email" placeholder="E-Mail Address">
+
+              @if ($errors->has('email'))
+              <span class="_is_invalid">{{ $errors->first('email') }}</span>
+              @endif
+
+              {{-- password --}}
+              <div class="_wrapper_input_password">
+                <input id="password_field" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field" class="_eye_icon"> </i>
+              </div>
+
+              @if ($errors->has('password'))
+               <span class="_is_invalid">{{ $errors->first('password') }}</span>
+              @endif
+
+              {{-- event trigger submit --}}
+              <a onclick="event.preventDefault(); document.getElementById('_form_login_mobile').submit();" class="_button">Login </a>
+            </div> {{-- end of FIELD --}}
+
+            {{-- remmember me  --}}
+            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+            <label id="_remember_label" for="remember"> Remember Me </label>
+
+          </form> 
+
+          <div class="_text_gray _has_range_top"> don't have a account? </div>
+
+          <div class="panel">
+           <form action="{{ route('register')}}" method="POST">
+              {{-- CSRF --}}
+              @csrf
+
+              <div class="_field">
+                <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
+                
+                  @if ($errors->has('username'))
+                  <span class="_is_invalid">{{ $errors->first('username') }}</span>
+                 @endif
+
+                <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
+         
+                 @if ($errors->has('email'))
+                  <span class="_is_invalid">{{ $errors->first('email') }}</span>
+                 @endif
+
+                <div class="_wrapper_input_password">
+                  <input id="password_field_register" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register" class="_eye_icon"> </i>
+                </div>
+
+                 @if ($errors->has('password'))
+                  <span class="_is_invalid">{{ $errors->first('password') }}</span>
+                 @endif
+
+               <div class="_wrapper_input_password">
+                <input id="password_field_confirmation" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation" class="_eye_icon"> </i>
+              </div>
+
+                @if ($errors->has('password_confirmation'))
+                <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
+                @endif
+
+                  <input class="_button" type="submit" value="Submit Register">
+            </div>
+
+            </form>
+          </div>
+
+          <a id="trigger-button-register" class="accordion _button _has_range_top _has_range_bottom"> Register </a>
+          <br>
+          {{-- login use Gmail  --}}
+          <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
+
+          {{-- login use Facebook --}}
+          <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
+
+        </nav>
+        @endif
+      </div> {{-- end of NAV --}}
 
       {{---------------------------------------------------------------------------------------------------------------}}
 

@@ -17,13 +17,15 @@ class AppController extends Controller
     public function index()
     {
 
+        $user = User::first(); 
+
         $blogs = Blog::with('tags','user')->orderBy('id', 'desc')->paginate(4, ['*'], 'blog-page');
         $products = Product::with('categories','user')->orderBy('id', 'desc')->paginate(4, ['*'], 'product-page');
 
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view('app/index' ,['blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
+        return view('app/index' ,['user' => $user, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
 
     }
 
