@@ -340,7 +340,7 @@
                       <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
                   
                       <span class="_products_users_username"> Owner :  {{ $product['user']['username'] }} </span> <br> <br>
-                      <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product->created_at))  }} </span> <br> <br>
+                      <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at']))  }} </span> <br> <br>
                     
                       @foreach ($product->categories as $category)
                       <span class="_products_categories"> {{ $category['name'] }} </span> <br> <br>
