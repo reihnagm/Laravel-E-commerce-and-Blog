@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use File;
 use Toastr;
 
-use Illuminate\App\Http\Requests\productRequest;
+use Illuminate\Http\Requests\productRequest;
 
 use App\Models\User;
 use App\Models\Product;
