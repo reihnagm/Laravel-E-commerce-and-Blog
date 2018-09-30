@@ -94,7 +94,9 @@
 
           <div class="_is_left">
             <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
-            <h2 class="_profile_menu_users_username">{{ $user->username }}</h2>
+            <h2  class="_profile_menu_users_username">
+              <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+            </h2>
           </div>
 
           <ul>
@@ -115,7 +117,9 @@
           @if($user->provider)
           <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
-              <h2  class="_profile_menu_users_username">{{ $user->username }}</h2>
+              <h2  class="_profile_menu_users_username">
+                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+              </h2>
           </div>
 
           <ul>
