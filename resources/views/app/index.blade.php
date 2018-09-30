@@ -30,7 +30,7 @@
              
               @if(Auth::check()) 
 
-                @if(Auth::user()->provider == null) 
+                @if(empty(Auth::user()->provider)) 
                 
                 {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
@@ -162,7 +162,7 @@
 
           @if(Auth::check()) 
 
-            @if(!Auth::user()->provider) 
+            @if(empty(Auth::user()->provider)) 
             
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
@@ -251,7 +251,6 @@
                   <span class="_is_invalid">{{ $errors->first('password') }}</span>
                  @endif
 
-              
                <div class="_wrapper_input_password">
                 <input id="password_field_confirmation" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation" class="_eye_icon"> </i>
               </div>
