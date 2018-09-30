@@ -373,7 +373,7 @@
                 @empty
               @endforelse
 
-           {{ $products->links() }}
+           {{-- {{ $products->links() }} --}}
 
         {{-----------------------------------------------------------------------------------}}
 
@@ -414,7 +414,7 @@
                     @endforelse
           </div> {{-- end of BLOG --}}
 
-          {{ $blogs->links() }}
+          {{-- {{ $blogs->links() }} --}}
 
         </div> {{-- end of BACKGROUND GRAY --}}
 
