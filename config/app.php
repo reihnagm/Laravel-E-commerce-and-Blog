@@ -149,7 +149,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         willvincent\Rateable\RateableServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
         Kamaln7\Toastr\ToastrServiceProvider::class,
         /*
          * Package Service Providers...
