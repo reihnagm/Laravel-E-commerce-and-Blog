@@ -25,7 +25,7 @@ class AppController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view('app/index' ,['user' => $user, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
+        return view('app/index', ['user' => $user, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
 
     }
 

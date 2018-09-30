@@ -34,7 +34,7 @@
 
                 {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
-                <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" text="{{ $user['name'] }}" alt="{{ $user->['name'] }}"> 
+                <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}"> 
               
                   <div>
                     <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
