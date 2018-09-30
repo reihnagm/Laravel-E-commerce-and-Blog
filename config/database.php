@@ -2,10 +2,10 @@
 
 $url = parse_url(getenv("DATABASE_URL"));
 
-$host = $url["host"];
-$username = $url["user"];
-$password = $url["password"];
-$database = substr($url["path"], 1);
+$host = $url["host"]?? null;
+$username = $url["user"]??null;
+$password = $url["password"]??null;
+$database = substr($url["path"], 1)??null;
 
 return [
 
