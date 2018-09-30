@@ -42,17 +42,15 @@ class SocialAuthController extends Controller
 
         $authUser = User::where('provider_id', $user->id)->first();
 
-        if ($authUser) {
+        if ($authUser) 
 
             return $authUser;
-
-        } else {
 
         $slug = str_slug($user->name, '-');
 
         $user_check_slug = User::where('slug', $slug)->first();
 
-        if ($user_check_slug != null) {
+        if ($user_check_slug != null) 
             $slug = $slug . '-' .time();
        
         return User::create([
@@ -64,9 +62,6 @@ class SocialAuthController extends Controller
             'slug' => $slug
         ]);
 
-         }
-
-      }
     }
 
     public function logout()
