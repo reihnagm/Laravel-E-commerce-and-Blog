@@ -85,7 +85,7 @@
   </div> {{-- end of MAKEAPRODUCT --}}
  </div> {{-- end of COLUMN --}}
 
- </div> {{-- end of COLUMNS --}}
-</div> {{-- end of CONTAINER --}}
+ </div>
+</div>
 
 @endsection

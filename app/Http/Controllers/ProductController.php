@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use File;
 use Toastr;
 
-use Illuminate\Http\Requests\productRequest;
+use App\Http\Requests\productRequest;
 
 use App\Models\User;
 use App\Models\Product;
@@ -36,7 +36,7 @@ class ProductController extends Controller
 
     }
 
-    public function store(ProductRequest $request) 
+    public function store(productRequest $request) 
     {
 
         $product = Product::create([
@@ -84,17 +84,15 @@ class ProductController extends Controller
     public function edit($id) 
     {
 
-     $user = User::first();
-
      $categories = Category::all();
 
      $product = Product::with('categories')->findOrFail($id);
 
-     return view('product/edit', ['product' => $product, 'categories' => $categories, 'user' => $user]);
+     return view('product/edit', ['product' => $product, 'categories' => $categories]);
 
     }
 
-    public function update($id, ProductRequest $request)
+    public function update($id, productRequest $request)
      {
 
       $product = Product::findOrFail($id);
@@ -152,7 +150,6 @@ class ProductController extends Controller
         //     unlink($productImg);
 
         // }
-
         
         $product->categories()->detach();
 

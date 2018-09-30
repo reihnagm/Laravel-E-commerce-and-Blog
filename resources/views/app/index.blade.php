@@ -4,50 +4,6 @@
 
 @section('content')
 
-  {{-- REGISTER FORM DIALOG JQUERY
-
-  <div id="register-form" title="Register Form" style="display:none;">
-
-    <p class="validateTips" style="padding:8px; color:rgba(37, 37, 37, 0.7);"></p>
-
-    <form id="form-register" method="POST" action="{{ route('register') }}">
-    {{-- CSRF --}}
-    {{-- @csrf
-
-    <fieldset> --}}
-
-      {{-- username --}}
-      {{-- <div class="_field">
-        <label for="username">username (Username may consist of a-z, 0-9, allow underscores without spaces and must begin with a lowercase letter)</label>
-        <input id="username" type="text" name="username" value="{{ old('username') }}">
-      </div> --}}
-
-      {{-- email address --}}
-      {{-- <div class="_field">
-       <label for="email"> E-mail Address </label>
-       <input id="email" type="email" name="email" value="{{ old('email') }}">
-     </div> --}}
-
-      {{-- password --}}
-      {{-- <div class="_field">
-       <label for="password">Password (Minimum 6 characters, at least one uppercase letter, one lowercase letter, one number and one special character)</label>
-       <input name="password" id="password" type="password">
-     </div> --}}
-
-     {{-- confirm password --}}
-     {{-- <div class="_field">
-       <label for="password-confirm">Confirm Password</label>
-       <input id="password-confirm" type="password" name="password_confirmation">
-     </div>
-
-    <input type="checkbox" id="showPassword" style="color: rgba(37, 37, 37, 0.7);">Show Password
-
-    </fieldset>
-
-  </form>
-</div>  --}}
-
-
   <div class="_container clearfix">
     <div class="_columns _is_multiline">
 
@@ -231,7 +187,6 @@
             <div>
               <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
             </div>
-
              
             @endif 
 

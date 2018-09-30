@@ -4,10 +4,7 @@
 <div class="_container">
   <div class="_columns">
 
-     @component('components/menu_in_profile_user/content',[
-     'user' => $user
-     ]); 
-    @endcomponent
+     @component('components/menu_in_profile_user/content') @endcomponent
 
     {{-------------------------------------------------------------------}}
 

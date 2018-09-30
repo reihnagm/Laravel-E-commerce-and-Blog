@@ -7,9 +7,7 @@
         </div>
 
        <div class="_mobile_nav_menu">
-         <ul>
-           <li>
-
+     
              <a href="{{ route('cart.index') }}" class="_cart">
                 @if($user->id === Auth::user()->id) 
                 <h2 class="_cart_count">{{ Cart::count() }}</h2>
@@ -31,7 +29,9 @@
 
             <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
-              <h2 class="_profile_menu_users_username">{{ $user->username }}</h2>
+               <h2  class="_profile_menu_users_username">
+                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+              </h2>
             </div>  
 
             <ul>
@@ -43,7 +43,7 @@
               @endif
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
               <li><a href="/social/account/logout/"> Logout </a></li> 
-            </ul>
+             </ul>
 
             @endif
 
@@ -52,7 +52,9 @@
             @if($user->provider)
             <div class="_is_left">
                 <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
-                <h2  class="_profile_menu_users_username">{{ $user->username }}</h2>
+              <h2  class="_profile_menu_users_username">
+                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+              </h2>
             </div>
 
             <ul>
@@ -67,8 +69,7 @@
             </ul>
            @endif 
                
-           </li>
-         </ul>
+  
        </div>
 
       <div class="_profile_menu">

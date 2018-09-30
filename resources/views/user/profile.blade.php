@@ -48,7 +48,7 @@
               {{-- METHOD_FIELD --}}
               {{ method_field('DELETE') }}
 
-              <input type="submit" value="Delete">
+              <input class="_button _products_delete" type="submit" value="Delete"> <br><br>
             </form>
 
             {{-- <a onclick="event.preventDefault(); document.getElementsByClassName('_form_products_delete')[0].click();" class="_button _products_delete" href="#!"> Delete</a> <br> <br> 

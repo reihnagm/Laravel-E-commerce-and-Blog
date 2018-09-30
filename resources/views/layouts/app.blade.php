@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="{{ app()->getLocale() }}">
 
 <head>
@@ -19,10 +18,7 @@
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  @yield('css')
-
-  {{-- intl-tel-input css --}}
-  {{-- <link rel="stylesheet" href="{{ asset('assets/css/intTelInput/intlTelInput.min.css') }}"> --}}
+   @yield('css')
 
   {{-- slick theme css --}}
   <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
