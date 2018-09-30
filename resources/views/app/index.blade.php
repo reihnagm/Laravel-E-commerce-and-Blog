@@ -297,12 +297,12 @@
                  </div>
                  Filter Product Category : 
                 @foreach ($categories as $category) /
-                 <a class="_text_gray" href="{{ route('product.filter', $category->name) }}"> {{ $category->name }} </a>      
+                 <a class="_text_gray" href="{{ route('product.filter', $category['name']) }}"> {{ $category['name'] }} </a>      
                 @endforeach 
                 <div>
                  Filter Blog Category :
                  @foreach ($tags as $tag) /
-                  <a class="_text_gray" href="{{ route('blog.filter', $tag->name) }}"> {{ $tag->name }} </a>    
+                  <a class="_text_gray" href="{{ route('blog.filter', $tag['name']) }}"> {{ $tag['name'] }} </a>    
                  @endforeach 
                 </div>
             </form>
@@ -387,18 +387,18 @@
                 <div class="_column _is_one_quarter">
 
                  <div class="_blogs_homepage">
-                   <h2 class="_blogs_homepage_title"> {{ $blog->title }}</h2>
+                   <h2 class="_blogs_homepage_title"> {{ $blog['title'] }}</h2>
                    <br>
                     @foreach ($blog->tags as $tag)
-                     <span class="_blogs_homepage_tags"> {{  $tag->name }} </span>
+                     <span class="_blogs_homepage_tags"> {{  $tag['name'] }} </span>
                     @endforeach 
                     <br> <br>
-                   <span class="_blogs_homepage_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog->created_at)) }}</span>
+                   <span class="_blogs_homepage_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog['created_at'])) }}</span>
                     <br> <br>
-                   <span class="_blogs_homepage_author"> Author : {{ $blog->user->username }}</span> <br> <br>
-                   <img src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}">
+                   <span class="_blogs_homepage_author"> Author : {{ $blog['user']['username'] }}</span> <br> <br>
+                   <img src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}">
                    <br>      
-                   <a class="_button" target="_blank" href="{{ route('blog.show', $blog->slug)}}"> Read more </a>
+                   <a class="_button" target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> Read more </a>
                  </div>
                 
                </div>
