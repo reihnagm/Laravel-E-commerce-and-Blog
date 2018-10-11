@@ -14,10 +14,13 @@ class CreatePollOptionsTable extends Migration
     public function up()
     {
         Schema::create('poll_options', function (Blueprint $table) {
-              $table->increments('id');
-            $table->integer('poll_id')->unsigned();
+            $table->increments('id');
+            $table->unsignedinteger('poll_id');
             $table->string('name');
             $table->integer('total');
+
+            $table->foreign('poll_id')->references('id')->on('polls')->onDelete('cascade');
+            $table->eclsngine = 'MyISAM';
             $table->timestamps();
         });
     }

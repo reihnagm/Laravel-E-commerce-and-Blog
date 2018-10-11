@@ -30,7 +30,7 @@ class AddressController extends Controller
     {
 
       $address = Address::create([
-          'addressline' => $request->addressline,
+          'address' => $request->address,
           'city' => $request->city,
           'state' => $request->state,
           'zip' => $request->zip,
@@ -39,8 +39,6 @@ class AddressController extends Controller
       ]);
 
       auth()->user()->addresses()->save($address);
-
-      Toastr::success('Successfully!');
 
       return redirect(route('payment.index'));
 

@@ -196,11 +196,13 @@ $(document).ready(function() {
     });
 
     // config jquery mask money
-    $("#_price").maskMoney({
-        thousands: ',',
-        decimal: '.',
-        affixesStay: false
-    });
+    // $("#_price").maskMoney({
+    //     precision: 3,
+    //     thousands: '.',
+    //     decimal: '.',
+    //     allowNegative: false,
+    //     affixesStay: false
+    // });
 
     // Jquery Ticker 
     $('.ticker').ticker();

@@ -9,16 +9,16 @@
           @csrf
         <div class="form-row">
           <label for="card-element">
-            Credit or debit card
-          </label>
+            <h2> Credit or debit card </h2>  
+          </label> <br>
           <div id="card-element">
             <!-- A Stripe Element will be inserted here. -->
           </div>
 
              <!-- Used to display form errors. -->
              <div id="card-errors" role="alert"></div>
-          </div>
-          <input type="submit" value="Submit Payment">
+          </div> <br>
+          <input class="_button" type="submit" value="Submit">
         </form>
 
     </div>
@@ -76,7 +76,7 @@
       fontSize: '16px',
       '::placeholder': {
         color: '#aab7c4'
-      }
+      },
     },
     invalid: {
       color: '#fa755a',

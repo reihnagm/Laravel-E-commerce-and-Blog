@@ -6,20 +6,18 @@
       <div class="_column _is_half">
 
           <form action="{{ route('address.store') }}" method="post">
-            {{-- @CSRF --}}
+             {{-- CSRF --}}
               @csrf
 
-            {{-- Address Line --}}
             <div class="_field">
-              <label for="_address"> Address Line </label>
-              <input id="_address" type="text" name="addressline" value="">
+              <label for="_address"> Address </label>
+              <input id="_address" type="text" name="address" value="">
             </div>
 
-              @if ($errors->has('addressline'))
-              <h2 class="_is_invalid"> {{ $errors->first('addressline') }} </h2>
+              @if ($errors->has('address'))
+              <h2 class="_is_invalid"> {{ $errors->first('address') }} </h2>
               @endif
 
-            {{-- City --}}
             <div class="_field">
               <label for="_city"> City </label>
               <input id="_city" type="text" name="city" value="">
@@ -29,7 +27,6 @@
               <h2 class="_is_invalid"> {{ $errors->first('city') }} </h2>
             @endif
 
-            {{-- State --}}
             <div class="_field">
               <label for="_state"> State / Country </label>
               <input id="_state" type="text" name="state" value="">
@@ -39,7 +36,6 @@
             <h2 class="_is_invalid"> {{ $errors->first('state') }} </h2>
             @endif
 
-            {{-- Zip --}}
             <div class="_field">
               <label for="_zip">Zip / Postal Code </label>
               <input id="_zip" type="number" name="zip" value="">
@@ -49,10 +45,9 @@
             <h2 class="_is_invalid"> {{ $errors->first('zip') }} </h2>
             @endif
 
-            {{-- Phone --}}
             <div class="_field">
               <label for="phone">Phone</label>
-              <input id="phone" type="tel" name="phone">
+              <input id="phone" type="number" name="phone">
             </div>
 
             @if ($errors->has('phone'))
@@ -60,7 +55,7 @@
             @endif
 
             <div class="_has_range_top">
-              <input class="_button" type="submit" name="submit" value="Send">
+              <input class="_button" type="submit" name="submit" value="Submit">
             </div>
 
           </form>

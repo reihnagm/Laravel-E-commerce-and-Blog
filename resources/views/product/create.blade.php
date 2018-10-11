@@ -71,7 +71,7 @@
 
         <div class="_field">
           <label for="_price">Price* :</label>
-          <input id="_price" type="currency" name="price">
+          <input id="_price" type="number" name="price">
         </div>
 
         @if($errors->has('price'))

@@ -55,7 +55,7 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
 
-      Cart::update($id, ['qty' => $request->qty ]);
+      Cart::update($id, ['qty' => $request->qty]);
 
       return back();
 
@@ -66,18 +66,24 @@ class CartController extends Controller
 
       Cart::remove($id);
 
-      Toastr::success('Item has been removed!');
+      Toastr::info('Item has been removed!');
 
       return back();
 
     }
 
-    public function addCart($productId) 
-    {
-      
-      $product = Product::findOrFail($productId);
+    public function addCart(Request $request) 
+    { 
+     
+      $duplicates = Cart::instance('default')->search(function ($cartItem, $rowId) use($request) {
+        return $cartItem->id === $request->id;
+      });
 
-      Cart::instance('default')->add($productId, $product->name, 1, $product->price, ['image' => $product->img, 'user_id' => auth()->user()->id])->associate('App\Models\Product');
+      if($duplicates->isNotEmpty()) {
+        return redirect(route('cart.index'));
+      }
+
+      Cart::instance('default')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'user_id' => auth()->user()->id])->associate('App\Models\Product');
 
       Toastr::info('Item was added to your Cart!');
 
@@ -87,14 +93,48 @@ class CartController extends Controller
 
     public function switchToSaveForLater(Request $request, $id)
     {
-
+      
       $item = Cart::get($id);
 
       Cart::remove($id);
 
       Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price, ['image' => str_replace('data:image/png;base64,', '', $request->img)])->associate('App\Models\Product');
+    
+      Toastr::info('Item has been Saved For Later!');
 
-      Toastr::success('Item has been Saved For Later!');
+      return back();
+
+    }
+
+    public function emptySaveForLater()
+    {
+
+      Cart::instance('saveForLater')->destroy();
+
+      Toastr::info('Item has been removed!');
+
+      return back();
+
+    }
+
+    public function moveToCart(Request $request, $id) 
+    {
+          
+      $item = Cart::instance('saveForLater')->get($id);
+      
+      Cart::instance('saveForLater')->remove($id);
+
+      $duplicates = Cart::instance('default')->search(function ($cartItem, $rowId) use ($id) {
+        return  $rowId === $id;
+      });
+
+      if($duplicates->isNotEmpty()) {
+        return redirect(route('cart.index'));
+      }
+
+      Cart::instance('default')->add($item->id, $item->name, 1, $item->price, ['image' => str_replace('data:image/png;base64,', '', $request->img)])->associate('App\Models\Product');
+    
+      Toastr::info('Item has been moved to Cart!');
 
       return back();
 

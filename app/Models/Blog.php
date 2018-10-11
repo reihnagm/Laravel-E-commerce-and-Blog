@@ -24,12 +24,12 @@ class Blog extends Model
         return $this->belongsToMany('App\Models\Tag');
 
     }
-    
-    public function emotions() 
-    {
-        
-        return $this->belongsToMany('App\Models\Emotion');
 
+    public function emotions()
+    {
+
+        return $this->hasMany('App\Models\BlogEmotion');
+   
     }
 
     public function comments()

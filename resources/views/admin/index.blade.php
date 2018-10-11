@@ -5,8 +5,7 @@
 <div class="_container">
 
     <div class="_column _is_fullWidth">
-     <div id="_header_admin">            
-       <h1> Name of admin </h1>
+     <div class="_header_admin">            
      </div>      
     </div>
 

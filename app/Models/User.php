@@ -5,12 +5,15 @@ namespace App\Models;
 use Auth;
 use Cache;
 
+use Spatie\Permission\Traits\HasRoles;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use HasRoles;
 
     use LikesTrait, UnlikesTrait;
 
@@ -42,6 +45,13 @@ class User extends Authenticatable
     {
 
         return $this->hasMany('App\Models\BlogComment');
+
+    }
+
+     public function emotions()
+    {
+
+        return $this->hasMany('App\Models\Emotion');
 
     }
 

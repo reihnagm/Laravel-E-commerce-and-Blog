@@ -676,11 +676,11 @@ return [
     'IDR' => [
         'name'                => 'Rupiah',
         'code'                => 360,
-        'precision'           => 2,
-        'subunit'             => 100,
-        'symbol'              => 'Rp',
+        'precision'           => 3,
+        'subunit'             => 10,
+        'symbol'              => 'Rp ',
         'symbol_first'        => true,
-        'decimal_mark'        => ',',
+        'decimal_mark'        => '.',
         'thousands_separator' => '.',
     ],
 

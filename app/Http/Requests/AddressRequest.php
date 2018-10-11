@@ -18,7 +18,7 @@ class AddressRequest extends FormRequest
   {
 
       return [
-          'addressline'=>'required',
+          'address'=>'required',
           'city'=> 'required',
           'state'=> 'required',
           'zip'=> 'required|integer',
@@ -31,7 +31,7 @@ class AddressRequest extends FormRequest
   {
 
       return [
-          'addressline.required' => 'Addressline Reqired',
+          'address.required' => 'Address Reqired',
           'city.required' => 'City Reqired',
           'state.required' => 'State Required',
           'zip.required'  => 'Zip Required',

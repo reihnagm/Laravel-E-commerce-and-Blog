@@ -5,224 +5,117 @@
 <div class="_container">
   <div class="_columns">
 
-  @component('components/menu_in_profile_user/content',[
-    'user' => auth()->user()
+  @component('components/menu_in_profile_user/content', [
+    'user' => $user
   ]); 
   @endcomponent
 
   {{-------------------------------------------------------------------}}
   
- <div class="_columns _is_multiline">
-  @forelse ($products->chunk(4) as $chunk)
+  <div class="_columns _is_multiline">
+    @forelse ($products->chunk(3) as $chunk)
     @foreach ($chunk as $product)
       <div class="_column _is_one_quarter">
 
         <div class="_products">
-            <img src="{{ asset('storage/products/images/'. $product->img) }}" alt="{{ $product->name }}">
+            <img src="{{ asset('storage/products/images/'. $product['img']) }}" alt="{{ $product['name'] }}" style="width: 100%;">
             
             <div class="_products_wrapper_price">
-              <img class="_products_img_price" src="{{ asset('/assets/icon/board-price.jpg')}}">
-              <p class="_products_desc_price"> {{ money($product->price, 'IDR') }}</p>
+              <p class="_products_desc_price">Rp {{ number_format($product['price'], 2,",",".") }}</p>
             </div> <br>
 
-            <h1 class="_products_name"> {{ title_case($product->name) }} </h1> <br> 
+            <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
         
-            <span class="_products_users_username"> Owner :  {{ $product->user->username }} </span> <br> <br>
-            <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product->created_at))  }} </span> <br> <br>
+            <span class="_products_users_username"> Owner : {{ $user['username'] }} </span> <br> <br>
+            <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at'] ))  }} </span> <br> <br>
           
             @foreach ($product->categories as $category)
-            <span class="_products_categories"> {{ $category->name }} </span> <br> <br>
+            <span class="_products_categories"> {{ $category['name'] }} </span> <br> <br>
             @endforeach 
 
-            <p class="_products_desc"> {{ $product->desc }} </p> <br>
+            <p class="_products_desc"> {{ $product['desc'] }} </p> <br>
+          
+            <form class="_cart_add" action="{{ route('cart.add')}}" method="post">
+              @csrf
+             {{-- CSRF --}}
 
-            <a class="_button _products_add_to_cart" href="{{ route('cart.add', $product->id) }}"> add to cart </a> <br> <br> 
-            
-          @if(Auth::user()->id === $product->user->id)
-            <a class="_button _products_edit" href="{{ route('product.edit', $product->id) }}" target="_blank" href="#!">edit</a> <br> <br> 
+             <input type="hidden" name="id" value="{{ $product['id']}}">
+             <input type="hidden" name="name" value="{{ $product['name']}}">
+             <input type="hidden" name="price" value="{{ $product['price']}}">
+             <input type="hidden" name="img" value="{{ $product['img']}}">
+
+             <input class="_button _products_add_to_cart" type="submit" value="Add to Cart"> <br> <br>
+            </form>
          
-            <form action="{{ route('product.destroy', $product->id) }}" method="post">
+          @if(Auth::user()->id === $user->id)
+            <a class="_button _products_edit"  target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a> <br> <br> 
+         
+            <form action="{{ route('product.destroy', $product['id']) }}" method="post">
               {{-- CSRF --}}
               @csrf
 
               {{-- METHOD_FIELD --}}
               {{ method_field('DELETE') }}
 
-              <input class="_button _products_delete" type="submit" value="Delete"> <br><br>
+              <input class="_button _products_delete" type="submit" value="Delete"> <br> <br>
             </form>
 
             {{-- <a onclick="event.preventDefault(); document.getElementsByClassName('_form_products_delete')[0].click();" class="_button _products_delete" href="#!"> Delete</a> <br> <br> 
               error delete not based on id
             --}}
           @endif
-
           </div>
 
         </div>
         @endforeach 
+        
+        <div class="_column _is_fullWidth">
+          <hr>
+        </div>
+
       @empty
     @endforelse
-    
+  
+
       {{-- PAGINATION --}}
     
-      <div style="width: 100%; flex: none;">
+      <div class="_column _is_fullWidth">
          {{ $products->links() }}
       </div>
-
-      <div style="width: 100%; flex: none;">
-        <hr>
-      </div>
-
-      {{----------------------------------------------------------------}}
+    
+      {{-------------------SINGLE BLOG-------------------------------------------}}
    
-      <div class="_column">
-         <div class="_blog">
-
-        @foreach (auth()->user()->blogs()->orderBy('id', 'desc')->limit(1)->get() as $blog) 
+      <div class="_column _is_fullWidth">
+        <div class="_blog">       
           <h2 class="_blog_title"> {{ title_case($blog->title) }} </h2> <br>
             @foreach ($blog->tags as $tag)
-              <span class="_blog_tags"> {{ $tag->name }} </span>
+              <span class="_blog_tags"> {{ $tag['name'] }} </span>
             @endforeach
-            <span class="_blog_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog->created_at)) }} </span> / 
-            <span class="_blog_author"> Author : {{ $blog->user->username }} </span>
+            <span class="_blog_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog['created_at'])) }} </span> / 
+            <span class="_blog_author"> Author : {{ $user['username'] }} </span>
               <figure>
-                <img class="_blog_img" src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}">
-                <figcaption> {{ $blog->caption }} </figcaption>
+                <img class="_blog_img" src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}">
+                <figcaption> {{ $blog['caption'] }} </figcaption>
               </figure> <br>
         
-              <p class="_blog_desc"> {!! $blog->desc !!} </p>
+              <p class="_blog_desc"> {!! $blog['desc'] !!} </p>
 
-              <form class="_form_blog_delete" action="{{ route('blog.destroy', $blog->id) }}" method="post">
+              <form class="_form_blog_delete" action="{{ route('blog.destroy', $blog['id']) }}" method="post">
                 {{-- CSRF --}}
                 @csrf 
                 {{-- METHOD_FIELD --}}
                 {{ method_field('DELETE') }}
               </form>
               <br>
-             @if(Auth::user()->id == $blog->user->id)
+             @if(Auth::user()->id == $blog['user']['id'])
               <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_blog_delete')[0].submit();" href="#!"> Delete </a>
               <br> <br>
-              <a class="_button" target="_blank" href="{{ route('blog.edit', $blog->slug) }}">Edit</a>
+              <a class="_button" target="_blank" href="{{ route('blog.edit', $blog['slug']) }}">Edit</a>
              @endif
+         </div>
+      </div>
     {{-----------------------------------------------------------------------------------}}
 
-      
-      {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    
-  
-     <div id="emotionBox">
-      <div class="_columns _is_multiline">
-
-         @forelse($emotions as $emotion) 
-          <div class="_column _is_one_third">
-           <div id="_emotions" class="clearfix">
-
-            <img style="float: left;" @click="vote(@php echo $emotion->id; @endphp)" src="{{ asset('assets/emotions/'. $emotion->name . '.png') }}">  
-          
-              <span v-if="totalIsZero">
-                <span style="float: left; margin: 15px 0 0 10px; display: inline-block;"> 
-                  0 %
-                <div style="margin: 8px 0 0 0;">
-                  total @{{  @php echo $emotion->name; @endphp }}
-                </div> 
-               </span>
-              </span>
-              <span v-else>
-                <span style="float: left; margin: 15px 0 0 10px; display: inline-block;">
-                  @{{ parseInt(@php echo $emotion->name; @endphp/total*100) }} % 
-                  <div style="margin: 8px 0 0 0;">
-                    total @{{  @php echo $emotion->name; @endphp }}
-                  </div> 
-               </span>
-              </span>
-              
-            </div>
-          </div>
-          @empty
-         @endforelse
-        
-       </div>
-      </div> 
-
-
-         <script>
-          new Vue({
-          el: "#emotionBox",
-          data: {
-            total: 0,
-            happy: 0,
-            sad: 0,
-            amazing: 0,
-            doubt: 0,
-            fear: 0,
-            angry: 0,
-
-            blog_id: @php echo $blog->id; @endphp
-          },
-          computed: {
-            totalIsZero: function() {
-              if (this.total == 0) {
-                return true
-              } else {
-                return false 
-              }
-            },
-          },
-          created: function () {    
-            this.$http({
-              url : '/emotion/' + this.blog_id,
-              method: 'GET'
-            }).then(function(response) {
-              res = response.body;
-              if (res.total != 0 ) {
-                this.total = res.total;
-                this.happy = res.happy;
-                this.sad = res.sad;
-                this.amazing = res.amazing;
-                this.doubt = res.doubt;
-                this.fear = res.fear;
-                this.angry = res.angry;
-              }
-            })
-          },
-          methods: {
-            vote(emotionid) {
-              this.$http({
-                url: '/emotion/emotionid/' + emotionid + '/blogid/' + this.blog_id,
-                method: 'GET'
-              }).then(function(response) {
-                res = response.body
-            
-                if(res.message == 'success') {
-                  this.total++;
-                  this.modify(emotionid, 1);
-                } else if(res.message == 'unvote') {
-                  this.total--;
-                  this.modify(emotionid, -1)
-                } else {
-                  this.modify(parseInt(res.old_emotion), -1);
-                  this.modify(emotionid, 1);
-                }
-
-              })
-            },
-          modify(val, point) {
-            switch (val) {
-              case 1: this.happy += point; break;
-              case 2: this.sad += point; break;
-              case 3: this.amazing += point; break;
-              case 4: this.doubt += point; break;
-              case 5: this.fear += point; break;
-              case 6: this.angry += point; break;
-              
-              default:
-              break;
-            }
-          }
-        }
-        })
-     </script>  --}}
 
     {{-- <emotion-icon 
     :emotions="{{ $emotions }}"
@@ -296,65 +189,185 @@
       </div>
     </div> --}}
 
-        @foreach($comments as $comment)
-        <div class="clearfix">     
-          <div class="_column">
-        
-                   <img class="_comments_ava" src="https://picsum.photos/200">
-                   <span class="_comments_username"> {{ $comment->user->username }}  </span>
-                   <p class="_comments_subject"> {{ $comment->subject }} </p>
-           
-                              
-                  <span class="_option_like_unlike_wrapper">
-                  <a class="{{ $comment->is_liked() ? '_after_liked' : '_before_liked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
-                    {{ $comment->is_liked() }}
-                  </a>         
-                      <span class="_like_number"> {{ $comment->likes->count() }} </span>
-                  </span>            
-               
-                  <span class="_option_unlike_wrapper">
-                  <a class="{{ $comment->is_unliked() ? '_after_unliked' : '_before_unliked' }}" href="#!" model-id="{{ $comment->id }}" model-type="2"> 
-                    {{ $comment->is_unliked() }}
-                  </a>         
-                      <span class="_unlike_number"> {{ $comment->unlikes->count() }} </span>
-                  </span>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+  
+       <div id="emotionBox" class="_emotions">
+          @php
+           $emotions = ['happy', 'sad', 'angry','amazing', 'fear', 'doubt'];
+          @endphp
+          <div class="_mobile_columns _is_multiline">
+          @for ($i = 0; $i <count($emotions); $i++)  
+            <div class="_mobile_column _is_one_third">
+              <img class="_emotions_img _mobile_column" @click="vote(@php echo $i; @endphp)" src="{{ asset('assets/emotions/'. $emotions[$i] . '.png') }}">  
               
+                <span v-if="totalIsZero">
+                  <div> 
+                      0 % <br>
+                    <span class="_emotions_total">
+                      total @{{  @php echo  $emotions[$i]; @endphp }}
+                    </span> 
+                  </div>
+                </span>
+                <span v-else>
+                  <div>
+                    @{{ parseInt(@php echo $emotions[$i]; @endphp/total*100) }} % <br>
+                    <span class="_emotions_total">
+                      total @{{  @php echo  $emotions[$i]; @endphp }}
+                    </span> 
+                  </div>
+                 </span>
+              </div>
+           @endfor
+          </div>
+         </div>
+         
+          <script>
+            new Vue({
+            el: "#emotionBox",
+            strict: true,
+            data: {
+              total: 0,
+              happy: 0,
+              sad: 0,
+              amazing: 0,
+              doubt: 0,
+              fear: 0,
+              angry: 0,
+
+              blog_id: @php echo $blog->id; @endphp
+            },
+            computed: {
+              totalIsZero: function() {
+                if (this.total == 0) {
+                  return true
+                } else {
+                  return false 
+                }
+              },
+            },
+            created: function () {    
+              this.$http({
+                url : '/emotions/' + this.blog_id,
+                method: 'GET'
+              }).then(function(res) {
+                  res = res.body;
+                if (res.total != 0 ) {
+                  this.total = res.total;
+                  this.happy = res.happy;
+                  this.sad = res.sad;
+                  this.amazing = res.amazing;
+                  this.doubt = res.doubt;
+                  this.fear = res.fear;
+                  this.angry = res.angry;
+                }
+              })
+            },
+            methods: {
+              vote(emotion_id) {
+                this.$http({
+                  url: '/emotions/emotionid/' + emotion_id + '/blogid/' + this.blog_id,
+                  method: 'GET'
+                }).then(function(res) {
+                   res = res.body
+                
+                  if(res.message == 'success') {
+                    this.total++;
+                    this.modify(emotion_id, 1);
+                  } else if(res.message == 'unvote') {
+                    this.total--;
+                    this.modify(emotion_id, -1)
+                  } else {
+                    this.modify(parseInt(res.old_emotion), -1);
+                    this.modify(emotion_id, 1);
+                  }
+                })
+              },
+            modify(val, point) {
+              switch (val) {
+                case 0: this.happy += point; break;
+                case 1: this.sad += point; break;
+                case 2: this.angry += point; break;
+                case 3: this.amazing += point; break;
+                case 4: this.fear += point; break;
+                case 5: this.doubt += point; break;
+                
+                default:
+                break;
+              }
+            }
+          }
+          })
+      </script> 
+
+      <br>
+
+        {{-------------------------------------ALL COMMENTS SINGLE BLOG----------------------------------------------------}}
+
+        <div class="_column _is_fullWidth">
+         @foreach($blog->comments as $comment) 
+              <img class="_comments_ava" src="https://picsum.photos/200">
+              <span class="_comments_username"> {{ $comment['user']['username'] }}  </span>
+              <p class="_comments_subject"> {{ $comment['subject'] }} </p>
+                          
+              <span class="_option_like_unlike_wrapper">
+              <a class="{{ $comment->is_liked() ? '_after_liked' : '_before_liked' }}" href="#!" model-id="{{ $comment['id'] }}" model-type="2"> 
+                {{ $comment->is_liked() }}
+              </a>         
+                <span class="_like_number"> {{ $comment->likes->count() }} </span>
+              </span>            
+            
+              <span class="_option_unlike_wrapper">
+              <a class="{{ $comment->is_unliked() ? '_after_unliked' : '_before_unliked' }}" href="#!" model-id="{{ $comment['id'] }}" model-type="2"> 
+                {{ $comment->is_unliked() }}
+              </a>         
+               <span class="_unlike_number"> {{ $comment->unlikes->count() }} </span>
+              </span>   
+          
                 @if(Auth::user()->id == $comment->user->id)
                   <div class="_comments_options">
-                    <a class="_button" href="{{ route('blog.comment.edit', $comment->id)}}"> edit </a>
-                    <a class="_button" href="{{ route('blog.comment.destroy', $comment->id)}}"> delete </a> 
+                    <a class="_button" href="{{ route('blog.comment.edit', $comment->id) }}"> Edit </a>
+                    <form style="display: inline;" action="{{ route('blog.comment.destroy', $comment->id) }}" method="post">
+                      @csrf 
+                      {{-- CSRF --}}
+                      {{ method_field('DELETE') }}
+                      {{-- METHOD_FIELD --}}
+
+                      <input class="_button" type="submit" value="Delete">
+                    </form>
                   </div>
                 @endif
-          
-             </div>
-           </div>
           @endforeach
 
         {{ $comments->links() }}
 
-       {{----------------------------------------------------------------------------}}
+        {{----------------------------------TEXTAREA SINGLE BLOG COMMENTS----------------------------------------}}
 
         @if ($errors->has('subject'))
-            <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
+          <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
         @endif
        
-        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog->id)}}">
-          {{-- CSRF --}}
+        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog->id)}}">  <br>
           @csrf
+          {{-- CSRF --}}
 
-           <br>
           <textarea name="subject" class="_comments_textarea"></textarea>
-        </form>  
-           <br>
-         <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();" href="#!"> Comment </a>  
-
-      {{------------------------------------------------------------------------------------------}}
-
-          <vote></vote>
+        </form> <br>
+          
+        <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();" href="#!"> Comment </a>  
+      </div>
+     
+       {{-- 
+      <div class="_columns _is_multiline">
+        @foreach(App\Models\Emotion::All() as $emotion)
+         <div class="_column _is_one_third">
+           <img width="80" src="{{ asset('assets/emotions/'. $emotion['name'] .'.png') }}" alt="{{ $emotion['name'] }}">     
+         </div>
+         @endforeach 
+      </div> --}}
 
       {{------------------------------------------------------------------------------------------}}
       
-
       {{-- AJAX COMMENT --}}
       {{-- <div id="_comment_content">
       </div> --}}
@@ -363,12 +376,6 @@
       {{-- <textarea id="subject" cols="4" rows="4"></textarea>
       <input class="submitComment" type="submit" blog-id="{{ $blog->id }}" blog-comments="{{ $blogcomments }}"> --}}
       
-             
-      @endforeach  
-
-    </div> {{-- end of BLOG --}}
-   </div> 
-
       {{-- <script>
          new Vue ({
           el: '#commentBox',
@@ -447,30 +454,33 @@
         })
       </script> --}}
 
-    {{--------------------------------------------------------------------------------------}}
-    
-    <div style="width: 100%; flex:none;">
-      <div class="_columns _is_multiline">
-        @forelse ($blogs as $blog)
-          <div class="_column _is_one_third">
-          
-          <img src="{{ asset('storage/blogs/images/'. $blog->img) }}" alt="{{ $blog->title }}"> <br>
-          <h2> <a class="_text_gray" target="_blank" href="{{ route('blog.show', $blog->slug)}}"> {{ title_case($blog->title) }} </a></h2>
+    {{----------------------------------------RECENTLY BLOGS----------------------------------------------}}
+    <br> <br> <br>
 
+        <div class="_column _is_fullWidth">
+          <h2 class="_title_recently_blogs"> Recently Blog's </h2>  
+        </div>
+      
+      <div class="_columns _is_multiline"> 
+        @forelse ($blogs->chunk(3) as $chunk)
+          @foreach ($chunk as $blog)
+          <div class="_column _is_one_third">
+            <img src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}"> <br>
+            <h2> <a class="_text_gray" target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> {{ title_case($blog['title']) }} </a></h2>
           </div>
-        @empty
-        @endforelse
+         @endforeach
+         @empty
+         @endforelse
       </div>
-    </div>
 
       {{-- PAGINATION --}}
-      <div style="width: 100%; flex:none;">
+      <div class="_column _is_fullWidth">
         {{ $blogs->links() }}
       </div>
 
-   </div> {{-- end of COLUMNS --}}
+       </div> {{-- end of COLUMNS PRODUCT --}}    
 
-  </div> {{-- end of COLUMNS --}}
-</div> {{-- end of CONTAINER --}}
+   </div> {{-- end of COLUMNS --}}
+  </div> {{-- end of CONTAINER --}}
 
 @endsection

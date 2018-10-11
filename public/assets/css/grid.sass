@@ -50,3 +50,27 @@ $default-margin: 1%
       &._is_fullWidth
           width: 100%
           flex: none
+
+
+// emotions layout
+
+._mobile_columns
+  display: flex
+  &._is_multiline
+      flex-wrap: wrap
+  ._mobile_column
+      padding: $default-padding
+      margin: $default-margin
+      flex-grow: 1
+      flex-shrink: 1
+      flex-basis: 0
+      &:_first_child
+      margin-left: 0
+      &:_last_child
+      margin-right: 0
+      &._is_half
+          width: 50%
+          flex: none
+      &._is_one_third
+          width: 33.3333333333%
+          flex: none

@@ -83,12 +83,14 @@ class ProductController extends Controller
 
     public function edit($id) 
     {
+    
+     $user = User::firstOrFail();
 
      $categories = Category::all();
 
-     $product = Product::with('categories')->findOrFail($id);
+     $product = Product::where('id', $id)->with(['categories'])->firstOrFail();
 
-     return view('product/edit', ['product' => $product, 'categories' => $categories]);
+     return view('product/edit', ['user' => $user, 'product' => $product, 'categories' => $categories]);
 
     }
 
@@ -110,6 +112,7 @@ class ProductController extends Controller
         "name"  => $request->name,
         "img"   => str_replace('data:image/png;base64,', '', $request->img),
         "desc"  => $request->desc,
+        "price" => $request->price,
         "user_id" => auth()->user()->id
       ]);
 
@@ -157,7 +160,7 @@ class ProductController extends Controller
 
         Toastr::info('Product has been removed !');
 
-        return back();
+        return redirect(route('user.profile'));
 
      }
 

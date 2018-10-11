@@ -4,7 +4,7 @@
 
 @section('content')
 
-  <div class="_container clearfix">
+  <div class="_container">
     <div class="_columns _is_multiline">
 
       <div class="_column _is_one_quarter">
@@ -27,6 +27,8 @@
                 @endif
               </div>
              </a>
+
+             <hr>
              
               @if(Auth::check()) 
 
@@ -74,7 +76,7 @@
 
                   {{-- password --}}
                   <div class="_wrapper_input_password">
-                    <input id="password_field_desktop" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field_desktop" class="_eye_icon"> </i>
+                    <input id="password_field_m" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field_m" class="_eye_icon"> </i>
                   </div>
 
                   @if ($errors->has('password'))
@@ -83,15 +85,15 @@
 
                   {{-- event trigger submit --}}
                   <a onclick="event.preventDefault(); document.getElementById('_form_login_desktop').submit();" class="_button">Login </a>
-                </div> {{-- end of FIELD --}}
+                </div>
 
-                {{-- remmember me  --}}
                 <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label id="_remember_label" for="remember"> Remember Me </label>
+                <label id="_remember_label" class="_text_gray" for="remember"> Remember Me </label>
 
               </form> 
 
-              <div class="_text_gray _has_range_top"> don't have a account? </div>
+              <br>
+              <div class="_text_gray"> don't have a account? </div>
 
             <div class="panel">
               <form action="{{ route('register')}}" method="POST">
@@ -112,7 +114,7 @@
                     @endif
 
                     <div class="_wrapper_input_password">
-                      <input id="password_field_register_desktop" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_desktop" class="_eye_icon"> </i>
+                      <input id="password_field_register_m" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_m" class="_eye_icon"> </i>
                     </div>
 
                     @if ($errors->has('password'))
@@ -120,7 +122,7 @@
                     @endif
 
                     <div class="_wrapper_input_password">
-                      <input id="password_field_confirmation_desktop" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_desktop" class="_eye_icon"> </i>
+                      <input id="password_field_confirmation_m" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_m" class="_eye_icon"> </i>
                     </div>
 
                     @if ($errors->has('password_confirmation'))
@@ -143,22 +145,36 @@
 
                 @endif
 
-        
-        </div>
+        </div> 
+
+        {{--------------------------------MOBILE MENU-----------------------------------------------------------}}
+
+      <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
+
+        @auth
+         <h2 class="_cart_count">{{ Cart::count() }}</h2>
+
+          <div class="_cart_wrapper">
+            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            @if(!empty(Cart::count()))
+            <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+            @endif
+          </div>
+        @endauth
+
+        @guest
+          <h2 class="_cart_count"> 0 </h2>
+
+          <div class="_cart_wrapper">
+            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+          </div>
+        @endguest
+      
+      </a>  
+
+        <hr class="_hidden_in_mobile">
 
         <nav class="nav">
-
-            {{-- CART --}}
-            {{-- <a class="_cart" href="{{ route('cart.index') }}">
-              <h2 class="_cart_count"> {{ Cart::count() }}</h2>
-
-              <div class="_cart_wrapper">
-                      <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
-                    @if(!empty(Cart::count()))
-                      <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
-                    @endif
-              </div>
-             </a>  --}}
 
           @if(Auth::check()) 
 
@@ -219,11 +235,12 @@
 
             {{-- remmember me  --}}
             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-            <label id="_remember_label" for="remember"> Remember Me </label>
+            <label id="_remember_label" class="_text_gray" for="remember"> Remember Me </label>
 
           </form> 
-
-          <div class="_text_gray _has_range_top"> don't have a account? </div>
+           
+           <br>
+           <div class="_text_gray"> don't have a account? </div>
 
           <div class="panel">
            <form action="{{ route('register')}}" method="POST">
@@ -277,12 +294,11 @@
         @endif
       </div> {{-- end of NAV --}}
 
-      {{---------------------------------------------------------------------------------------------------------------}}
+      {{-------------------------------------------SEARCH--------------------------------------------------------------------}}
 
        <div class="_column">
         <div class="_has_large_padding _back_gray">
 
-         {{-- search --}}
           <div class="_field">
             <form id="_submit_search" action="{{ route('blog.and.product.search') }}" method="get">
               <input type="search" name="search">
@@ -307,7 +323,7 @@
             </form>
           </div>
 
-          {{----------------------------------------------------------------------------------------------------}}
+          {{----------------------------------------------BANNER------------------------------------------------------}}
 
           {{-- <div class="_slick" style="max-width: 500px;">
             @foreach ($products as $product)
@@ -318,7 +334,7 @@
              @endforeach
              </div> --}}
            
-          {{-----------------------------------------------------------------------------------------------------}}
+          {{-------------------------------------------------PRODUCTS----------------------------------------------------}}
 
             <h2> All Products </h2>
             <hr>
@@ -333,7 +349,7 @@
                       
                       <div class="_products_wrapper_price">
                         <img class="_products_img_price" src="{{ asset('/assets/icon/board-price.jpg')}}">
-                        <p class="_products_desc_price"> {{ money($product['price'], 'IDR') }}</p>
+                        <p class="_products_desc_price">Rp {{ number_format($product['price'],2,",",".") }} </p>
                       </div> <br>
 
                       <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
@@ -347,21 +363,31 @@
 
                       <p class="_products_desc"> {{ $product['desc'] }} </p> <br>
 
-                      <a class="_button _products_add_to_cart" href="{{ route('cart.add', $product['id']) }}"> add to cart </a> <br> <br> 
-                  
+                       <form class="_cart_add" action="{{ route('cart.add')}}" method="post">
+                          @csrf
+                        {{-- CSRF --}}
+
+                        <input type="hidden" name="id" value="{{ $product['id']}}">
+                        <input type="hidden" name="name" value="{{ $product['name']}}">
+                        <input type="hidden" name="price" value="{{ $product['price']}}">
+                        <input type="hidden" name="img" value="{{ $product['img']}}">
+
+                        <input class="_button _products_add_to_cart"  type="submit" value="Add To Cart"> <br> <br>
+                       </form>
+                      
                     @auth
                     @if(Auth::user()->id === $product['user']['id'])
-                      <a class="_button _products_edit" href="{{ route('product.edit', $product['id']) }}" target="_blank" href="#!">edit</a> <br> <br> 
+                    <a class="_button _products_edit" target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a> <br> <br> 
                   
-                      <form class="_form_products_delete" action="{{ route('product.update', $product['id']) }}" method="post">
+                       <form class="_form_products_delete" action="{{ route('product.update', $product['id']) }}" method="post">
                         {{-- CSRF --}}
                         @csrf
 
                         {{-- METHOD_FIELD --}}
                         {{ method_field('DELETE') }}
-                      </form>
 
-                      <a onclick="event.preventDefault(); document.getElementsByClassName('_form_products_delete').submit();" class="_button _products_delete" href="#!"> Delete</a> <br> <br>
+                        <input class="_button _products_delete" type="submit" value="Delete">
+                       </form> <br>
                     @endif
                    @endauth
                     
@@ -375,13 +401,13 @@
 
            {{ $products->links() }}
 
-        {{-----------------------------------------------------------------------------------}}
+        {{------------------------------------------BLOGS-----------------------------------------}}
 
           <h2> All Blogs </h2>
           <hr>
-         
+
+        @forelse ($blogs->chunk(4) as $chunk)
           <div class="_columns _is_multiline">
-            @forelse ($blogs->chunk(4) as $chunk)
               @foreach ($chunk as $blog)
                 <div class="_column _is_one_quarter">
 
@@ -404,23 +430,16 @@
               @endforeach
               @empty
               <div> 
-                @auth
-                 <br>
-                  there are no blogs found    
-                 <br>
-                 <a class="_button" style="margin-top: 9px;" target="_blank" href="{{ route('blog.create') }}">  create a blog </a>
-                @endauth
-              </div>
-                    @endforelse
-          </div> {{-- end of BLOG --}}
+            </div>
+           @endforelse
+          </div> 
 
           {{ $blogs->links() }}
 
-        </div> {{-- end of BACKGROUND GRAY --}}
+        </div> 
 
         {{-----------------------------------------------------------}}
 
-        {{-- FOOTER --}}
          <div class="_footer">
             <p>
               Community to every writter and a merchantman.
@@ -430,7 +449,7 @@
 
        </div> {{-- end of COLUMN --}}
 
-  </div> 
-</div>
+  </div>  {{-- end of COLUMNS --}}
+</div>  {{-- end of COLUMN --}}
 
 @endsection

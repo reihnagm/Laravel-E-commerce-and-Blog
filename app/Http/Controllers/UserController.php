@@ -17,6 +17,8 @@ use App\Models\User;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\BlogComment;
+use App\Models\BlogEmotion;
+use App\Models\Emotion;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Notification;
@@ -28,39 +30,33 @@ class UserController extends Controller
     public function profile($id = null)
     {
 
-      if($id == null) {
+      if($id == null) 
 
-           if(Auth::check()) {
-              $user = User::where('slug', Auth::user()->slug);                
-            } 
-            else {
-              abort(404);
-            }
+            if(Auth::check())
+            $user = User::where('id', Auth::user()->id)->with(['blogs', 'products'])->firstOrFail();           
+            else 
+            // automatically throw 404 if not login  
+            return redirect(route('app.index'));
 
-        }
-      else 
+       else 
+         
+            $user = User::where('slug', $id)->firstOrFail();  
+            // make a conditional to throw 404   
 
-        {
-          if(Auth::check()) {
-        $user = User::where('slug', $id);
-            } 
-          else {
-            abort(404);
-          }
+        // paginate products perpage 3
+        $products = $user->products()->with(['user:username','categories:name'])->paginate(3, ['*'], 'product-page');
 
-        }
+        // single blog latest update 
+        $blog = $user->blogs()->with(['user:username','tags:name','comments.user'])->orderBy('id', 'desc')->limit(1)->first();
 
-        $products = Product::with(['user','categories'])->paginate(3, ['*'], 'product-page');
+        // show comments 
+        $comments = $blog->comments()->with(['user:username','likes','unlikes'])->paginate(6, ['*'], 'comment-page'); 
 
-        $blog = Blog::with(['user','tags','comments.user'])->latest();
+        // paginate recents blogs perpage 3
+        $blogs = $user->blogs()->paginate(3, ['*'], 'blog-page'); 
 
-        $blogs = Blog::paginate(3, ['*'], 'blog-page'); 
-
-        // paginate 2 for DEMO 
-        $comments = BlogComment::with(['user','likes','unlikes'])->paginate(2, ['*'], 'comment-page'); 
-
-        return view('user/profile', ['products' => $products, 'comments' => $comments, 'blog' => $blog, 'blogs' => $blogs]);
-           
-     }
+        return view('user/profile', ['user' => $user, 'comments' => $comments, 'blog' => $blog, 'blogs' => $blogs, 'products' => $products]);
+    
+    }
 
 }
