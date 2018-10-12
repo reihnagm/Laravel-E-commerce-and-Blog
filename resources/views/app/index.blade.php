@@ -440,12 +440,15 @@
 
         {{-----------------------------------------------------------}}
 
+        <div class="_column _is_fullWidth">
          <div class="_footer">
             <p>
               Community to every writter and a merchantman.
             </p>
            <p> &copy; Basuketto {{ date('Y') }} </p>
          </div> 
+        </div>
+        
 
        </div> {{-- end of COLUMN --}}
 
