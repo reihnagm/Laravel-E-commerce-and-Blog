@@ -31,11 +31,11 @@
 
              <hr>
 
-           @if (empty($user['provider']))
+           {{-- @if (empty($user['provider'])) --}}
 
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
-            <div class="_is_left">
+            {{-- <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
                <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
@@ -51,9 +51,9 @@
               @endif
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
               <li><a href="/social/account/logout/"> Logout </a></li> 
-             </ul>
+             </ul> --}}
 
-            @else
+            {{-- @else --}}
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
@@ -74,7 +74,7 @@
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
               <li><a href="/social/account/logout/"> Logout </a></li>
             </ul>
-           @endif 
+           {{-- @endif  --}}
                  
        </div>
       
@@ -103,10 +103,10 @@
 
       <div class="_profile_menu">
 
-        @if (empty($user['provider']))
+        {{-- @if (empty($user['provider'])) --}}
 
           {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
-
+{{-- 
           <div class="_is_left">
             <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
             <h2  class="_profile_menu_users_username">
@@ -123,9 +123,9 @@
             @endif
             <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
             <li><a href="/social/account/logout/"> Logout </a></li>
-          </ul>
+          </ul> --}}
 
-        @else
+        {{-- @else --}}
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
@@ -146,7 +146,7 @@
             <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
             <li><a href="/social/account/logout/"> Logout </a></li>
           </ul>
-        @endif 
+        {{-- @endif  --}}
 
       </div> {{-- end of PROFILE MENU --}}
   </div> {{-- end of COLUMN --}}

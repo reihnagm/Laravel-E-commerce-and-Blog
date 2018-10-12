@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+
 use App\Models\Message;
 use App\Events\ChatCreated;
+
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
