@@ -57,12 +57,12 @@
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-            <div class="_is_left">
+            {{-- <div class="_is_left">
                 <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
-            </div>
+            </div> --}}
 
             <ul>
               {{-- @if($user['id'] === Auth::user()->id) --}}
@@ -129,12 +129,12 @@
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-          <div class="_is_left">
+          {{-- <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
-          </div>
+          </div> --}}
 
           <ul>
             {{-- @if($user['id'] === Auth::user()->id) --}}
