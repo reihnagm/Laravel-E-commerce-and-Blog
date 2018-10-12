@@ -8,20 +8,26 @@
 
         <div class="_mobile_nav_menu">
      
-             <a href="{{ route('cart.index') }}" class="_cart">
-                @if($user['id'] === Auth::user()->id) 
-                 <h2 class="_cart_count">{{ Cart::count() }}</h2>
-                @elseif(!$user->isOwner())
-                 <h2 class="_cart_count">{{ Cart::count() }}</h2>
-                @endif
+          <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
+            @auth
+              <h2 class="_cart_count">{{ Cart::count() }}</h2>
 
                 <div class="_cart_wrapper">
-                      <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
-                    @if(!empty(Cart::count()))
-                      <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
-                    @endif
+                  <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                  @if(!empty(Cart::count()))
+                  <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+                  @endif
                 </div>
-              </a> 
+              @endauth
+
+              @guest
+                <h2 class="_cart_count"> 0 </h2>
+
+                <div class="_cart_wrapper">
+                  <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+                </div>
+              @endguest
+            </a>
 
              <hr>
 
@@ -71,26 +77,27 @@
            @endif 
                  
        </div>
-
+      
       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
-       @auth
-         <h2 class="_cart_count">{{ Cart::count() }}</h2>
+        @auth
+           <h2 class="_cart_count">{{ Cart::count() }}</h2>
 
-          <div class="_cart_wrapper">
-            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
-            @if(!empty(Cart::count()))
-            <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
-            @endif
-          </div>
-        @endauth
-        @guest
-          <h2 class="_cart_count"> 0 </h2>
+            <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+              @if(!empty(Cart::count()))
+              <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+              @endif
+            </div>
+           @endauth
 
-          <div class="_cart_wrapper">
-            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
-          </div>
-        @endguest
-      </a> 
+          @guest
+            <h2 class="_cart_count"> 0 </h2>
+
+            <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            </div>
+          @endguest
+        </a>
 
       <hr class="_hidden_in_mobile">
 
