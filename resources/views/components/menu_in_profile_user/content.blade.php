@@ -47,11 +47,10 @@
               <li><a href="/social/account/logout/"> Logout </a></li> 
              </ul>
 
-            @endif
+            @else
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-            @if($user['provider'])
             <div class="_is_left">
                 <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
@@ -119,11 +118,10 @@
             <li><a href="/social/account/logout/"> Logout </a></li>
           </ul>
 
-        @endif
+        @else
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-          @if($user['provider'])
           <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
