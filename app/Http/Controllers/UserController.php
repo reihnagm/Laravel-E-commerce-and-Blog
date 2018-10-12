@@ -47,10 +47,10 @@ class UserController extends Controller
         $products = $user->products()->with(['user:username','categories:name'])->paginate(3, ['*'], 'product-page');
 
         // single blog latest update 
-        $blog = $user->blogs()->with(['user:username','tags:name','comments.user'])->orderBy('id', 'desc')->limit(1)->first();
+        $blog = $user->blogs()->with(['user','tags:name','comments.user'])->orderBy('id', 'desc')->limit(1)->first();
 
         // show comments 
-        $comments = $blog->comments()->with(['user:username','likes','unlikes'])->paginate(6, ['*'], 'comment-page'); 
+        $comments = BlogComment::with(['user','likes','unlikes'])->paginate(6, ['*'], 'comment-page'); 
 
         // paginate recents blogs perpage 3
         $blogs = $user->blogs()->paginate(3, ['*'], 'blog-page'); 

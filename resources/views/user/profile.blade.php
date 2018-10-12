@@ -85,9 +85,10 @@
     
       {{-------------------SINGLE BLOG-------------------------------------------}}
    
+      @if($blog)
       <div class="_column _is_fullWidth">
         <div class="_blog">       
-          <h2 class="_blog_title"> {{ title_case($blog->title) }} </h2> <br>
+          <h2 class="_blog_title"> {{ title_case($blog['title']) }} </h2> <br>
             @foreach ($blog->tags as $tag)
               <span class="_blog_tags"> {{ $tag['name'] }} </span>
             @endforeach
@@ -112,9 +113,10 @@
               <br> <br>
               <a class="_button" target="_blank" href="{{ route('blog.edit', $blog['slug']) }}">Edit</a>
              @endif
+
          </div>
       </div>
-    {{-----------------------------------------------------------------------------------}}
+    {{----------------------------------------EMOTIONS BLOG-------------------------------------------}}
 
 
     {{-- <emotion-icon 
@@ -235,7 +237,7 @@
               fear: 0,
               angry: 0,
 
-              blog_id: @php echo $blog->id; @endphp
+              blog_id: @php echo $blog['id']; @endphp
             },
             computed: {
               totalIsZero: function() {
@@ -305,7 +307,7 @@
         {{-------------------------------------ALL COMMENTS SINGLE BLOG----------------------------------------------------}}
 
         <div class="_column _is_fullWidth">
-         @foreach($blog->comments as $comment) 
+         @forelse($blog->comments as $comment) 
               <img class="_comments_ava" src="https://picsum.photos/200">
               <span class="_comments_username"> {{ $comment['user']['username'] }}  </span>
               <p class="_comments_subject"> {{ $comment['subject'] }} </p>
@@ -327,9 +329,9 @@
                 @if(Auth::user()->id == $comment->user->id)
                   <div class="_comments_options">
                     <a class="_button" href="{{ route('blog.comment.edit', $comment->id) }}"> Edit </a>
-                    <form style="display: inline;" action="{{ route('blog.comment.destroy', $comment->id) }}" method="post">
-                      @csrf 
+                    <form style="display: inline;" action="{{ route('blog.comment.destroy', $comment['id']) }}" method="post">
                       {{-- CSRF --}}
+                      @csrf 
                       {{ method_field('DELETE') }}
                       {{-- METHOD_FIELD --}}
 
@@ -337,7 +339,8 @@
                     </form>
                   </div>
                 @endif
-          @endforeach
+                @empty 
+          @endforelse
 
         {{ $comments->links() }}
 
@@ -347,15 +350,16 @@
           <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
         @endif
        
-        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog->id)}}">  <br>
-          @csrf
+        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog['id'])}}">  <br>
           {{-- CSRF --}}
-
+          @csrf
+      
           <textarea name="subject" class="_comments_textarea"></textarea>
         </form> <br>
-          
+       
         <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();" href="#!"> Comment </a>  
       </div>
+      
      
        {{-- 
       <div class="_columns _is_multiline">
@@ -477,6 +481,8 @@
       <div class="_column _is_fullWidth">
         {{ $blogs->links() }}
       </div>
+
+       @endif
 
        </div> {{-- end of COLUMNS PRODUCT --}}    
 

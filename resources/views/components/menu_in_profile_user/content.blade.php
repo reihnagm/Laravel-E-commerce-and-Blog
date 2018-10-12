@@ -90,7 +90,7 @@
           <div class="_cart_wrapper">
             <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
           </div>
-        @guest
+        @endguest
       </a> 
 
       <hr class="_hidden_in_mobile">
