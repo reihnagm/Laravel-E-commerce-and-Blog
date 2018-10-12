@@ -31,7 +31,7 @@
 
              <hr>
 
-           @if (!$user['provider'])
+           @if (empty($user['provider']))
 
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
@@ -43,7 +43,7 @@
             </div>  
 
             <ul>
-              @if($user->id === Auth::user()->id) 
+              @if($user['id'] === Auth::user()->id) 
               <li><a href="/chat" target="_blank"> Chat </a></li> <br>
               <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>   
@@ -103,7 +103,7 @@
 
       <div class="_profile_menu">
 
-        @if (!$user['provider'])
+        @if (empty($user['provider']))
 
           {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
