@@ -9,7 +9,7 @@
         <div class="_mobile_nav_menu">
      
              <a href="{{ route('cart.index') }}" class="_cart">
-                @if($user->id === Auth::user()->id) 
+                @if($user['id'] === Auth::user()->id) 
                  <h2 class="_cart_count">{{ Cart::count() }}</h2>
                 @elseif(!$user->isOwner())
                  <h2 class="_cart_count">{{ Cart::count() }}</h2>
@@ -25,14 +25,14 @@
 
              <hr>
 
-           @if ($user->provider == null)
+           @if (!$user['provider'])
 
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
             <div class="_is_left">
-              <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
+              <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
                <h2  class="_profile_menu_users_username">
-                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+                <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
             </div>  
 
@@ -51,16 +51,16 @@
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-            @if($user->provider)
+            @if($user['provider'])
             <div class="_is_left">
-                <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
+                <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
-                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+                <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
             </div>
 
             <ul>
-              @if($user->id === Auth::user()->id)
+              @if($user['id'] === Auth::user()->id)
               <li><a href="/chat" target="_blank"> Chat </a></li>
               <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
@@ -97,19 +97,19 @@
 
       <div class="_profile_menu">
 
-        @if ($user->provider == null)
+        @if (!$user['provider'])
 
           {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
           <div class="_is_left">
-            <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user->username }}">
+            <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
             <h2  class="_profile_menu_users_username">
-              <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+              <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
             </h2>
           </div>
 
           <ul>
-            @if($user->id === Auth::user()->id) 
+            @if($user['id'] === Auth::user()->id) 
             <li><a href="/chat" target="_blank"> Chat </a></li>
             <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
             <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
@@ -123,16 +123,16 @@
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-          @if($user->provider)
+          @if($user['provider'])
           <div class="_is_left">
-              <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user->username}}">
+              <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
-                <a href="{{ route('user.profile') }}"> {{ $user->username }} </a>
+                <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
           </div>
 
           <ul>
-            @if($user->id === Auth::user()->id)
+            @if($user['id'] === Auth::user()->id)
             <li><a href="/chat" target="_blank"> Chat </a></li>
             <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
             <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
