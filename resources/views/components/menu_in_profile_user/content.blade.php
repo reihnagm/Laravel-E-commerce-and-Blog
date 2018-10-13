@@ -31,11 +31,13 @@
 
              <hr> 
 
-           @if (empty($user['provider']))
+           {{ $user->username }}
+
+           {{-- @if (empty($user['provider'])) --}}
 
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
-            <div class="_is_left">
+            {{-- <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
                <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
@@ -43,20 +45,20 @@
             </div>  
 
             <ul>
-              {{-- @if($user['id'] === Auth::user()->id)  --}}
+              @if($user['id'] === Auth::user()->id) 
               <li><a href="/chat" target="_blank"> Chat </a></li> <br>
               <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>   
               <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-              {{-- @endif --}}
+              @endif
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
               <li><a href="/social/account/logout/"> Logout </a></li> 
              </ul>
 
-            @else
+            @else --}}
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
-
+{{-- 
             <div class="_is_left">
                 <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
@@ -65,16 +67,16 @@
             </div>
 
             <ul>
-              {{-- @if($user['id'] === Auth::user()->id) --}}
+              @if($user['id'] === Auth::user()->id)
               <li><a href="/chat" target="_blank"> Chat </a></li>
               <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
               <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-              {{-- @endif --}}
+              @endif
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
               <li><a href="/social/account/logout/"> Logout </a></li>
-            </ul> 
-           @endif 
+            </ul>  --}}
+           {{-- @endif  --}}
                
        </div> 
 {{--       
