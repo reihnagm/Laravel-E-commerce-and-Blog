@@ -132,14 +132,14 @@
           <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
-              <a href="/user/profile/{{ $user['id'] }}"> {{ $user['username'] }} </a>
+              <a href=""> {{ $user['username'] }} </a>
               </h2>
           </div>
 
           <ul>
             @if($user['id'] === Auth::user()->id)
             <li><a href="/chat" target="_blank"> Chat </a></li>
-            {{-- <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li> --}}
+            <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
             <li><a target="_blank" href="/product/create" style="line-height: 30px;"> Create your own Product </a></li>     
             <li><a target="_blank" href="/blog/create"> Create a Blog</a></li>
             @endif 
