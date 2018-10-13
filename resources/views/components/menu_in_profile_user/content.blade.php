@@ -1,4 +1,4 @@
- {{-- <div class="_column _is_one_quarter">
+ <div class="_column _is_one_quarter">
 
         <div class="_hamburger_menu">
           <span class="bar1"></span> 
@@ -29,7 +29,7 @@
               @endguest
             </a>
 
-             <hr> --}}
+             <hr> 
 
            {{-- @if (empty($user['provider'])) --}}
 
@@ -75,8 +75,8 @@
               <li><a href="/social/account/logout/"> Logout </a></li>
             </ul> --}}
            {{-- @endif  --}}
-{{--                  
-       </div> --}}
+               
+       </div> 
 {{--       
       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
         @auth
@@ -147,6 +147,6 @@
             <li><a href="/social/account/logout/"> Logout </a></li> --}}
           {{-- </ul> --}}
         {{-- @endif  --}}
-{{--
+
       </div> {{-- end of PROFILE MENU --}}
-   {{-- end of COLUMN </div> --}}
+ </div> {{-- end of COLUMN --}}
