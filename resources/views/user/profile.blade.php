@@ -118,13 +118,7 @@
       </div>
     {{----------------------------------------EMOTIONS BLOG-------------------------------------------}}
 
-
-    {{-- <emotion-icon 
-    :emotions="{{ $emotions }}"
-    :blog_id="{{ $blog->id }}"
-    ></emotion-icon> --}}
-
-    {{-------------------------------------------------------------------}}
+    <emotion :blog_id="{{ $blog['id'] }}"></emotion>
 
     {{-- <comment
      v-for='comment in comments'
@@ -191,7 +185,7 @@
       </div>
     </div> --}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
   
        <div id="emotionBox" class="_emotions">
@@ -227,7 +221,6 @@
           <script>
             new Vue({
             el: "#emotionBox",
-            strict: true,
             data: {
               total: 0,
               happy: 0,
@@ -300,7 +293,7 @@
             }
           }
           })
-      </script> 
+      </script>  --}}
 
       <br>
 

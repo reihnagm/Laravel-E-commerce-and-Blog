@@ -80094,7 +80094,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -80151,64 +80151,99 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['blog_id'],
   data: function data() {
     return {
-      emotionslists: [],
+      emotionslists: [{
+        'id': '0',
+        'name': 'happy'
+      }, {
+        'id': '1',
+        'name': 'sad'
+      }, {
+        'id': '2',
+        'name': 'angry'
+      }, {
+        'id': '3',
+        'name': 'amazing'
+      }, {
+        'id': '4',
+        'name': 'fear'
+      }, {
+        'id': '5',
+        'name': 'doubt'
+      }],
       total: 0,
       happy: 0,
       sad: 0,
+      amazing: 0,
+      doubt: 0,
+      fear: 0,
       angry: 0
     };
   },
 
-  computed: {},
-  mounted: function mounted() {
-    this.getEmotionsLists();
-    this.getEmotionsTotal();
+  computed: {
+    test: function test() {}
   },
+  mounted: function mounted() {},
 
+  created: function created() {
+    var _this = this;
+
+    axios.get('/emotions/' + this.blog_id).then(function (res) {
+      if (res.data.total != 0) {
+        _this.total = res.data.total;
+        _this.happy = res.data.happy;
+        _this.sad = res.data.sad;
+        _this.amazing = res.data.amazing;
+        _this.doubt = res.data.doubt;
+        _this.fear = res.data.fear;
+        _this.angry = res.data.angry;
+      }
+    });
+  },
   methods: {
-    getEmotionsLists: function getEmotionsLists() {
-      var _this = this;
-
-      axios.get('/emotionslists').then(function (res) {
-        _this.emotionslists = res.data;
-      }).catch(function (err) {
-        console.log(err);
-      });
-    },
-    getEmotionsTotal: function getEmotionsTotal() {
+    vote: function vote(emotion_id) {
       var _this2 = this;
 
-      axios.get('/emotions/' + this.blog_id).then(function (res) {
-        console.log(res);
-        if (res.data.total != 0) {
-          _this2.total = res.data.total;
-          _this2.happy = res.data.happy;
-          _this2.sad = res.data.sad;
-          _this2.angry = res.data.angry;
+      axios.get('/emotions' + '/emotionid/' + emotion_id + '/blogid/' + this.blog_id).then(function (res) {
+        if (res.data.message == 'vote') {
+          _this2.total++;
+          _this2.modify(emotion_id, 1);
+        } else if (res.data.message == 'unvote') {
+          _this2.total--;
+          _this2.modify(emotion_id, -1);
+        } else {
+          _this2.modify(parseInt(res.data.old_emotion), -1);
+          _this2.modify(emotion_id, 1);
         }
       });
     },
-    vote: function vote(emotion_id) {
-      var _this3 = this;
+    modify: function modify(val, point) {
+      switch (val) {
+        case 0:
+          this.happy += point;break;
+        case 1:
+          this.sad += point;break;
+        case 2:
+          this.angry += point;break;
+        case 3:
+          this.amazing += point;break;
+        case 4:
+          this.fear += point;break;
+        case 5:
+          this.doubt += point;break;
 
-      axios.get('/emotions' + '/emotion_id/' + emotion_id + '/blog_id/' + this.blog_id).then(function (res) {
-        if (res.data.message == 'vote') {
-          _this3.total++;
-          //  this.modify(emotionid, 1);
-        } else if (res.data.message == 'unvote') {
-          _this3.total--;
-          //  this.modify(emotionid, -1)
-        } else {
-            //  this.modify(parseInt(res.data.old_emotion), -1);
-            //  this.modify(emotionid, 1);
-          }
-      });
+        default:
+          break;
+      }
     }
   }
 });
@@ -80224,11 +80259,11 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "_columns _is_multiline" },
+      { staticClass: "_mobile_columns _is_multiline" },
       _vm._l(_vm.emotionslists, function(emotionlist) {
         return _c(
           "div",
-          { key: emotionlist.id, staticClass: "_column _is_one_third" },
+          { key: emotionlist.id, staticClass: "_mobile_column _is_one_third" },
           [
             _c("img", {
               attrs: {
@@ -80245,7 +80280,11 @@ var render = function() {
             _vm._v(
               "\n      \n       Total : " +
                 _vm._s(emotionlist.name) +
-                "\n  \n    "
+                "\n\n       " +
+                _vm._s(_vm.total) +
+                "\n\n        " +
+                _vm._s(_vm.test) +
+                "\n    "
             )
           ]
         )
