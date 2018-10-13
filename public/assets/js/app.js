@@ -28249,9 +28249,9 @@ Vue.component('chat-messages', __webpack_require__(188));
 Vue.component('chat-form', __webpack_require__(193));
 Vue.component('chat-userlists', __webpack_require__(199));
 
-// const app = new Vue({
-//     el: '#app'
-// });
+var app = new Vue({
+    el: '#app'
+});
 
 /***/ }),
 /* 142 */
