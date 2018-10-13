@@ -25,7 +25,7 @@ class SocialAuthController extends Controller
     public function callback($service, Request $request)
     {
 
-        $user = Socialite::driver($service)->user();
+        $user = Socialite::driver($service)->stateless()->user();
 
         $authUser = $this->findOrCreateUser($user, $service);
 
@@ -38,13 +38,11 @@ class SocialAuthController extends Controller
     public function findOrCreateUser($user, $service)
     {
 
-        Toastr::info("Welcome ! " . $user->name);
+        $checkUser = User::where('provider_id', $user->id)->first();
 
-        $authUser = User::where('provider_id', $user->id)->first();
+        if ($checkUser) 
 
-        if ($authUser) 
-
-            return $authUser;
+            return $checkUser;
 
         $slug = str_slug($user->name, '-');
 
@@ -66,8 +64,6 @@ class SocialAuthController extends Controller
 
     public function logout()
     {
-
-        Toastr::info("You're logged out!");
 
         Auth::guard('web')->logout();
 
