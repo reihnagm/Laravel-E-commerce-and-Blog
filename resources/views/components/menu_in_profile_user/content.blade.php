@@ -8,7 +8,7 @@
 
         <div class="_mobile_nav_menu">
      
-          <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
+          <a class="_cart" href="{{ route('cart.index') }}">
             @auth
               <h2 class="_cart_count">{{ Cart::count() }}</h2>
 
@@ -130,7 +130,7 @@
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
           <div class="_is_left">
-              <img class="_profile_menu_ava" src="" alt="{{ $user['username'] }}">
+              <img class="_profile_menu_ava" src="{{ $user->avatar }}" alt="{{ $user['username'] }}">
               <h2  class="_profile_menu_users_username">
               <a href=""> {{ $user['username'] }} </a>
               </h2>
