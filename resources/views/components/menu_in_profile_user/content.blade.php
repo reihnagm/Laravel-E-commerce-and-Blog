@@ -77,7 +77,7 @@
            {{-- @endif  --}}
                
        </div> 
-{{--       
+      
       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
         @auth
            <h2 class="_cart_count">{{ Cart::count() }}</h2>
@@ -103,10 +103,10 @@
 
       <div class="_profile_menu">
 
-        {{-- @if (empty($user['provider'])) --}}
+        @if (empty($user['provider']))
 
           {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
-{{-- 
+
           <div class="_is_left">
             <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
             <h2  class="_profile_menu_users_username">
@@ -118,14 +118,14 @@
             @if($user['id'] === Auth::user()->id) 
             <li><a href="/chat" target="_blank"> Chat </a></li>
             <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
-            <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
+            <li><a  target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>     
             <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
             @endif
             <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
             <li><a href="/social/account/logout/"> Logout </a></li>
-          </ul> --}}
+          </ul>
 
-        {{-- @else --}}
+        @else
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
@@ -146,7 +146,7 @@
             <li><a href="/"> Back to homepage </a></li>
             <li><a href="/social/account/logout/"> Logout </a></li> 
           </ul>
-         {{-- @endif   --}}
+         @endif  
 
       </div> {{-- end of PROFILE MENU --}}
  </div> {{-- end of COLUMN --}}
