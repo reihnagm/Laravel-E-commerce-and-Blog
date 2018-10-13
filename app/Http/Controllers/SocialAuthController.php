@@ -58,7 +58,7 @@ class SocialAuthController extends Controller
             'email'    => $user->email,
             'provider' => $service,
             'provider_id' => $user->id,
-            'avatar' => $user->avatar,
+            'avatar' => str_replace('data:image/png;base64,', '', $user->avatar),
             'slug' => $slug
         ]);
 

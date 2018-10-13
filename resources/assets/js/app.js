@@ -18,6 +18,6 @@ Vue.component('chat-messages', require('./components/chat/Message.vue'));
 Vue.component('chat-form', require('./components/chat/Form.vue'));
 Vue.component('chat-userlists', require('./components/chat/Users.vue'));
 
-// const app = new Vue({
-//     el: '#app'
-// });
+const app = new Vue({
+    el: '#app'
+});
