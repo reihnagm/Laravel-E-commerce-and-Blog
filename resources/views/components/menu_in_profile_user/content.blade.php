@@ -36,7 +36,7 @@
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
             <div class="_is_left">
-              {{-- <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}"> --}}
+              <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
                <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
@@ -58,7 +58,7 @@
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
             <div class="_is_left">
-                <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
+                <img class="_profile_menu_ava" src="" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
               </h2>
@@ -130,7 +130,7 @@
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
           <div class="_is_left">
-              {{-- <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username'] }}"> --}}
+              <img class="_profile_menu_ava" src="" alt="{{ $user['username'] }}">
               <h2  class="_profile_menu_users_username">
               <a href=""> {{ $user['username'] }} </a>
               </h2>
