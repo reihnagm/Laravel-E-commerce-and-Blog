@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-
+<html lang="en">
+{{-- {{ app()->getLocale() }} --}}
 <head>
 
   <title> @yield('title') </title>
