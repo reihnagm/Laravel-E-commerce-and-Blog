@@ -101,7 +101,7 @@
 
       <hr class="_hidden_in_mobile">
 
-      <div class="_profile_menu"> --}}
+      <div class="_profile_menu">
 
         {{-- @if (empty($user['provider'])) --}}
 
@@ -129,12 +129,12 @@
 
           {{-- LOGIN WITH SOCIAL MEDIA  --}}
 
-          {{-- <div class="_is_left">
-              <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username'] }}">
+          <div class="_is_left">
+              {{-- <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username'] }}"> --}}
               <h2  class="_profile_menu_users_username">
               <a href=""> {{ $user['username'] }} </a>
               </h2>
-          </div> --}}
+          </div>
 
           <ul>
             @if($user['id'] === Auth::user()->id)
