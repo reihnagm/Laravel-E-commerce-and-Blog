@@ -1,4 +1,4 @@
- <div class="_column _is_one_quarter">
+ {{-- <div class="_column _is_one_quarter">
 
         <div class="_hamburger_menu">
           <span class="bar1"></span> 
@@ -29,7 +29,7 @@
               @endguest
             </a>
 
-             <hr>
+             <hr> --}}
 
            {{-- @if (empty($user['provider'])) --}}
 
@@ -64,20 +64,20 @@
               </h2>
             </div> --}}
 
-            <ul>
+            {{-- <ul> --}}
               {{-- @if($user['id'] === Auth::user()->id) --}}
-              <li><a href="/chat" target="_blank"> Chat </a></li>
+              {{-- <li><a href="/chat" target="_blank"> Chat </a></li>
               <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
-              <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+              <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li> --}}
               {{-- @endif --}}
-              <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+              {{-- <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
               <li><a href="/social/account/logout/"> Logout </a></li>
-            </ul>
+            </ul> --}}
            {{-- @endif  --}}
-                 
-       </div>
-      
+{{--                  
+       </div> --}}
+{{--       
       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
         @auth
            <h2 class="_cart_count">{{ Cart::count() }}</h2>
@@ -101,7 +101,7 @@
 
       <hr class="_hidden_in_mobile">
 
-      <div class="_profile_menu">
+      <div class="_profile_menu"> --}}
 
         {{-- @if (empty($user['provider'])) --}}
 
@@ -136,17 +136,17 @@
               </h2>
           </div> --}}
 
-          <ul>
+          {{-- <ul> --}}
             {{-- @if($user['id'] === Auth::user()->id) --}}
-            <li><a href="/chat" target="_blank"> Chat </a></li>
+            {{-- <li><a href="/chat" target="_blank"> Chat </a></li>
             <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
             <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
-            <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+            <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li> --}}
             {{-- @endif --}}
-            <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
-            <li><a href="/social/account/logout/"> Logout </a></li>
-          </ul>
+            {{-- <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+            <li><a href="/social/account/logout/"> Logout </a></li> --}}
+          {{-- </ul> --}}
         {{-- @endif  --}}
-
+{{--
       </div> {{-- end of PROFILE MENU --}}
-  </div> {{-- end of COLUMN --}}
+   {{-- end of COLUMN </div> --}}
