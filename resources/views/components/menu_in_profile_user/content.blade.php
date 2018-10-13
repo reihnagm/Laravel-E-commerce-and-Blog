@@ -43,12 +43,12 @@
             </div>  
 
             <ul>
-              @if($user['id'] === Auth::user()->id) 
+              {{-- @if($user['id'] === Auth::user()->id)  --}}
               <li><a href="/chat" target="_blank"> Chat </a></li> <br>
               <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a  target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>   
               <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-              @endif
+              {{-- @endif --}}
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
               <li><a href="/social/account/logout/"> Logout </a></li> 
              </ul>
@@ -65,12 +65,12 @@
             </div>
 
             <ul>
-              @if($user['id'] === Auth::user()->id)
+              {{-- @if($user['id'] === Auth::user()->id) --}}
               <li><a href="/chat" target="_blank"> Chat </a></li>
               <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
               <li><a target="_blank" href="{{ route('product.create') }}" style="line-height: 30px;"> Create your own Product </a></li>     
               <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
-              @endif
+              {{-- @endif --}}
               <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
               <li><a href="/social/account/logout/"> Logout </a></li>
             </ul> 
