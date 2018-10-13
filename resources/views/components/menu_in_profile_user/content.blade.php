@@ -31,11 +31,11 @@
 
              <hr> 
 
-           {{-- @if (empty($user['provider'])) --}}
+           @if (empty($user['provider']))
 
             {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
 
-            {{-- <div class="_is_left">
+            <div class="_is_left">
               <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
                <h2  class="_profile_menu_users_username">
                 <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
@@ -53,10 +53,10 @@
               <li><a href="/social/account/logout/"> Logout </a></li> 
              </ul>
 
-            @else --}}
+            @else
 
             {{-- LOGIN WITH SOCIAL MEDIA  --}}
-{{-- 
+
             <div class="_is_left">
                 <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username']}}">
               <h2  class="_profile_menu_users_username">
@@ -73,8 +73,8 @@
               @endif
               <li><a href="/"> Back to homepage </a></li>
               <li><a href="/social/account/logout/"> Logout </a></li>
-            </ul>  --}}
-           {{-- @endif  --}}
+            </ul> 
+           @endif 
                
        </div> 
       
