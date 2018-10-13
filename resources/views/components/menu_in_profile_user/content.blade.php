@@ -32,6 +32,8 @@
              <hr> 
 
            {{ $user->username }}
+           
+           {{ $user['username'] }}
 
            {{-- @if (empty($user['provider'])) --}}
 
