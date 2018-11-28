@@ -28,10 +28,8 @@ class Order extends Model
       $user = Auth::user();
 
       $order = $user->orders()->create([
-
         'total' => Cart::total(),
         'delivered' => 0
-
       ]);
 
       $carts = Cart::content();

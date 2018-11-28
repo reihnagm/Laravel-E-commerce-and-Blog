@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+
 use App\Models\User;
 use App\Models\Blog;
 use App\Models\Tag;
@@ -17,15 +19,15 @@ class AppController extends Controller
     public function index()
     {
 
-        $user = User::first(); 
-
+        $user = User::first();
+        
         $blogs = Blog::with('tags','user')->orderBy('id', 'desc')->paginate(4, ['*'], 'blog-page');
         $products = Product::with('categories','user')->orderBy('id', 'desc')->paginate(4, ['*'], 'product-page');
 
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view('app/index', ['user' => $user, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
+        return view('app/index', ['user' => $user ,'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
 
     }
 

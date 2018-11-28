@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Cart;
 use DB;
 use Toastr;
+use Auth;
 
 use App\Models\User;
 use App\Models\Product;
@@ -83,7 +84,12 @@ class CartController extends Controller
         return redirect(route('cart.index'));
       }
 
-      Cart::instance('default')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'user_id' => auth()->user()->id])->associate('App\Models\Product');
+      if(Auth::check()) {
+       Cart::instance('default')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'user_id' => auth()->user()->id])->associate('App\Models\Product');
+      } else {
+        Toastr::info('You must Login before!');
+        return back();
+      }
 
       Toastr::info('Item was added to your Cart!');
 
@@ -108,6 +114,10 @@ class CartController extends Controller
 
     public function emptySaveForLater()
     {
+
+      /*-------------------------------------------------
+      -- CART INSTANCE : Ex : wishlist, default : default
+      ---------------------------------------------------*/
 
       Cart::instance('saveForLater')->destroy();
 

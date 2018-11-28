@@ -1,6 +1,6 @@
 <template>
     <div class="chat-lists">
-        <div class="messages" v-for="message in messages">
+        <div class="messages" v-for="message in messages" :key="message.id">
             <div class="users"> {{ message.user.username }}
                 <span class="time">{{ message.created_at }}</span>
             </div>
@@ -25,7 +25,6 @@
             this.getMessage();
 
             Bus.$on('chat.sent', (newMessage) => {
-                console.log('masuk di on Bus')
                 this.messages.push(newMessage)
                 this.scrollToBottom()
             }).$on('chat.removed', (message) => {

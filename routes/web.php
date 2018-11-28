@@ -18,16 +18,15 @@ Route::prefix('admin')->group(function () {
     Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 });
 
-// Admin
 Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin'], function() {
-    Route::get('/orders', 'OrderController@orders')->name('orders');
+    Route::get('/orders/{type?}', 'OrderController@orders')->name('orders');
     Route::post('/orders/toggle/delivered/{boolean}', 'OrderController@toggleDeliver')->name('toggle.deliver');
 });
 
 // Socialite
 Route::get('/redirect/{service}', 'SocialAuthController@redirect');
 Route::get('/callback/{service}', 'SocialAuthController@callback');
-Route::get('/social/account/logout', 'SocialAuthController@logout');
+Route::get('/social/account/logout', 'SocialAuthController@logout')->name('social.logout');
 
 // Address
 Route::group(['middleware' => 'auth'], function() {
@@ -57,39 +56,37 @@ Route::get('/product/filter/{id}','AppController@productFilter')->name('product.
 // Blog
 Route::resource('/blog', 'BlogController');
 
-Route::get('/blog-comment','BlogCommentController@index')->name('blog.comment.index');
+// Route::get('/blog-comment','BlogCommentController@index')->name('blog.comment.index');
 
-Route::post('/blog-comment/{id}', 'BlogCommentController@store')->name('blog.comment.store');
+// Route::post('/blog-comment/{id}', 'BlogCommentController@store')->name('blog.comment.store');
 
-Route::get('/blog-comment/{id}', 'BlogCommentController@edit')->name('blog.comment.edit');
+// Route::get('/blog-comment/{id}', 'BlogCommentController@edit')->name('blog.comment.edit');
 
-Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
+// Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
 
-Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
+// Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
 
-// Payment
+// PAYMENT
 Route::get('/payment', 'PaymentController@index')->name('payment.index');
 Route::post('/payment/store', 'PaymentController@store')->name('payment.store');
 
-// Like & Unlike
+// LIKE & UNLIKE
 Route::get('/like/{model}/{type}', 'LikeController@like');
 Route::get('/cancel_like/{model}/{type}', 'LikeController@unlike');
 
 Route::get('/unlike/{model}/{type}', 'UnlikeController@unlike');
 Route::get('/cancel_unlike/{model}/{type}', 'UnlikeController@cancel_unlike');
 
-// Emotion
-Route::get('/emotions/{blogid}', 'EmotionController@index');
-Route::get('/emotions/emotionid/{emotionid}/blogid/{blogid}','EmotionController@saveEmotion');
+// EMOTION
+Route::get('/emotions/{blog_id}', 'EmotionController@index');
+Route::get('/emotions/{emotion_id}/{blog_id}','EmotionController@save');
 
-// Notification 
+// NOTIFICATION 
 Route::get('/notification','NotificationController@index')->name('notifications.index');
 Route::get('/mark_as_read/{id}', 'NotificationController@mark_As_Read');
 
-// Chat
+// CHAT
 Route::get('/chat', 'ChatController@index');
-
-// Messages API
 Route::get('/messages', 'ChatController@getMessages');
 Route::post('/messages', 'ChatController@postMessage');
 

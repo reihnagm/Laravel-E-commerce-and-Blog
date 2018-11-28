@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
  
-use App\Models\Poll;
+use Auth;
+
 use App\Models\Blog;
+use App\Models\Poll;
 use App\Models\PollOption;
 use Illuminate\Http\Request;
  
@@ -29,32 +31,63 @@ class PollController extends Controller
 			
 	}
 	
-	public function getPolls() 
+	public function getPolls($blogid) 
 	{
 	
-		return Poll::with('pollOptions')->get();
+		return Poll::with(['pollOptions'])->get();
+	
+	}
+
+	public function getPollOptions() 
+	{
+	
+		return PollOption::all();
 	
 	}
  
-    public function store(Request $request)
+ 
+    public function saveVote($poll_id, $blog_id)
     {
 
-		$poll_option_id = $request->get('poll_option_id');
-		$blog_id = $request->get('blog_id');
+		// $blog_id = $request->get('blog_id');
+		// $poll_id = $request->get('poll_id');
 
-    	if($poll_option_id && $blog_id)
-    	{
-			
-			$option = PollOption::findOrFail($poll_option_id);
-			$option->blog_id = $blog_id;
-			$option->total += 1;	
+		$checkPollOptions = PollOption::where('blog_id', $blog_id)->where('user_id', Auth::user()->id)->first();
 
-			$option->save();
+	   if(!$checkPollOptions) {
+		$option = new PollOption;
+		$option->poll_id = $poll_id;
+		$option->user_id = Auth::user()->id;
+		$option->blog_id = $blog_id;
+		$option->total += 1;
+		$option->save();
 
-			return response("Vote added successfully");
-			// ->cookie('poll','yes',1440);
+		return json_encode(['message' => 'vote']);
+	   
+	   } else if ($checkPollOptions->poll_id == $poll_id) {
+
+		PollOption::where('blog_id', $blog_id)->where('user_id', Auth::user()->id)->delete();
+
+		return json_encode(['message' => 'unvote']);
+	   
+		} else {
+      
+         PollOption::where('blog_id', $blog_id)->where('user_id', Auth::user()->id)->update([
+		  'poll_id' => $poll_id,
+          'total' => 1
+        ]);
+
+       return json_encode(['message' => 'changedVote']);
+
+      }
+    	
+		// $option = PollOption::findOrFail($poll_id)->first();
+		// $option->total += 1;	
+
+		// $option->save();
+
 		
-		}
+		// ->cookie('poll','yes',1440);
 
 	}
 	

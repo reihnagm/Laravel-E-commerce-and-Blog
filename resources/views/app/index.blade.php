@@ -5,296 +5,278 @@
 @section('content')
 
   <div class="_container">
-    <div class="_columns _is_multiline">
+    <div class="_columns">
+       <div class="_column _is_one_quarter">
 
-      <div class="_column _is_one_quarter">
+      <div class="_hamburger_menu">
+        <span class="bar1"></span> 
+        <span class="bar2"></span>
+        <span class="bar3"></span>
+      </div>
 
-        <div class="_hamburger_menu">
-          <span class="bar1"></span> 
-          <span class="bar2"></span>
-          <span class="bar3"></span>
-        </div>
-
-        <div class="_mobile_nav_menu">
-          
-             <a class="_cart" href="{{ route('cart.index') }}">
-              <h2 class="_cart_count"> {{ Cart::count() }}</h2>
-
-              <div class="_cart_wrapper">
-                  <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
-                @if(!empty(Cart::count()))
-                  <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
-                @endif
-              </div>
-             </a>
-
-             <hr>
-             
-              @if(Auth::check()) 
-
-                @if(empty($user['provider'])) 
-
-                {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
-
-                <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}"> 
-              
-                  <div>
-                    <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
-                  </div>
-                    <div>
-                    <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
-                  </div>
-              
-                @else 
-
-                {{-- LOGIN WITH SOCIAL MEDIA --}}
-
-                <img style="padding: 5px 5px;" src="{{ $user['avatar'] }}" text="{{ $user['username'] }}" alt="{{ $user['name'] }}"> 
-
-                  <div>
-                    <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
-                  </div>
-                  <div>
-                    <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
-                  </div>
-
-                @endif 
-
-              @else  
-
-              <form id="_form_login_desktop" action="{{ route('login') }}" method="POST">
-                {{-- CSRF --}}
-                @csrf
-
-                <div class="_field">
-                  {{-- email address  --}}
-                  <input type="text" name="email" placeholder="E-Mail Address">
-
-                  @if ($errors->has('email'))
-                  <span class="_is_invalid">{{ $errors->first('email') }}</span>
-                  @endif
-
-                  {{-- password --}}
-                  <div class="_wrapper_input_password">
-                    <input id="password_field_m" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field_m" class="_eye_icon"> </i>
-                  </div>
-
-                  @if ($errors->has('password'))
-                  <span class="_is_invalid">{{ $errors->first('password') }}</span>
-                  @endif
-
-                  {{-- event trigger submit --}}
-                  <a onclick="event.preventDefault(); document.getElementById('_form_login_desktop').submit();" class="_button">Login </a>
-                </div>
-
-                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label id="_remember_label" class="_text_gray" for="remember"> Remember Me </label>
-
-              </form> 
-
-              <br>
-              <div class="_text_gray"> don't have a account? </div>
-
-            <div class="panel">
-              <form action="{{ route('register')}}" method="POST">
-                  {{-- CSRF --}}
-                  @csrf
-
-                  <div class="_field">
-                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
-                    
-                    @if ($errors->has('username'))
-                      <span class="_is_invalid">{{ $errors->first('username') }}</span>
-                    @endif
-
-                    <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
-            
-                    @if ($errors->has('email'))
-                      <span class="_is_invalid">{{ $errors->first('email') }}</span>
-                    @endif
-
-                    <div class="_wrapper_input_password">
-                      <input id="password_field_register_m" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_m" class="_eye_icon"> </i>
-                    </div>
-
-                    @if ($errors->has('password'))
-                      <span class="_is_invalid">{{ $errors->first('password') }}</span>
-                    @endif
-
-                    <div class="_wrapper_input_password">
-                      <input id="password_field_confirmation_m" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_m" class="_eye_icon"> </i>
-                    </div>
-
-                    @if ($errors->has('password_confirmation'))
-                    <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
-                    @endif
-
-                      <input class="_button" type="submit" value="Submit Register">
-                 </div>
-
-                </form>
-              </div>
-
-                <a id="trigger-button-register" class="accordion _button _has_range_top _has_range_bottom"> Register </a>
-                <br>
-                {{-- login use Gmail  --}}
-                <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
-
-                {{-- login use Facebook --}}
-                <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
-
-                @endif
-
-        </div> 
-
-        {{--------------------------------MOBILE MENU-----------------------------------------------------------}}
-
-      <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
-
-        @auth
-         <h2 class="_cart_count">{{ Cart::count() }}</h2>
-
+      <div class="_mobile_nav_menu">
+        <a class="_cart" href="{{ route('cart.index') }}">
+          @auth
+          <h2 class="_cart_count">{{ Cart::count() }}</h2>
           <div class="_cart_wrapper">
             <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
             @if(!empty(Cart::count()))
             <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
             @endif
           </div>
-        @endauth
+          @endauth
 
-        @guest
+          @guest
           <h2 class="_cart_count"> 0 </h2>
-
           <div class="_cart_wrapper">
-            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
           </div>
-        @endguest
+          @endguest
+        </a>
+
+     @if(Auth::check())   
+        @if (empty($user['provider']))
+         
+        <div class="_is_left">
+          <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
+          <h2  class="_profile_menu_users_username"> <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a> </h2>
+         </div>  
+        
+        <ul class="_mobile_menu">
+          @if($user['id'] === Auth::user()->id) 
+            <li><a target="_blank" href="/chat"> Chat </a></li> 
+            <li><a target="_blank" href="{{ route('notifications.index')}}" class="_see_Notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+            <li><a target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>   
+            <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+          @endif
+          <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
+          <li><a href="/social/account/logout/"> Logout </a></li> 
+        </ul>
+        
+        @else 
+
+        <div class="_is_left">
+          <img class="_profile_menu_ava" src="" alt="{{ $user['username'] }}">
+          <h2 class="_profile_menu_users_username"> <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a> </h2>
+        </div>
+
+        <ul class="_mobile_menu">
+        @if($user['id'] === Auth::user()->id)
+          <li><a href="/chat" target="_blank"> Chat </a></li>
+          <li><a target="_blank" href="/notification" class="_see_Notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+          <li><a target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>     
+          <li><a target="_blank" href="/blog/create"> Create a Blog</a></li>
+        @endif
+        <li><a href="/"> Back to homepage </a></li>
+        <li><a href="/social/account/logout/"> Logout </a></li>
+        </ul> 
+
+        @endif
+       @else
+
+      <form id="_form_login_mobile" action="{{ route('login') }}" method="POST">
+        {{-- CSRF --}}
+        @csrf
+
+        <div class="_field">
+        <input type="text" name="email" placeholder="E-Mail Address">
+
+        @if ($errors->has('email'))
+        <span class="_is_invalid">{{ $errors->first('email') }}</span>
+        @endif
+
+        <div class="_wrapper_input_password">
+        <input id="password_field_mobile" type="password" name="password" placeholder="Password"> <i toggle="#password_field_mobile" class="_eye_icon"> </i>
+        </div>
+
+        @if ($errors->has('password'))
+        <span class="_is_invalid">{{ $errors->first('password') }}</span>
+        @endif
+        <br> 
+        <a  class="_button" onclick="event.preventDefault(); document.getElementById('_form_login_mobile').submit();">Login </a> 
+        </div> 
       
-      </a>  
+        <input type="checkbox" name="remember" id="remember_label_mobile" {{ old('remember') ? 'checked' : '' }}>
+        <label id="_remember_label_mobile"  for="remember"> Remember Me </label>
+      </form> 
 
-        <hr class="_hidden_in_mobile">
+        <span class="_dont_have_account"> don't have a account? </span>
 
-        <nav class="nav">
-
-          @if(Auth::check()) 
-
-            @if(empty($user['provider'])) 
-            
-            {{-- LOGIN WITHOUT SOCIAL MEDIA --}}
-
-            <img style="padding: 5px 5px;" src="{{ Gravatar::src('wavatar') }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}">
-           
-            <div>
-              <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
-            </div>
-            <div>
-              <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
-            </div>
-
-            @else 
-
-            {{-- LOGIN WITH SOCIAL MEDIA --}}
-
-            <img style="padding: 5px 5px;" src="{{ $user['avatar'] }}" text="{{ $user['name'] }}" alt="{{ $user['name'] }}"> 
-
-            <div>
-              <a style="margin: 5px 0;" class="_button" href="{{ route('user.profile') }}">My Profile </a> 
-            </div>
-            <div>
-              <a style="margin: 5px 0;" class="_button" href="social/account/logout/">Logout</a> 
-            </div>
-             
-            @endif 
-
-          @else  
-
-          <form id="_form_login_mobile" action="{{ route('login') }}" method="POST">
-            {{-- CSRF --}}
-            @csrf
-
-            <div class="_field">
-              {{-- email address  --}}
-              <input type="text" name="email" placeholder="E-Mail Address">
-
-              @if ($errors->has('email'))
-              <span class="_is_invalid">{{ $errors->first('email') }}</span>
-              @endif
-
-              {{-- password --}}
-              <div class="_wrapper_input_password">
-                <input id="password_field" type="password" name="password" placeholder="Password" style="margin-bottom: 5px;"> <i toggle="#password_field" class="_eye_icon"> </i>
-              </div>
-
-              @if ($errors->has('password'))
-               <span class="_is_invalid">{{ $errors->first('password') }}</span>
-              @endif
-
-              {{-- event trigger submit --}}
-              <a onclick="event.preventDefault(); document.getElementById('_form_login_mobile').submit();" class="_button">Login </a>
-            </div> {{-- end of FIELD --}}
-
-            {{-- remmember me  --}}
-            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-            <label id="_remember_label" class="_text_gray" for="remember"> Remember Me </label>
-
-          </form> 
-           
-           <br>
-           <div class="_text_gray"> don't have a account? </div>
-
-          <div class="panel">
-           <form action="{{ route('register')}}" method="POST">
+        <div class="panel">
+          <form action="{{ route('register')}}" method="POST">
               {{-- CSRF --}}
               @csrf
 
               <div class="_field">
                 <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
                 
-                  @if ($errors->has('username'))
+                @if ($errors->has('username'))
                   <span class="_is_invalid">{{ $errors->first('username') }}</span>
-                 @endif
+                @endif
 
                 <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
-         
-                 @if ($errors->has('email'))
+        
+                @if ($errors->has('email'))
                   <span class="_is_invalid">{{ $errors->first('email') }}</span>
-                 @endif
+                @endif
 
                 <div class="_wrapper_input_password">
-                  <input id="password_field_register" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register" class="_eye_icon"> </i>
+                  <input id="password_field_register_mobile" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_mobile" class="_eye_icon"> </i>
                 </div>
 
-                 @if ($errors->has('password'))
+                @if ($errors->has('password'))
                   <span class="_is_invalid">{{ $errors->first('password') }}</span>
-                 @endif
+                @endif
 
-               <div class="_wrapper_input_password">
-                <input id="password_field_confirmation" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation" class="_eye_icon"> </i>
-              </div>
+                <div class="_wrapper_input_password">
+                  <input id="password_field_confirmation_mobile" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_mobile" class="_eye_icon"> </i>
+                </div>
 
                 @if ($errors->has('password_confirmation'))
                 <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
                 @endif
 
-                  <input class="_button" type="submit" value="Submit Register">
-            </div>
+                <input class="_button" type="submit" value="Submit Register">
+              </div>
 
             </form>
           </div>
 
-          <a id="trigger-button-register" class="accordion _button _has_range_top _has_range_bottom"> Register </a>
+          <a id="trigger-button-register" class="accordion _button"> Register </a>
           <br>
           {{-- login use Gmail  --}}
           <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
 
           {{-- login use Facebook --}}
           <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
+          @endif
+        
+        </div>
 
-        </nav>
+      {{-- MOBILE --}}
+  
+       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
+          @auth
+          <h2 class="_cart_count">{{ Cart::count() }}</h2>
+          <div class="_cart_wrapper">
+            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            @if(!empty(Cart::count()))
+            <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+            @endif
+          </div>
+          @endauth 
+          @guest
+            <h2 class="_cart_count"> 0 </h2>
+            <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            </div>
+          @endguest
+       </a>
+
+      <hr class="_hidden_in_mobile">
+
+      @if(Auth::check())
+        @if(empty($user['provider']))
+        <nav class="nav">
+          <ul>
+            <li><img src="" alt=""></li>
+            <li><a href="{{ route('user.profile') }}">My Profile</a></li>
+            <li><a href="{{ route('social.logout') }}">Logout</a></li>
+          </ul>
+          @else 
+          <ul>
+            <li><img src="" alt=""></li>
+            <li><a href="{{ route('user.profile') }}">My Profile</a></li>
+            <li><a href="{{ route('social.logout') }}">Logout</a></li>
+          </ul>
+         </nav>
         @endif
-      </div> {{-- end of NAV --}}
+      @else 
 
-      {{-------------------------------------------SEARCH--------------------------------------------------------------------}}
+      <nav class="nav">
+       <form id="_form_login" action="{{ route('login') }}" method="POST">
+          {{-- CSRF --}}
+          @csrf
+
+        <div class="_field">
+          <input type="text" name="email" placeholder="E-Mail Address">
+
+          @if ($errors->has('email'))
+           <span class="_is_invalid">{{ $errors->first('email') }}</span>
+          @endif
+
+          <div class="_wrapper_input_password">
+           <input id="password_field" type="password" name="password" placeholder="Password"> <i toggle="#password_field" class="_eye_icon"> </i>
+          </div>
+
+          @if ($errors->has('password'))
+           <span class="_is_invalid">{{ $errors->first('password') }}</span>
+          @endif
+
+          <br> 
+          <a class="_button" onclick="event.preventDefault(); document.getElementById('_form_login').submit();">Login </a> 
+        </div> 
+        
+          <input type="checkbox" name="remember" id="remember_label_mobile" {{ old('remember') ? 'checked' : '' }}>
+          <label id="_remember_label_mobile"  for="remember"> Remember Me </label> <br> <br>
+       </form> 
+       
+        <span class="_dont_have_account"> don't have a account? </span>  <br>
+
+          <div class="panel">
+            <form action="{{ route('register')}}" method="POST">
+                {{-- CSRF --}}
+                @csrf
+
+                <div class="_field">
+                  <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
+                  
+                    @if ($errors->has('username'))
+                    <span class="_is_invalid">{{ $errors->first('username') }}</span>
+                  @endif
+
+                  <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
+          
+                  @if ($errors->has('email'))
+                    <span class="_is_invalid">{{ $errors->first('email') }}</span>
+                  @endif
+
+                  <div class="_wrapper_input_password">
+                    <input id="password_field_register" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register" class="_eye_icon"> </i>
+                  </div>
+
+                  @if ($errors->has('password'))
+                    <span class="_is_invalid">{{ $errors->first('password') }}</span>
+                  @endif
+
+                <div class="_wrapper_input_password">
+                  <input id="password_field_confirmation" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation" class="_eye_icon"> </i>
+                </div>
+
+                  @if ($errors->has('password_confirmation'))
+                  <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
+                  @endif
+
+                  <input class="_button" type="submit" value="Submit Register">
+              </div>
+
+              </form>
+            </div>
+            
+          <a id="trigger-button-register" class="accordion _button"> Register </a>
+          <br> <br>
+          {{-- login use Gmail  --}}
+          <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
+
+          {{-- login use Facebook --}}
+          <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
+          </nav>
+
+          @endif
+
+         </div>
+      
+      {{---------------------------SEARCH--------------------------}}
 
        <div class="_column">
         <div class="_has_large_padding _back_gray">
@@ -307,23 +289,22 @@
                 <a onclick="event.preventDefault(); document.getElementById('_submit_search').submit()" class="_has_range_top" href="#"> <i class="_search _button"></i> </a>
                </div>
                  
-                 <div>
-                 <a class="_text_gray" href="/"> All  </a>
-                 </div>
+                <br>
+                <a href="{{ route('app.index') }}"> All  </a> <br> <br>
                  Filter Product Category : 
                 @foreach ($categories as $category) /
-                 <a class="_text_gray" href="{{ route('product.filter', $category['name']) }}"> {{ $category['name'] }} </a>      
+                 <a href="{{ route('product.filter', $category['name']) }}"> {{ $category['name'] }} </a>      
                 @endforeach 
                 <div>
                  Filter Blog Category :
                  @foreach ($tags as $tag) /
-                  <a class="_text_gray" href="{{ route('blog.filter', $tag['name']) }}"> {{ $tag['name'] }} </a>    
+                  <a href="{{ route('blog.filter', $tag['name']) }}"> {{ $tag['name'] }} </a>    
                  @endforeach 
                 </div>
             </form>
           </div>
 
-          {{----------------------------------------------BANNER------------------------------------------------------}}
+          {{------------------------------BANNER--------------------------------------}}
 
           {{-- <div class="_slick" style="max-width: 500px;">
             @foreach ($products as $product)
@@ -334,36 +315,36 @@
              @endforeach
              </div> --}}
            
-          {{-------------------------------------------------PRODUCTS----------------------------------------------------}}
+          {{-------------------------------PRODUCTS-----------------------------------}}
 
             <h2> All Products </h2>
+            
             <hr>
 
              @forelse ($products->chunk(4) as $chunk)
-             <div class="_columns _is_multiline">
-              @foreach ($chunk as $product)
-                <div class="_column _is_one_quarter">
+              <div class="_columns _is_multiline">
+               @foreach ($chunk as $product)
+                 <div class="_column _is_one_quarter">
 
-                  <div class="_products">
+                   <div class="_products">
                       <img src="{{ asset('storage/products/images/'. $product['img']) }}" alt="{{ $product['name'] }}">
                       
                       <div class="_products_wrapper_price">
-                        <img class="_products_img_price" src="{{ asset('/assets/icon/board-price.jpg')}}">
                         <p class="_products_desc_price">Rp {{ number_format($product['price'],2,",",".") }} </p>
-                      </div> <br>
+                      </div> 
 
-                      <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
+                      <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> 
                   
-                      <span class="_products_users_username"> Owner :  {{ $product['user']['username'] }} </span> <br> <br>
-                      <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at']))  }} </span> <br> <br>
+                      <span class="_products_users_username"> Owner :  {{ $product['user']['username'] }} </span> 
+                      <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at']))  }} </span>
                     
                       @foreach ($product->categories as $category)
-                      <span class="_products_categories"> {{ $category['name'] }} </span> <br> <br>
+                      <span class="_products_categories"> {{ $category['name'] }} </span>
                       @endforeach 
 
-                      <p class="_products_desc"> {{ $product['desc'] }} </p> <br>
+                      <p class="_products_desc"> {{ $product['desc'] }} </p>
 
-                       <form class="_cart_add" action="{{ route('cart.add')}}" method="post">
+                       <form class="_cart_add" action="{{ route('cart.add')}}" method="post"> 
                           @csrf
                         {{-- CSRF --}}
 
@@ -372,24 +353,23 @@
                         <input type="hidden" name="price" value="{{ $product['price']}}">
                         <input type="hidden" name="img" value="{{ $product['img']}}">
 
-                        <input class="_button _products_add_to_cart"  type="submit" value="Add To Cart"> <br> <br>
+                        <input class="_button _products_add_to_cart"  type="submit" value="Add To Cart"> <br><br>
                        </form>
-                      
-                    @auth
-                    @if(Auth::user()->id === $product['user']['id'])
-                    <a class="_button _products_edit" target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a> <br> <br> 
-                  
-                       <form class="_form_products_delete" action="{{ route('product.update', $product['id']) }}" method="post">
-                        {{-- CSRF --}}
-                        @csrf
+                        
+                        @auth
+                          @if(Auth::user()->id === $product['user']['id'])
+                          <a class="_button _products_edit" target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a> 
+                            <form class="_form_products_delete" action="{{ route('product.update', $product['id']) }}" method="post">
+                              {{-- CSRF --}}
+                              @csrf
 
-                        {{-- METHOD_FIELD --}}
-                        {{ method_field('DELETE') }}
+                              {{-- METHOD_FIELD --}}
+                              {{ method_field('DELETE') }}
 
-                        <input class="_button _products_delete" type="submit" value="Delete">
-                       </form> <br>
-                    @endif
-                   @endauth
+                              <input class="_button _products_delete" type="submit" value="Delete">
+                            </form> <br>
+                          @endif
+                        @endauth
                     
                     </div>
 
@@ -399,60 +379,51 @@
                 @empty
               @endforelse
 
+           {{-- PAGINATION --}}
+           
            {{ $products->links() }}
 
-        {{------------------------------------------BLOGS-----------------------------------------}}
+        {{---------------------------------------BLOGS-------------------------------------}}
 
-          <h2> All Blogs </h2>
-          <hr>
+         <h2> All Blogs </h2>
 
-        @forelse ($blogs->chunk(4) as $chunk)
+         <hr>
+
+         @forelse ($blogs->chunk(4) as $chunk)
           <div class="_columns _is_multiline">
               @foreach ($chunk as $blog)
                 <div class="_column _is_one_quarter">
 
                  <div class="_blogs_homepage">
                    <h2 class="_blogs_homepage_title"> {{ $blog['title'] }}</h2>
-                   <br>
+                 
                     @foreach ($blog->tags as $tag)
                      <span class="_blogs_homepage_tags"> {{  $tag['name'] }} </span>
                     @endforeach 
-                    <br> <br>
+                  
                    <span class="_blogs_homepage_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($blog['created_at'])) }}</span>
-                    <br> <br>
-                   <span class="_blogs_homepage_author"> Author : {{ $blog['user']['username'] }}</span> <br> <br>
+                  
+                   <span class="_blogs_homepage_author"> Author : {{ $blog['user']['username'] }}</span> 
                    <img src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}">
-                   <br>      
-                   <a class="_button" target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> Read more </a>
-                 </div>
+                  
+                   <a class="_button" target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> Read more </a>   
+                  </div>
                 
                </div>
               @endforeach
               @empty
-              <div> 
-            </div>
-           @endforelse
-          </div> 
+           </div>
+          @endforelse
+      
+
+          {{-- PAGINATION --}}
 
           {{ $blogs->links() }}
+         </div>
+    
 
-        </div> 
-
-        {{-----------------------------------------------------------}}
-
-        <div class="_column _is_fullWidth">
-         <div class="_footer">
-            <p>
-              Community to every writter and a merchantman.
-            </p>
-           <p> &copy; Basuketto {{ date('Y') }} </p>
-         </div> 
-        </div>
-        
-
-       </div> {{-- end of COLUMN --}}
-
-  </div>  {{-- end of COLUMNS --}}
-</div>  {{-- end of COLUMN --}}
-
+      </div>
+    </div> 
+   </div>
+  </div>
 @endsection

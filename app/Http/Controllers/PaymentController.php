@@ -30,12 +30,13 @@ class PaymentController extends Controller
       // Get the payment token ID submitted by the form:
       $token = $request->stripeToken;
       $charge = \Stripe\Charge::create([
-          'amount' => Cart::total()*100,
+          'amount' => Cart::total()*100, // Amount in cents
           'currency' => 'usd',
           'description' => 'Example charge',
           'source' => $token,
       ]);
 
+      // Create the order
       Order::createOrder();
 
     }

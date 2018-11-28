@@ -5,50 +5,266 @@
 <div class="_container">
   <div class="_columns">
 
-  @component('components/menu_in_profile_user/content', [
-    'user' => $user
-  ]); 
-  @endcomponent
+      <div class="_column _is_one_quarter">
 
-  {{-------------------------------------------------------------------}}
+      <div class="_hamburger_menu">
+        <span class="bar1"></span> 
+        <span class="bar2"></span>
+        <span class="bar3"></span>
+      </div>
+
+      <div class="_mobile_nav_menu">
+        <a class="_cart" href="{{ route('cart.index') }}">
+          @auth
+          <h2 class="_cart_count">{{ Cart::count() }}</h2>
+          <div class="_cart_wrapper">
+            <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            @if(!empty(Cart::count()))
+            <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+            @endif
+          </div>
+          @endauth
+
+          @guest
+          <h2 class="_cart_count"> 0 </h2>
+          <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+          </div>
+          @endguest
+        </a>
+
+     @if(Auth::check())  
+        @if (empty($user['provider']))
+         
+        <div class="_is_left">
+          <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
+          <h2  class="_profile_menu_users_username"> <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a> </h2>
+         </div>  
+        
+        <ul class="_mobile_menu">
+          @if($user['id'] === Auth::user()->id) 
+            <li><a target="_blank" href="/chat"> Chat </a></li> 
+            <li><a target="_blank" href="{{ route('notifications.index')}}" class="_see_Notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+            <li><a target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>   
+            <li><a target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+          @endif
+          <li><a href="{{ route('app.index') }}"> Back to homepage </a></li> 
+          <li><a href="/social/account/logout/"> Logout </a></li> 
+        </ul>
+        
+        @else 
+
+        <div class="_is_left">
+          <img class="_profile_menu_ava" src="" alt="{{ $user['username'] }}">
+          <h2 class="_profile_menu_users_username"> <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a> </h2>
+        </div>
+
+        <ul class="_mobile_menu">
+        @if($user['id'] === Auth::user()->id)
+          <li><a href="/chat" target="_blank"> Chat </a></li>
+          <li><a target="_blank" href="/notification" class="_see_Notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+          <li><a target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>     
+          <li><a target="_blank" href="/blog/create"> Create a Blog</a></li>
+        @endif
+        <li><a href="/"> Back to homepage </a></li>
+        <li><a href="/social/account/logout/"> Logout </a></li>
+        </ul> 
+
+        @endif
+       @else
+
+      <form id="_form_login_mobile" action="{{ route('login') }}" method="POST">
+        {{-- CSRF --}}
+        @csrf
+
+        <div class="_field">
+        <input type="text" name="email" placeholder="E-Mail Address">
+
+        @if ($errors->has('email'))
+        <span class="_is_invalid">{{ $errors->first('email') }}</span>
+        @endif
+
+        <div class="_wrapper_input_password">
+        <input id="password_field_mobile" type="password" name="password" placeholder="Password"> <i toggle="#password_field_mobile" class="_eye_icon"> </i>
+        </div>
+
+        @if ($errors->has('password'))
+        <span class="_is_invalid">{{ $errors->first('password') }}</span>
+        @endif
+        <br> 
+        <a  class="_button" onclick="event.preventDefault(); document.getElementById('_form_login_mobile').submit();">Login </a> 
+        </div> 
+      
+        <input type="checkbox" name="remember" id="remember_label_mobile" {{ old('remember') ? 'checked' : '' }}>
+        <label id="_remember_label_mobile"  for="remember"> Remember Me </label>
+      </form> 
+
+        <span class="_dont_have_account"> don't have a account? </span>
+
+        <div class="panel">
+          <form action="{{ route('register')}}" method="POST">
+              {{-- CSRF --}}
+              @csrf
+
+              <div class="_field">
+                <input type="text" name="username" value="{{ old('username') }}" placeholder="Username">
+                
+                @if ($errors->has('username'))
+                  <span class="_is_invalid">{{ $errors->first('username') }}</span>
+                @endif
+
+                <input type="text" name="email" value="{{ old('email') }}" placeholder="E-Mail Address">
+        
+                @if ($errors->has('email'))
+                  <span class="_is_invalid">{{ $errors->first('email') }}</span>
+                @endif
+
+                <div class="_wrapper_input_password">
+                  <input id="password_field_register_mobile" type="password" name="password" placeholder="Password"> <i toggle="#password_field_register_mobile" class="_eye_icon"> </i>
+                </div>
+
+                @if ($errors->has('password'))
+                  <span class="_is_invalid">{{ $errors->first('password') }}</span>
+                @endif
+
+                <div class="_wrapper_input_password">
+                  <input id="password_field_confirmation_mobile" type="password" name="password_confirmation" placeholder="Password Confirmation"> <i toggle="#password_field_confirmation_mobile" class="_eye_icon"> </i>
+                </div>
+
+                @if ($errors->has('password_confirmation'))
+                <span class="_is_invalid">{{ $errors->first('password_confirmation') }}</span>
+                @endif
+
+                <input class="_button" type="submit" value="Submit Register">
+              </div>
+
+            </form>
+          </div>
+
+           <a id="trigger-button-register" class="accordion _button"> Register </a>
+          <br>
+          {{-- login use Gmail  --}}
+          <a id="google_wrapper" class="_button" href="redirect/google"><i class="_has_range_right" id="google_icon"></i>Log in with Google</a>
+
+          {{-- login use Facebook --}}
+          <a id="facebook_wrapper" class="_button" href="redirect/facebook"> <i class="_has_range_right" id="facebook_icon"></i>Log in with Facebook</a>
+          @endif
+          </div>
+
+      {{-- MOBILE --}}
+    
+       <a class="_cart _hidden_in_mobile" href="{{ route('cart.index') }}">
+          @auth
+            <h2 class="_cart_count">{{ Cart::count() }}</h2>
+            <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+              @if(!empty(Cart::count()))
+                <img class="_fill_of_cart" src="{{ asset('assets/icon/sack.png')}}">
+              @endif
+            </div>
+          @endauth
+          @guest
+            <h2 class="_cart_count"> 0 </h2>
+            <div class="_cart_wrapper">
+              <img class="_cart_img" src="{{ asset('assets/icon/cart.png')}}">
+            </div>
+          @endguest
+        </a>
+ 
+      <hr class="_hidden_in_mobile">
+
+      <div class="_profile_menu">
+
+         @if(empty($user['provider']))
+
+        <div class="_is_left">
+          <img class="_profile_menu_ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ $user['username'] }}">
+          <h2  class="_profile_menu_users_username">
+            <a href="{{ route('user.profile') }}"> {{ $user['username'] }} </a>
+          </h2>
+        </div>
+
+         @auth 
+          <ul>
+            @if($user['id'] === Auth::user()->id) 
+              <li><a href="/chat" target="_blank"> Chat </a></li>
+              <li><a class="_see_Notif" target="_blank" href="{{ route('notifications.index')}}"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+              <li><a  target="_blank" href="{{ route('product.create') }}"> Create your own Product </a></li>     
+              <li><a  target="_blank" href="{{ route('blog.create') }}"> Create a Blog</a></li>
+            @endif
+            <li><a href="{{ route('app.index') }}"> Back to homepage </a></li>
+            <li><a href="/social/account/logout/"> Logout </a></li>
+          </ul>
+         @endauth
+
+          @else
+
+          <div class="_is_left">
+            <img class="_profile_menu_ava" src="{{ $user['avatar'] }}" alt="{{ $user['username'] }}">
+              <h2  class="_profile_menu_users_username">
+                <a href=""> {{ $user['username'] }} </a>
+              </h2>
+          </div>
+
+         @auth
+          <ul>
+            @if($user['id'] === Auth::user()->id)
+            <li><a href="/chat" target="_blank"> Chat </a></li>
+            <li><a class="_see_Notif" target="_blank" href="/notification"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
+            <li><a target="_blank" href="/product/create"> Create your own Product </a></li>     
+            <li><a target="_blank" href="/blog/create"> Create a Blog</a></li>
+            @endif 
+            <li><a href="/"> Back to homepage </a></li>
+            <li><a href="/social/account/logout/"> Logout </a></li> 
+          </ul>
+         @endauth
+
+         @endif  
+
+      </div> 
+
+     </div> 
+ 
+    
+  {{---------------------------PRODUCTS----------------------------}}
   
   <div class="_columns _is_multiline">
     @forelse ($products->chunk(3) as $chunk)
-    @foreach ($chunk as $product)
-      <div class="_column _is_one_quarter">
+     @foreach ($chunk as $product)
+      <div class="_column _is_one_third">
 
         <div class="_products">
             <img src="{{ asset('storage/products/images/'. $product['img']) }}" alt="{{ $product['name'] }}" style="width: 100%;">
             
             <div class="_products_wrapper_price">
-              <p class="_products_desc_price">Rp {{ number_format($product['price'], 2,",",".") }}</p>
-            </div> <br>
+              <p class="_products_desc_price">Rp {{ ($product['price']) }} </p>
+            </div> 
 
-            <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> <br> 
+            <h1 class="_products_name"> {{ title_case($product['name']) }} </h1> 
         
-            <span class="_products_users_username"> Owner : {{ $user['username'] }} </span> <br> <br>
-            <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at'] ))  }} </span> <br> <br>
+            <span class="_products_users_username"> Owner : {{ $product['user']['username'] }} </span> 
+            <span class="_products_date"> {{ date(str_replace("-", " ",'d-F-Y'), strtotime($product['created_at'] ))  }} </span> 
           
             @foreach ($product->categories as $category)
-            <span class="_products_categories"> {{ $category['name'] }} </span> <br> <br>
+            <span class="_products_categories"> {{ $category['name'] }} </span> 
             @endforeach 
 
-            <p class="_products_desc"> {{ $product['desc'] }} </p> <br>
+            <p class="_products_desc"> {{ $product['desc'] }} </p>
           
             <form class="_cart_add" action="{{ route('cart.add')}}" method="post">
               @csrf
              {{-- CSRF --}}
 
-             <input type="hidden" name="id" value="{{ $product['id']}}">
-             <input type="hidden" name="name" value="{{ $product['name']}}">
-             <input type="hidden" name="price" value="{{ $product['price']}}">
-             <input type="hidden" name="img" value="{{ $product['img']}}">
+             <input type="hidden" name="id" value="{{ $product['id'] }}">
+             <input type="hidden" name="name" value="{{ $product['name'] }}">
+             <input type="hidden" name="price" value="{{ $product['price'] }}">
+             <input type="hidden" name="img" value="{{ $product['img'] }}">
 
-             <input class="_button _products_add_to_cart" type="submit" value="Add to Cart"> <br> <br>
+             <input class="_button _products_add_to_cart" type="submit" value="Add to Cart"> 
             </form>
          
           @if(Auth::user()->id === $user->id)
-            <a class="_button _products_edit"  target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a> <br> <br> 
+            <a class="_button _products_edit"  target="_blank" href="{{ route('product.edit', $product['id']) }}">Edit</a>  
          
             <form action="{{ route('product.destroy', $product['id']) }}" method="post">
               {{-- CSRF --}}
@@ -57,7 +273,7 @@
               {{-- METHOD_FIELD --}}
               {{ method_field('DELETE') }}
 
-              <input class="_button _products_delete" type="submit" value="Delete"> <br> <br>
+              <input class="_button _products_delete" type="submit" value="Delete"> 
             </form>
 
             {{-- <a onclick="event.preventDefault(); document.getElementsByClassName('_form_products_delete')[0].click();" class="_button _products_delete" href="#!"> Delete</a> <br> <br> 
@@ -70,25 +286,25 @@
         @endforeach 
         
         <div class="_column _is_fullWidth">
-          <hr>
+        <hr>
         </div>
 
       @empty
     @endforelse
   
+    {{-- PAGINATION --}}
 
-      {{-- PAGINATION --}}
+    <div class="_column _is_fullWidth">
+        {{ $products->links() }}
+    </div>
     
-      <div class="_column _is_fullWidth">
-         {{ $products->links() }}
-      </div>
-    
-      {{-------------------SINGLE BLOG-------------------------------------------}}
+    {{-------------------SINGLE LATEST BLOG------------------}}
    
-      @if($blog)
+    @if($blog)
       <div class="_column _is_fullWidth">
-        <div class="_blog">       
-          <h2 class="_blog_title"> {{ title_case($blog['title']) }} </h2> <br>
+        <div class="_blog">     
+            
+          <h2 class="_blog_title"> {{ title_case($blog['title']) }} </h2> 
             @foreach ($blog->tags as $tag)
               <span class="_blog_tags"> {{ $tag['name'] }} </span>
             @endforeach
@@ -97,7 +313,7 @@
               <figure>
                 <img class="_blog_img" src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}">
                 <figcaption> {{ $blog['caption'] }} </figcaption>
-              </figure> <br>
+              </figure> 
         
               <p class="_blog_desc"> {!! $blog['desc'] !!} </p>
 
@@ -110,16 +326,38 @@
               <br>
              @if(Auth::user()->id == $blog['user']['id'])
               <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_blog_delete')[0].submit();" href="#!"> Delete </a>
-              <br> <br>
+          
               <a class="_button" target="_blank" href="{{ route('blog.edit', $blog['slug']) }}">Edit</a>
              @endif
 
          </div>
       </div>
-    {{----------------------------------------EMOTIONS BLOG-------------------------------------------}}
 
-    <emotion :blog_id="{{ $blog['id'] }}"></emotion>
+    {{-----------------------EMOTIONS BLOG-------------------}}
+    
+     <emotion :blog_id="{{ $blog['id'] }}"> </emotion>
 
+     <div class="_column">
+       <comment :blog_id="{{ $blog['id'] }}" :user_id="{{ Auth::user()->id }}"> </comment>
+     {{-- <comment-textarea :blog_id="{{ $blog['id'] }}" :user_id="{{ Auth::user()->id }}"> </comment-textarea> --}}
+     </div>    
+
+    {{--    
+   <div class="_mobile_columns _is_multiline">
+      @foreach ($emotions as $emotion)  
+      <div class="_mobile_column _is_one_third">
+       <img class="_emotions_img" src="{{ asset('/assets/emotions/'. $emotion['name'] . '.png') }}" alt="{{ $emotion['name'] }}" emotion-id="{{ $emotion['id'] }}" blog-id="{{ $blog['id'] }}">
+        @if(!empty($emotion->emotionOptions->count()))  
+          <span class="_emotions_percentage"> {{ round($emotion->emotionOptions->count()/$totalEmotions*100) }} % </span> 
+          <span class="_emotions_total"> Total : {{ $emotion->emotionOptions->count() }}  </span>
+          @else 
+          <span class="_emotions_percentage"> 0 %</span> 
+          <span class="_emotions_total"> Total : 0 </span>
+         @endif
+       </div>
+      @endforeach
+    </div>  --}}
+      
     {{-- <comment
      v-for='comment in comments'
      :username="comment.user.username"
@@ -184,41 +422,37 @@
 
       </div>
     </div> --}}
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
   
-       <div id="emotionBox" class="_emotions">
-          @php
-           $emotions = ['happy', 'sad', 'angry','amazing', 'fear', 'doubt'];
-          @endphp
+    
+       {{-- <div id="emotionBox" class="_emotions">
           <div class="_mobile_columns _is_multiline">
-          @for ($i = 0; $i <count($emotions); $i++)  
+          @foreach ($emotions as $emotion)  
             <div class="_mobile_column _is_one_third">
-              <img class="_emotions_img _mobile_column" @click="vote(@php echo $i; @endphp)" src="{{ asset('assets/emotions/'. $emotions[$i] . '.png') }}">  
+              <img class="_emotions_img _mobile_column" @click="vote(@php echo $emotion['id']; @endphp)" src="{{ asset('assets/emotions/'. $emotion['name'] . '.png') }}">  
               
                 <span v-if="totalIsZero">
                   <div> 
                       0 % <br>
                     <span class="_emotions_total">
-                      total @{{  @php echo  $emotions[$i]; @endphp }}
+                      total @{{  @php echo  $emotion['name']; @endphp }}
                     </span> 
                   </div>
                 </span>
                 <span v-else>
                   <div>
-                    @{{ parseInt(@php echo $emotions[$i]; @endphp/total*100) }} % <br>
+                    @{{ parseInt(@php echo $emotion['name']; @endphp/total*100) }} % <br>
                     <span class="_emotions_total">
-                      total @{{  @php echo  $emotions[$i]; @endphp }}
+                      total @{{  @php echo  $emotion['name']; @endphp }}
                     </span> 
                   </div>
                  </span>
               </div>
-           @endfor
+           @endforeach
           </div>
          </div>
-         
-          <script>
+      
+         <script>
+           
             new Vue({
             el: "#emotionBox",
             data: {
@@ -242,11 +476,9 @@
               },
             },
             created: function () {    
-              this.$http({
-                url : '/emotions/' + this.blog_id,
-                method: 'GET'
-              }).then(function(res) {
-                  res = res.body;
+              axios.get('/emotions/' + this.blog_id).then((res) => {
+                  res = res.data;
+                  
                 if (res.total != 0 ) {
                   this.total = res.total;
                   this.happy = res.happy;
@@ -260,11 +492,8 @@
             },
             methods: {
               vote(emotion_id) {
-                this.$http({
-                  url: '/emotions/emotionid/' + emotion_id + '/blogid/' + this.blog_id,
-                  method: 'GET'
-                }).then(function(res) {
-                   res = res.body
+                axios.get('/emotions/emotionid/' + emotion_id + '/blogid/' + this.blog_id).then((res) => {
+                   res = res.data
                 
                   if(res.message == 'success') {
                     this.total++;
@@ -291,15 +520,14 @@
                 break;
               }
             }
+
           }
           })
-      </script>  --}}
+      </script>--}}
 
-      <br>
+     {{-------------------------------------ALL COMMENTS SINGLE BLOG----------------------------------------------------}}
 
-        {{-------------------------------------ALL COMMENTS SINGLE BLOG----------------------------------------------------}}
-
-        <div class="_column _is_fullWidth">
+      {{-- <div class="_column _is_fullWidth">
          @forelse($blog->comments as $comment) 
               <img class="_comments_ava" src="https://picsum.photos/200">
               <span class="_comments_username"> {{ $comment['user']['username'] }}  </span>
@@ -317,43 +545,36 @@
                 {{ $comment->is_unliked() }}
               </a>         
                <span class="_unlike_number"> {{ $comment->unlikes->count() }} </span>
-              </span>   
+              </span>    --}}
           
-                @if(Auth::user()->id == $comment->user->id)
-                  <div class="_comments_options">
-                    <a class="_button" href="{{ route('blog.comment.edit', $comment->id) }}"> Edit </a>
-                    <form style="display: inline;" action="{{ route('blog.comment.destroy', $comment['id']) }}" method="post">
+                {{-- @if(Auth::user()->id == $comment->user->id) --}}
+                  {{-- <div class="_comments_options"> --}}
+                    {{-- <a class="_button" href="{{ route('blog.comment.edit', $comment->id) }}"> Edit </a> --}}
+                    {{-- <form style="display: inline;" action="{{ route('blog.comment.destroy', $comment['id']) }}" method="post"> --}}
                       {{-- CSRF --}}
-                      @csrf 
-                      {{ method_field('DELETE') }}
+                      {{-- @csrf  --}}
+                      {{-- {{ method_field('DELETE') }} --}}
                       {{-- METHOD_FIELD --}}
-
-                      <input class="_button" type="submit" value="Delete">
-                    </form>
-                  </div>
-                @endif
-                @empty 
-          @endforelse
-
-        {{ $comments->links() }}
+                      {{-- <input class="_button" type="submit" value="Delete"> </form> </div> @endif @empty @endforelse  --}}
+          {{-- @empty 
+        @endforelse --}}
+        {{-- {{ $comments->links() }}  --}}
 
         {{----------------------------------TEXTAREA SINGLE BLOG COMMENTS----------------------------------------}}
 
-        @if ($errors->has('subject'))
+        {{-- @if ($errors->has('subject'))
           <span class="_is_invalid"> {{ $errors->first('subject') }}</span>
-        @endif
+        @endif --}}
        
-        <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog['id'])}}">  <br>
+        {{-- <form class="_form_comments" method="post" action="{{ route('blog.comment.store', $blog['id'])}}">  --}}
           {{-- CSRF --}}
-          @csrf
-      
+          {{-- @csrf
           <textarea name="subject" class="_comments_textarea"></textarea>
-        </form> <br>
+        </form>  --}}
        
-        <a class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();" href="#!"> Comment </a>  
-      </div>
+        {{-- <a  href="#!" class="_button" onclick="event.preventDefault(); document.getElementsByClassName('_form_comments')[0].submit();"> Comment </a>  
+      </div>  --}}
       
-     
        {{-- 
       <div class="_columns _is_multiline">
         @foreach(App\Models\Emotion::All() as $emotion)
@@ -452,34 +673,36 @@
       </script> --}}
 
     {{----------------------------------------RECENTLY BLOGS----------------------------------------------}}
-    <br> <br> <br>
-
-        <div class="_column _is_fullWidth">
-          <h2 class="_title_recently_blogs"> Recently Blog's </h2>  
-        </div>
-      
+ 
+      <div class="_column _is_fullWidth">
+        <h2> Recently Blog's </h2>  
+      </div>
+    
       <div class="_columns _is_multiline"> 
         @forelse ($blogs->chunk(3) as $chunk)
           @foreach ($chunk as $blog)
           <div class="_column _is_one_third">
-            <img src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}"> <br>
-            <h2> <a class="_text_gray" target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> {{ title_case($blog['title']) }} </a></h2>
+
+            <img src="{{ asset('storage/blogs/images/'. $blog['img']) }}" alt="{{ $blog['title'] }}">
+            <h2> <a target="_blank" href="{{ route('blog.show', $blog['slug'])}}"> {{ title_case($blog['title']) }} </a></h2>
+          
           </div>
          @endforeach
          @empty
          @endforelse
-      </div>
+       </div>
 
       {{-- PAGINATION --}}
+      
       <div class="_column _is_fullWidth">
         {{ $blogs->links() }}
       </div>
 
-       @endif
+       @endif {{-- end of CHECK BLOG IS EMPTY --}}
 
        </div> {{-- end of COLUMNS PRODUCT --}}    
 
-   </div> {{-- end of COLUMNS --}}
-  </div> {{-- end of CONTAINER --}}
+   </div> 
+  </div> 
 
 @endsection

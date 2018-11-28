@@ -11,7 +11,22 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
 
-  public function orders()
+  public function orders_api($type = '')
+  {
+
+      if($type == 'pending') {
+      $orders = Order::with(['products'])->where('delivered', '0')->get();
+    } else if ( $type == 'delivered') {
+      $orders = Order::with(['products'])->where('delivered', '1')->get();
+    } else {
+      $orders = Order::with(['products'])->get();
+    }
+
+      return $orders;
+
+  }
+
+  public function orders($type = '')
   {
 
     if($type == 'pending') {
@@ -31,14 +46,17 @@ class OrderController extends Controller
 
     $order = Order::findOrFail($orderId);
 
-    if($request->has('delivered')) {
+    if($request->has('delivered'))  {
 
-      $order->delivered = $request->delivered;
+      $order->delivered = $request->delivered; 
 
+      Toastr::info('Changed to delivered successfullly');
     }
-    else {
+    else  {
 
       $order->delivered = 0;
+
+      Toastr::info('Changed to pending successfullly');
 
     }
 

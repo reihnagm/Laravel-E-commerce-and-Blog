@@ -5,7 +5,9 @@
             <li v-for="user in users" :key="user.id">
                <a target="_blank" :href="'/profile/'+ user.slug"> {{ user.username }} </a>
             </li>
-        </ul>
+        </ul> 
+        <br>
+        <a class="_button" href="/"> back to homepage </a>
     </div>
 </template>
 

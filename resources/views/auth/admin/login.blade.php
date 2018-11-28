@@ -26,7 +26,7 @@
 
           <label class="label" for="password"> Password </label>
           <div class="_wrapper_input_password">
-            <input id="password_field_admin" type="password" name="password"> <i toggle="#password_field_admin" class="_eye_icon"> </i>
+            <input id="_password_field_admin" type="password" name="password"> <i toggle="#_password_field_admin" class="_eye_icon"> </i>
           </div>
          </div>
       

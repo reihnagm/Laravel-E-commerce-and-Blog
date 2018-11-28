@@ -19,6 +19,7 @@
              <div id="card-errors" role="alert"></div>
           </div> <br>
           <input class="_button" type="submit" value="Submit">
+          <a class="_button" href="{{ route('app.index') }}"> Back </a>
         </form>
 
     </div>

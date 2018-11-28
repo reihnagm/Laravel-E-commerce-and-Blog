@@ -12,6 +12,32 @@ window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+import { Validator } from "vee-validate";
+
+// create rules
+Validator.extend('password', {
+    getMessage: field => 'The password must contain at least: uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. , . _ & ? etc)',
+    validate: value => {
+        var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+        return regex.test(value);
+    }
+});
+
+// custom message
+// const dict = {
+//     custom: {
+//         email: {
+       
+//         }
+//     }
+// }
+
+// Validator.localize("en", dict);
+
+Vue.use(VeeValidate);
+
 import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
@@ -24,3 +50,5 @@ window.Echo = new Echo({
 });
     
 require('./echo');
+
+require('./components');

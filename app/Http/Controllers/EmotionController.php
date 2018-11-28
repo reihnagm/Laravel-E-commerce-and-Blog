@@ -2,91 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Auth;
-
-use App\Models\Blog;
 use App\Models\Emotion;
 
 use Illuminate\Http\Request;
 
 class EmotionController extends Controller
 {
+    public function index($id)
+    {
+		$emotions = Emotion::where('blog_id', $id)->get(); 
+		
+		$total= count($emotions);
 
-    public function index($blogid)
+		$happy = 0; $sad = 0; $angry = 0;
+
+		foreach($emotions as $emotion) {
+			switch ($emotion['emotion_id']) {
+				case 1: $happy++; break;
+				case 2: $sad++; break;
+				case 3: $angry++; break;
+				default: break;
+			}
+		}
+
+		return json_encode([
+			"total" => $total,
+			"happy" => $happy,
+			"sad" => $sad,
+			"angry" => $angry
+		]);
+
+	}
+
+
+    public function save($emotion_id, $blog_id)
     {
 
-       $emotions = Emotion::where('blog_id', $blogid)->get();
-       
-       $total = count($emotions);
-       $happy = 0;
-       $sad = 0;
-       $angry = 0;
-       $fear = 0;
-       $doubt = 0;
-       $amazing = 0;
-       
-       foreach($emotions as $emotion) 
-      {
-        switch ($emotion->emotion_id)
-          {
-            case 0: $happy++; break;
-            case 1: $sad++; break;
-            case 2: $angry++; break;
-            case 3: $amazing++; break;
-            case 4: $fear++; break;
-            case 5: $doubt++; break;
-            default: break;
-          }
-      } 
+		$emotion = Emotion::where('blog_id', $blog_id)->where('user_id', auth()->user()->id)->first();
 
-       return json_encode([
-        "total" => $total, 
-        "happy" => $happy,
-        "sad" => $sad,
-        "angry" => $angry,
-        "amazing" => $amazing,
-        "fear" => $fear,
-        "doubt" => $doubt
-       ]);
+		if(!$emotion) {
+		Emotion::create([
+			"emotion_id"  => $emotion_id,
+			"blog_id" => $blog_id,
+			"user_id" => auth()->user()->id, 
+		]); 
+		 return json_encode([
+			"message" => "vote"
+		]);
+		
+	    } elseif($emotion->emotion_id == $emotion_id) {
+		  Emotion::where('blog_id', $blog_id)->where('user_id', auth()->user()->id)->delete();
+		
+		  return json_encode([
+			"message" => "unvote"
+		]);
+	  } else {
+		   Emotion::where('blog_id', $blog_id)->where('user_id', auth()->user()->id)->
+		   update([
+			   "emotion_id" => $emotion_id
+		   ]);
+		
+		  return json_encode([
+		    "message" => "changed",
+			"old_emotion" => $emotion->emotion_id
+		  ]);
+	  }
 
     }
-
-
-    public function saveEmotion($emotionid, $blogid) 
-    {
-
-      $emotions = Emotion::where('blog_id', $blogid)->where('user_id', Auth::user()->id)->first();
-
-      if (!$emotions) {
-
-       Emotion::create([
-        'user_id' => Auth::user()->id,
-        'blog_id' => $blogid,
-        'emotion_id' => $emotionid
-       ]);
-
-       return json_encode(['message' => 'success']);
-      
-      } else if ($emotions->emotion_id == $emotionid) {
-
-       Emotion::where('blog_id', $blogid)->where('user_id', Auth::user()->id)->delete();
-
-       return json_encode(['message' => 'unvote']);
-
-      } else {
-      
-        Emotion::where('blog_id', $blogid)->where('user_id', Auth::user()->id)->update([
-          'emotion_id' => $emotionid
-        ]);
-
-       return json_encode([
-         'message' => 'changed',
-         'old_emotion' => $emotions->emotion_id
-        ]);
-
-      }
-
-    }
-
 }

@@ -83,78 +83,14 @@ $(document).ready(function() {
         sendToAjax(...data)
     });
 
-    function sendToAjax(subject, blog_id, comments, html) {
-    $.ajax({
-        method: "POST",
-        url: "/blog-comment/" + blog_id,
-        data: {
-          subject: subject
-        }
-    }).done(function(success) {
-        console.log(comment_subject)
-            html += 
-                "<div class='_column'>" +
-                    "<div id='_userComment'>" +
-                        "<img id='_imgComment' src='https://picsum.photos/200'>" +
-                             comment.user.username +
-                            "<div id='_descComment'>" +
-
-                            comment.subject +
-                    
-                                "<div>" +
-                                    "<span class='_option_like_unlike_wrapper'>" +
-                                       "<a class="+ comment.is_liked + "'?' '_after_liked' : '_before_liked' href='#!' model-id=" + comment.id + 'model-type = 2' + ">"+
-                                          'comment.is_liked' +
-                                        "</a>" +
-                                        "<span class='_total_like'>"+
-                                            "<span class='_like_number'>"+ comment.likes.length + "</span>" +
-                                        "</span>" +
-                                    "</span>" +
-                                "</div>" +
-
-                               "<div>" +
-                                    "<span class='_option_unlike_wrapper'>" +
-                                        "<a class=" + comment.is_unliked + "'?' '_after_unliked' : '_before_unliked'  href='#!' 'model-id=" + comment.id + 'model-type=2' + ">" +
-                                            comment.is_unliked +
-                                        "</a>" +
-                                        "<span class='_total_unlike'>"+
-                                          "<span class='_unlike_number'> " + comment.unlikes.length + "</span>" +
-                                       "</span>" +
-                                    "</span>" +
-                                "</div>" + 
- 
-                        
-                        "<div id='_optionCommentBtn'>" +
-                            "<a class='_button' href='/blog-comment/'"+ comment.id + "'> edit </a>" +
-                            "<a class='_button' href='/blog-comment/'"+ comment.id + "'> delete </a>" +
-                        "</div>"+
-                       
-              "</div>"+
-          "</div>"
-       
-  
-      
-        $('#_comment_content').append(html);
-    }).fail(function(error) { 
-        console.log(error)
-    });
-  }
- 
-
-    // $(document).on('click touchstart','._see_Notif', function() {
-    //     $('._wrapper_box_Notif').show(500)
-    // })
-
-    // $(document).on('click touchstart', '._exit_Notif', function () {
-    //     $('._wrapper_box_Notif').hide(500)
-    // });
-
     $(document).on('click touchstart', '._mark_as_read', function () {
         let _this = $(this)
         let id = _this.attr('notif-id')
         markAsRead(id)
     });
 
+
+    // MARK AS READ
     function markAsRead(id) {  
         $.ajax({
             url: '/mark_as_read/' + id,
@@ -166,10 +102,10 @@ $(document).ready(function() {
         })
     }
 
-    // summernote
-    $('#summernote').summernote();
+    // SUMMERNOTE
+    // $('#summernote').summernote();
 
-    // slick
+    // CONFIG SLICK
     $("._slick").slick({
         dots: true,
         infinite: false,
@@ -178,7 +114,7 @@ $(document).ready(function() {
         cssEase: 'linear'
     });
 
-    // password eye
+    // PASSWORD EYE
     $("._eye_icon").click(function () {
         $(this).toggleClass("_eye_icon _eye_icon_slash");
         var input = $($(this).attr("toggle"));
@@ -190,7 +126,7 @@ $(document).ready(function() {
         }
     });
 
-    // mode price money input text
+
     $("input[class='_inputfile']").change(function () {
         $(this).html($(this).val());
     });
@@ -204,10 +140,10 @@ $(document).ready(function() {
     //     affixesStay: false
     // });
 
-    // Jquery Ticker 
+    // JQUERY TICKER
     $('.ticker').ticker();
     
-    // Accordion
+    // ACCORDION
     let accordion = $(".accordion");
     for (i = 0; i < accordion.length; i++) {
         accordion[i].addEventListener("click", function () {
@@ -220,13 +156,14 @@ $(document).ready(function() {
         });
     }
 
-    // Mobile menu
+    // MOBILE MENU
     $(document).on('click', '._hamburger_menu', function(e) {
         $('._hamburger_menu').toggleClass('change')
          $('._mobile_nav_menu').toggleClass('lft')
-    })
+    })    
 
-})
+});
+
 
 
   

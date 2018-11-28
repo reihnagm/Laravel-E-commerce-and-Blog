@@ -48,13 +48,7 @@ class User extends Authenticatable
 
     }
 
-     public function emotions()
-    {
-
-        return $this->hasMany('App\Models\Emotion');
-
-    }
-
+  
     public function isOwner()
     {
 

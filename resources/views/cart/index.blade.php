@@ -21,9 +21,9 @@
             <tr>
              <td>
                <form action="{{ route('cart.update', $cart->rowId) }}" method="post">
-                @csrf
+                 @csrf
                  {{-- CSRF --}}
-                {{ method_field('PUT')}}
+                 {{ method_field('PUT')}}
                  {{-- METHOD_FIELD --}}
 
                 <input type="number" name="qty" value="{{ $cart->qty }}" style="width: 30px;"> <br> <br>
@@ -58,6 +58,7 @@
                   <input type="hidden" name="img" value="{{ $cart->options->image }}">
                 </form>
                 <a class="_button" href="#!" onclick="event.preventDefault(); document.getElementById('saveForLater').submit();"> Save for Later </a> &nbsp;
+                 <a href="{{ route('address.index') }}" class="_button"> Checkout </a> &nbsp;
                 <a href="{{ route('user.profile') }}" class="_button"> Back </a>
               </div>
             </td>
@@ -65,25 +66,11 @@
           </tr>
            @endauth
             @empty
+             <span> No items in Cart </span>
+             <a class="_button" href="/profile"> Continue Shopping </a> <br> <br>
             @endforelse 
-            @guest
-            <span> No items in Cart </span>
-            <a class="_button" href="/profile"> Continue Shopping </a> <br> <br>
-            @endguest
-            @auth
-            <tr>
-              <td> items {{ Cart::count() }}</td>
-              <td></td>
-              <td>
-                <div> Tax (13%) Rp {{ Cart::tax() }} </div> <br>
-                <div> Sub Total Rp {{ Cart::subtotal() }} </div> <br>
-                <div> Total  Rp {{ Cart::total() }} </div> <br>
-                <a href="{{ route('address.index') }}" class="_button"> Checkout </a> &nbsp;
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            @endauth
+
+          
             @guest 
               <tr>
                 <td> items 0</td>
@@ -92,9 +79,6 @@
                   <div> Tax (13%) Rp 0.000 </div> <br>
                   <div> Sub Total Rp 0.000 </div> <br>
                   <div> Total  Rp 0.000  </div> <br>
-                  @auth
-                  <a href="{{ route('address.index') }}" class="_button"> Checkout </a> &nbsp;
-                  @endauth
                 </td>
                 <td></td>
                 <td></td>

@@ -2,7 +2,8 @@
     <div>
         <form action="#">
              <div class="form-group">
-                 <textarea rows="4" v-model="body"
+                 <textarea
+                  v-model="body"
                      @keydown="handleInput"
                      placeholder="Chat here.."></textarea>
              </div>

@@ -30,23 +30,25 @@ class LikeController extends Controller
         'likeable_type' => $model_type
         ]);
 
-        switch($type) {
-            case 1: 
-            Notification::create([
-            'user_id'  => $model->user->id,
-            'blog_id' => $model->id,
-            'subject'  => Auth::user()->username. ' "Likes your post."'
-            ]);
-            break;
-            case 2:
-             Notification::create([
-            'user_id'  => $model->user->id,
-            'blog_id' => $model->blog->id,
-            'subject'  => Auth::user()->username. ' "Likes your comment."'
-            ]);
-        }
 
-        return json_encode(['message', 'like']);
+        // notif
+        // switch($type) {
+        //     case 1: 
+        //     Notification::create([
+        //     'user_id'  => $model->user->id,
+        //     'blog_id' => $model->id,
+        //     'subject'  => Auth::user()->username. ' "Likes your post."'
+        //     ]);
+        //     break;
+        //     case 2:
+        //      Notification::create([
+        //     'user_id'  => $model->user->id,
+        //     'blog_id' => $model->blog->id,
+        //     'subject'  => Auth::user()->username. ' "Likes your comment."'
+        //     ]);
+        // }
+
+        return json_encode(['message' => 'like']);
       
        }
        
@@ -70,6 +72,7 @@ class LikeController extends Controller
        }
 
     }
+
     
      public function check_type($type, $model_id)
     {

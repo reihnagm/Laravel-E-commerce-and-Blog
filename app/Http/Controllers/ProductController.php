@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function create()
     {
 
-        $user = User::first();
+        $user = User::findOrFail(auth()->user()->id);
 
         $notifications = Notification::all();
 
@@ -146,13 +146,13 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        // $productImg = public_path("storage/products/images/{$product->img}");
+        $productImg = public_path("storage/products/images/{$product->img}");
 
-        // if (File::exists($productImg)) {
+        if (File::exists($productImg)) {
 
-        //     unlink($productImg);
+            unlink($productImg);
 
-        // }
+        }
         
         $product->categories()->detach();
 

@@ -15,6 +15,7 @@ use App\Http\Resources\BlogResource as BlogCollection;
 
 use App\Models\User;
 use App\Models\Blog;
+use App\Models\BlogComment;
 use App\Models\Product;
 use App\Models\Tag;
 use App\Models\Category;
@@ -60,7 +61,7 @@ class BlogController extends Controller
     public function create()
     {
 
-        $user = User::first();
+        $user = User::findOrFail(auth()->user()->id);
 
         $tags = Tag::all();
 
@@ -117,18 +118,22 @@ class BlogController extends Controller
 
      public function show($id)
     {
-      
-     $blog = Blog::with(['user', 'tags'])->where('slug', $id)->first();
 
-     $blogs = Blog::where('slug', $id)->paginate(3, ['*'], 'blog-page');
+     $user = User::firstOrFail();
+      
+     $blog = Blog::with(['user', 'tags:name', 'comments.user'])->where('slug', $id)->first();
+
+     $blogs = Blog::paginate(3, ['*'], 'blog-page');
+     
+     $comments = $blog->comments()->with(['user','likes','unlikes'])->paginate(6, ['*'], 'comment-page');     
     
-     $products = auth()->user()->products()->paginate(4);
+     $products = Product::with(['user:username','categories:name'])->paginate(3, ['*'], 'product-page');
 
      $categories = DB::table('categories')->select('name', 'id')->get();
  
      $tags = DB::table('tags')->select('name', 'id')->get();
  
-     return view('blog/show', ['blog' => $blog, 'blogs' => $blogs, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
+     return view('blog/show', ['user' => $user, 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products, 'categories' => $categories, 'tags' => $tags]);
 
     }
     
@@ -157,8 +162,7 @@ class BlogController extends Controller
         "img"   => str_replace('data:image/png;base64,', '', $request->img),
         "caption" => $request->caption,
         "desc"  => $request->desc,
-        "user_id" => auth()->user()->id,
-       
+        "user_id" => auth()->user()->id
       ]);
 
       if ($request->hasFile('img')) {

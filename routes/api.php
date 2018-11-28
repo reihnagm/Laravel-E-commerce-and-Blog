@@ -23,7 +23,6 @@ Route::group(['middleware' => ['api']], function () {
     // }
 });
 
-
 // API RESOURCE BLOG /api/blog
 // Route::get('/blog', 'BlogController@index')->name('blog.index');
 
@@ -39,11 +38,20 @@ Route::group(['middleware' => ['api']], function () {
 
 // Route::delete('/blog/{id}', 'BlogController@destroy')->name('blog.destroy');
 
-// API RESOURCE COMMENT BLOG
-// Route::get('/blog-comment','BlogCommentController@index')->name('blog.comment.index');
+/*--------------------------------------------
+-- API RESOURCE COMMENT BLOG /api/blog-comment
+----------------------------------------------*/ 
 
-// Route::post('/blog-comment/{id}', 'BlogCommentController@store')->name('blog.comment.store');
+Route::get('/blog-comment','BlogCommentController@index_api');
 
-// Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
+Route::post('/blog-comment/{id}/{user_id}', 'BlogCommentController@store')->name('blog.comment.store');
 
-// Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
+Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
+
+Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
+
+/*---------------------------------------------
+--  API RESOURCE ORDERS /api/orders/{type?}
+-----------------------------------------------*/ 
+
+Route::get('/orders', 'OrderController@orders_api');

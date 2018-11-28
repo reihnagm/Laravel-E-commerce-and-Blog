@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Emotion extends Model  
+class Emotion extends Model
 {
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+
 use Auth;
 
  trait LikesTrait
@@ -13,6 +15,7 @@ use Auth;
     return $this->morphMany('App\Models\Like', 'likeable');
    
    }
+
 
    public function is_liked()
    {

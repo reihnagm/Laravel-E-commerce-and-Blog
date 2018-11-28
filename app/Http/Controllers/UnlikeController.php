@@ -31,21 +31,21 @@ class UnlikeController extends Controller
            'unlikeable_type' => $model_type
        ]);
 
-        switch($type) {
-            case 1: 
-            Notification::create([
-            'user_id'  => $model->user->id,
-            'blog_id' => $model->id,
-            'subject'  => Auth::user()->username. ' "Unlikes your post."'
-            ]);
-            break;
-            case 2:
-             Notification::create([
-            'user_id'  => $model->user->id,
-            'blog_id' => $model->blog->id,
-            'subject'  => Auth::user()->username. ' "Unlikes your comment."'
-            ]);
-        }
+        // switch($type) {
+        //     case 1: 
+        //     Notification::create([
+        //     'user_id'  => $model->user->id,
+        //     'blog_id' => $model->id,
+        //     'subject'  => Auth::user()->username. ' "Unlikes your post."'
+        //     ]);
+        //     break;
+        //     case 2:
+        //      Notification::create([
+        //     'user_id'  => $model->user->id,
+        //     'blog_id' => $model->blog->id,
+        //     'subject'  => Auth::user()->username. ' "Unlikes your comment."'
+        //     ]);
+        // }
 
       return json_encode(['message' => 'unlike']);
 

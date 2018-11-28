@@ -9,9 +9,8 @@ class Like extends Model
 
   use LikesTrait;
 
-    protected $guarded = ['id'];
-
-  // prevent error if not using timepstamp in table
+  protected $guarded = ['id'];
+ 
   public $timestamps  = false;
 
   public function likeable()

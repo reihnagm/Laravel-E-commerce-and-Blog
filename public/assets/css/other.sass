@@ -1,20 +1,18 @@
-// hide animate left
 ._mobile_nav_menu
   position: absolute
   left: -100%
   z-index: 1
   display: none
 
-// animate show to left
 .lft
   left: 0
 
-// trigger mobile menu
 ._hamburger_menu
   display: none
-
-// hamburger menu 
-.bar1, .bar2, .bar3
+ 
+.bar1, 
+.bar2, 
+.bar3
   width: 35px
   height: 5px
   background-color: grey
@@ -22,19 +20,13 @@
   transition: 0.5s
   display: block
 
-// animate hamburger menu
 .change .bar1 
   transform: rotate(-45deg) translate(-9px, 6px)
-
 .change .bar2 
   opacity: 0
-
 .change .bar3 
   transform: rotate(45deg) translate(-8px, -8px)
 
-// -----------------------------------------------------------
-
-// info
 #_info
   display: inline-block
   width: 100%
@@ -43,18 +35,18 @@
   color: rgb(251, 251, 251)
   p
   text-align: center
-  
-// markAsRead Notification
+
 .marked
   text-decoration: line-through
 
-// clearfix 
 .clearfix::after
   display: table
   clear: both
   content: ""
 
-// profile menu
+._my_profile_homepage
+  margin: 12px 0 8px 0
+
 ._profile_menu
   background:  rgba(199, 199, 199, 0.65)
   color: rgba(37, 37, 37, 0.7)
@@ -75,29 +67,6 @@
 ._profile_menu ._profile_menu_ava
   width: 120px
   padding: 5px 5px 
-
-// admin 
-._admin_header 
-  background: linear-gradient(rgb(52, 150, 89), rgb(176, 189, 137))
-  padding: 16px
-  margin-top: 20px
-
-// admin icon
-._admin_dashboard_icon
-  content: url('../../icon/dashboard.png')
-  width: 25px
-  height: 25px
-._admin_product_icon
-  content: url('../../icon/product.png')
-  width: 25px
-  height: 25px
-._admin_logout_icon
-  content: url('../../icon/logout.png')
-  width: 25px
-  height: 25px
- 
-// like & unlike
-
 ._before_liked
   content: url('../../icon/like.png')
   width: 25px
@@ -119,9 +88,6 @@
   content: url('../../icon/unlike.png')
   width: 25px
   height: 25px
-
-
-// eye icon
   
 ._wrapper_input_password
   display: flex
@@ -146,16 +112,11 @@
   width: 26px
   height: 26px
  
-// search
-
 ._search
   content: url('../../icon/search.png')
   width: 40px
   height: 40px
 
-// banner
-
-// Google and Facebook
 #google_wrapper
   position: relative
 #facebook_wrapper
@@ -169,17 +130,15 @@
   width: 30px
   height: 30px
 
-// header
 header
   border-bottom: 1px dashed rgb(209, 139, 82) !important
-// nav
+
 .nav
   background: rgba(199, 199, 199, 0.65)
   padding: 8px
   a
    text-decoration: none
 
-// cart
 ._cart
   position: relative
   display: block
@@ -189,7 +148,6 @@ header
 ._cart ._cart_count
   display: inline-block
   padding: 5px
-  font-size: 19px
   background: rgba(210, 0, 0, 0.65)
   color: whitesmoke
 
@@ -200,8 +158,6 @@ header
   position: absolute
   transform: translate(25px, -65px)
   width: 19px
-
-// --------------------------------------------------------------------------------
 
 #_login_wrapper
   display: flex
@@ -234,28 +190,17 @@ header
   display: inline-block
   padding: 8px
 
-// form login
-#_form_login
-  a
-   margin-top: 8px
-  #_remember_label
-   color: rgba(37, 37, 37, 0.7)
-
-// table cart wrapper
 #_table_cart th
   border: none
 #_table_cart td
   background: white
   border: none
 
-// Flag int-tel-input
 .iti-flag
   background-image: url("../../icon/flags.png")
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
   .iti-flag
   background-image: url("../../icon/flags@2x.png")
-
-// products
 
 ._products
   border: 1px solid rgba(152, 152, 152, 0.5)
@@ -264,63 +209,63 @@ header
 
 ._products ._products_name
   font-weight: 800 
-  margin-left: 6px
+  margin: 10px 0 0 5%
 
 ._products ._products_users_username
-  display: inline-block
-  margin-left: 6px  
+  display: block
+  margin: 10px 0 0 5%  
 
 ._products ._products_date
-  margin-left: 6px
+  display: block
+  margin: 10px 0 0 5%
 
 ._products ._products_categories
   padding: 5px
-  margin-left: 6px
+  margin: 10px 0 0 5%
   display: inline-block
   border-radius: 7px
-  border: 1px solid rgb(125, 91, 56)
+  border: 0.5px solid rgb(125, 91, 56)
   background: rgb(185, 185, 185)
   color: rgb(238, 238, 238)
 
 ._products ._products_desc
-  padding: 0 5px
+  margin: 10px 2% 0 2%
   text-align: justify
-  word-break: break-all
   line-height: 25px
 
 ._products_add_to_cart,
 ._products_edit,
 ._products_delete 
-  margin-left: 6px
+  margin: 10px 0 0 5%
 
-._products_wrapper_price
-  background:  url('../../icon/board-price.jpg') no-repeat top 
-  width: auto
-  height: auto
-
-._products_img_price
-  max-height: 60px
+._products_delete 
+  margin-bottom: 5%
 
 ._products_desc_price
-  
-// blogs in homepage
+  margin: 10px 0 0 5%
 
 ._blogs_homepage 
   background: #f7f7f7
   padding: 10px
+
+._blogs_homepage_title 
+  margin-bottom: 8px
+
+._blogs_homepage_author 
+  margin-bottom: 8px
+  display: block
+
+._blogs_homepage_date 
+  margin: 8px 0
+  display: block
   
 ._blogs_homepage_tags
   padding: 5px
   display: inline-block
   border-radius: 7px
-  border: 1px solid rgb(125, 91, 56)
+  border: 0.5px solid rgb(125, 91, 56)
   background: rgb(185, 185, 185)
   color: rgb(238, 238, 238) 
-
-._blogs_homepage_desc
-  font-size: 16px !important
-
-// blog in profile
 
 ._blog ._blog_img
   margin: 12px 0 
@@ -335,7 +280,7 @@ header
   padding: 5px
   display: inline-block
   border-radius: 7px
-  border: 1px solid rgb(125, 91, 56)
+  border: 0.5px solid rgb(125, 91, 56)
   background: rgb(185, 185, 185)
   color: rgb(238, 238, 238) 
 
@@ -344,20 +289,18 @@ header
   font-size: 16px
   text-indent: 40px 
   
-// blog emotions
-
 ._emotions
   color: rgba(37, 37, 37, 0.7)
 
 ._emotions_img
-  width: 80px
-  height: 80px
+  width: 90px
   cursor: pointer
 
-._emotions_img:hover
-  padding: 5px
-
-// blog comments
+._emotions_percentage, 
+._emotions_total
+  display: block
+  margin: 4% 0
+  color: rgba(37, 37, 37, 0.7)
 
 ._comments_textarea 
     color: grey
@@ -378,18 +321,14 @@ header
     word-wrap: break-word
     text-align: justify
 
-// footer
 ._footer 
   text-align: center
-  padding: 16px
-
-// pagination
+._footer p
+  margin: 5px 0
 
 .pagination 
   background: transparent !important 
   display: flex !important
-
-// notif
 
 ._mark_as_readed
   text-decoration: line-through
@@ -403,21 +342,20 @@ header
   padding: 8px
   width: 50%
   p 
-   margin: 5px 0
-
-// blog in profile
+  margin: 5px 0
 
 ._blog div span 
   margin: 6px 0
   display: inline-block
-
-// panel register
 
 .panel 
   padding: 0 5px
   max-height: 0
   overflow: hidden
   transition: max-height 0.5s ease-out
+
+
+
 
 
 

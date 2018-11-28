@@ -25,13 +25,8 @@ class Blog extends Model
 
     }
 
-    public function emotions()
-    {
-
-        return $this->hasMany('App\Models\BlogEmotion');
    
-    }
-
+   
     public function comments()
     {
 
