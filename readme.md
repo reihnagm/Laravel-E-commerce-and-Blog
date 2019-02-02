@@ -26,7 +26,7 @@
 - **have slug**
 - **pagination with different url**
 - **multiple input dollar and idr** 
-- **discount**
+- **discount & coupons**
 - **summer note lite version text editor for crud product (desc)**
 
 ### Integrate Payment
@@ -38,6 +38,10 @@
 - **package admin laravel voyager(modified)**
 - **login use google**
 - **login use facebook**
+
+
+
+
 
 
 
