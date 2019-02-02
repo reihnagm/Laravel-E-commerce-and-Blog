@@ -13,6 +13,7 @@
 - **have image**
 - **have tags**
 - **have slug**
+- **pagination with different url**
 - **have a single page**
 - **emotions vote with percentage bar (vue js)**
 - **comments (crud (vue js), like and unlike (vue js), pagination use collection)**
@@ -23,6 +24,7 @@
 - **have image**
 - **have categories**
 - **have slug**
+- **pagination with different url**
 - **multiple input dollar and idr** 
 - **discount**
 - **summer note lite version text editor for crud product (desc)**
@@ -36,6 +38,9 @@
 - **package admin laravel voyager(modified)**
 - **login use google**
 - **login use facebook**
+
+
+
 
 
 
