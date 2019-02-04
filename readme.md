@@ -16,7 +16,7 @@
 - **pagination with different url**
 - **have a single page**
 - **emotions vote with percentage bar (vue js)**
-- **comments (crud (vue js), like and unlike (vue js), pagination use collection)**
+- **comments realtime (crud (vue js), like and unlike (vue js), pagination use collection)**
 - **summer note lite version text editor for crud blog (desc)**
 
 ### Product
@@ -28,6 +28,7 @@
 - **multiple input dollar and idr** 
 - **discount & coupons**
 - **summer note lite version text editor for crud product (desc)**
+- **checkout as guest**
 
 ### Integrate Payment
 - **Stripe**
@@ -38,16 +39,3 @@
 - **package admin laravel voyager(modified)**
 - **login use google**
 - **login use facebook**
-
-
-
-
-
-
-
-
-
-
-
-
-
