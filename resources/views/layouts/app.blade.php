@@ -4,11 +4,11 @@
 <head>
   <title> @yield('title') </title>
 
-  <meta name="description" content="@yield('desc')">
+  <meta name="author" content="@yield('author')">
 
-  <meta name="author" content=" @yield('author')">
+  <meta name="description" content="@yield('description')">
 
-  <meta name="token" content="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,29 +18,26 @@
 
    @yield('css')
 
-  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
-
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" >
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" >
-
   <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
 
   <link rel="stylesheet" href="{{ asset('assets/slick/slick.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('assets/css/main/main.css') }}"> 
+  {{-- WITHOUT BOOTSTRAP --}}
+  <link rel="stylesheet" href="{{ asset('assets/summernote/dist/summernote-lite.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('assets/css/main/main.css') }}">
 
   <link rel="stylesheet" href="{{ asset('assets/css/main/css-reset.css') }}">
- 
-  <link rel="icon" href="{{ asset('assets/logo/logo.ico') }}">
 
-  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="shortcut icon" href="{{ asset('assets/logo/logo.ico') }}" type="image/x-icon">
 
   <script>
       window.Laravel = {!! json_encode([
-            'token' => csrf_token(),
+            'csrfToken' => csrf_token(),
+            'auth' => auth()->check() ? auth()->check() : null, // CHECK LOGIN
+            'auth_id' =>  auth()->check() ? auth()->user()->id : null, // AUTH USER ID
             'user' => [
-                'username' => auth()->check() ? auth()->user()->username : null
+                'name' => auth()->check() ? auth()->user()->name : null
             ]
         ]) !!};
   </script>
@@ -49,28 +46,35 @@
 <body>
 
   <div id="app">
+    {{-- HEADER --}}
     @include('_partials/header')
+
+    {{-- CONTENT --}}
      @yield('content')
+
+    {{-- FOOTER --}}
     @include('_partials/footer')
   </div>
 
-  @yield('js')
-  
+
   <script src="{{ asset('assets/js/app.js') }}"></script>
   
+  @yield('js')
+
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
+  {{-- WITHOUT BOOTSTRAP --}}
+  <script src="{{ asset('assets/summernote/dist/summernote-lite.js') }}"></script>
+
+  {{-- <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script> --}}
+
   <script src="{{ asset('assets/js/jquery-mask-money.js') }}"></script>
-   
+
   <script src="{{ asset('assets/js/jquery.ticker.min.js') }}"></script>
 
   {!! Toastr::render() !!}
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" ></script>
-
-  <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
 
  </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Message;
+
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -29,13 +30,8 @@ class ChatCreated implements ShouldBroadcast
         ];
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel|array
-     */
     public function broadcastOn()
     {
         return new PresenceChannel('channel-chat');
-    }
+    }    
 }

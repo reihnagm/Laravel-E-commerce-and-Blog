@@ -1,25 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="_container">
-    <div class="_columns _is_center">
-      <div class="_column _is_half">
+  <div class="container">
+    <div class="columns is-center">
+      <div class="column is-half">
 
-        <form action="{{ route('payment.store') }}" method="post" id="payment-form">
-          @csrf
+        <h2> Checkout </h2>
+        <hr>
+
+        <form  action="" method="post" id="payment-form">
+         @csrf
+        <label for="email"> E-mail Address </label>
+        <input id="email" type="text" name="email" value="{{ old('email') }}">
+
+        <label for="name"> Name </label>
+        <input id="name" type="text" name="name" value="{{ old('name') }}">
+
+        <label for="address"> Address </label>
+        <input id="address" type="password" name="password" value="{{ old('address') }}">
+
+        <label for="city"> City </label>
+        <input id="city" type="text" name="city" value="{{ old('city') }}">
+
+        <label for="postal"> Postal Code </label>
+        <input type="text" name="city" value="{{ old('psot') }}">
+
+        <label for="city"> Province </label>
+        <input id="city" type="text" name="city" value="{{ old('city') }}">
+
+        <label for="phone"> Phone </label>
+        <input type="number" name="phone" value="{{ old('phone') }}">
+
         <div class="form-row">
           <label for="card-element">
-            <h2> Credit or debit card </h2>  
+            <h2> Credit or Debit Card </h2>
           </label> <br>
-          <div id="card-element">
-            <!-- A Stripe Element will be inserted here. -->
-          </div>
+          <div id="card-element"></div>
 
-             <!-- Used to display form errors. -->
-             <div id="card-errors" role="alert"></div>
-          </div> <br>
-          <input class="_button" type="submit" value="Submit">
-          <a class="_button" href="{{ route('app.index') }}"> Back </a>
+          <div id="card-errors" role="alert"></div>
+         </div> <br>
+
+          <input class="button" type="submit" value="Submit">
+          <a class="button" href="{{ route('app.index') }}"> Back </a>
         </form>
 
     </div>
@@ -31,43 +53,41 @@
   <script>
 
   const stripeTokenHandler = (token) => {
-  // Insert the token ID into the form so it gets submitted to the server
   const form = document.getElementById('payment-form');
   const hiddenInput = document.createElement('input');
+
   hiddenInput.setAttribute('type', 'hidden');
   hiddenInput.setAttribute('name', 'stripeToken');
   hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
 
-  // Submit the form
+  form.appendChild(hiddenInput);
   form.submit();
   }
 
-  // Create a token or display an error when the form is submitted.
   const form = document.getElementById('payment-form');
+
   form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const {token, error} = await stripe.createToken(card);
 
   if (error) {
-    // Inform the customer that there was an error.
+
     const errorElement = document.getElementById('card-errors');
     errorElement.textContent = error.message;
+
   } else {
-    // Send the token to your server.
+
     stripeTokenHandler(token);
+
   }
+
   });
 
-  // Create a Stripe client.
   var stripe = Stripe('pk_test_eHjYcVRuQR81p6O1lInHlVXc');
 
-  // Create an instance of Elements.
   var elements = stripe.elements();
 
-  // Custom styling can be passed to options when creating an Element.
-  // (Note that this demo uses a wider set of styles than the guide below.)
   var style = {
     base: {
       color: '#32325d',
@@ -85,11 +105,9 @@
     }
   };
 
-  // Create an instance of the card Element.
   var card = elements.create('card', {style: style});
 
-  // Add an instance of the card Element into the `card-element` <div>.
   card.mount('#card-element');
 
-  </script>
+</script>
 @endsection

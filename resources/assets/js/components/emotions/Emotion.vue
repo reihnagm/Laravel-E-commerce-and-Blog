@@ -1,30 +1,39 @@
 <template>
- <div>
+  <div>
 
-  <div class="_mobile_columns _is_multiline">
-    <div class="_mobile_column _is_one_third" v-for="emotion in emotions" :key="emotion.id"> 
-        <img  @click.prevent="submit(emotion.id)" class="_emotions_img" :src="'/assets/emotions/' + emotion.name + '.png'">
-        <span v-if="totalIsZero">
-           <span class="_emotions_total"> 0 % </span>
-        </span>
-        <span v-else>
-           <span class="_emotions_total">  {{ parseInt(emotion.perTotal/total*100) }} % </span>
-        </span>
-        <span class="_emotions_percentage"> Total : {{ emotion.perTotal }} </span> 
-      
+  <div class="columns mobile-columns is-multiline">
+    <div class="column mobile-column is-one-third" v-for="emotion in emotions" :key="emotion.id">
+
+      <div class="emotions-bar-container">
+      <span v-if="totalIsZero">
+        <div class="emotions-bar" :style="{ height: '0px' }"></div>
+      </span>
+      <span v-else>
+        <div class="emotions-bar" :style="{ height: parseInt(emotion.perTotal/total*100) + 'px' }"></div> <!--  v-bind:style="{ height: percentage + 'px' }" -->
+      </span>
+        <img @click.prevent="submit(emotion.id)" class="emotions-img" :src="'/assets/emotions/' + emotion.name + '.png'">
+      </div>
+
+      <span v-if="totalIsZero">
+        <span class="emotions-total"> 0 % </span>
+      </span>
+      <span v-else>
+        <span class="emotions-total"> {{ parseInt(emotion.perTotal/total*100) }} % </span>
+      </span>
+      <span class="emotions-percentage"> Total : {{ emotion.perTotal }} </span>
+
     </div>
   </div>
 
  </div>
 </template>
- 
+
 <script>
 export default {
   props: ["blog_id"],
   data() {
     return {
-      emotions: [
-        {
+      emotions: [{
           id: 1,
           name: "happy",
           perTotal: 0
@@ -55,7 +64,8 @@ export default {
           perTotal: 0
         }
       ],
-      total: 0
+      total: 0,
+      percentage: 0
     };
   },
   computed: {
@@ -63,26 +73,36 @@ export default {
       if (this.total != 0) {
         return false;
       }
-      return true;
-    }
+        return true;
+    },
   },
   created() {
     axios.get("/emotions/" + this.blog_id).then(response => {
       this.total = response.data.total;
 
-      this.emotions.forEach(emotion => {
-        switch (emotion.id) {
-          case 1:
-            emotion.perTotal = response.data.happy;
-            break;
-          case 2:
-            emotion.perTotal = response.data.sad;
-            break;
-          case 3:
-            emotion.perTotal = response.data.angry;
-            break;
-        }
-      });
+        this.emotions.forEach(emotion => {
+          switch (emotion.id) {
+            case 1:
+              emotion.perTotal = response.data.happy;
+              break;
+            case 2:
+              emotion.perTotal = response.data.sad;
+              break;
+            case 3:
+              emotion.perTotal = response.data.angry;
+              break;
+            case 4:
+              emotion.perTotal = response.data.amazing;
+              break;
+            case 5:
+              emotion.perTotal = response.data.fear;
+              break;
+            case 6:
+              emotion.perTotal = response.data.doubt;
+              break;
+          }
+        });
+
     });
   },
   methods: {
@@ -95,6 +115,7 @@ export default {
             let index = this.emotions.findIndex(
               emotion => emotion.id === emotion_id
             );
+            toastr.info('Successfully vote a blog!')
             this.emotions[index].perTotal++;
             // this.modify(emotion_id, 1);
           }
@@ -103,15 +124,22 @@ export default {
             let index = this.emotions.findIndex(
               emotion => emotion.id === emotion_id
             );
+            toastr.info('Successfully cancel a vote!')
             this.emotions[index].perTotal--;
           }
           if (response.data.message == "changed") {
+            toastr.info('Successfully updated a vote!')
             this.modify(response.data.old_emotion, -1);
             this.modify(emotion_id, 1);
             // this.total--
             // let index = this.emotions.findIndex(emotion => emotion.id === emotion_id);
             // this.emotions[index].perTotal++
           }
+        }).catch((error) => {
+          if(error.response.data.message = "Trying to get property of non-object") {
+            toastr.info("You must Login before vote Emotions!");
+          }
+          console.log(error.response)
         });
     },
     modify(val, point) {
@@ -137,6 +165,7 @@ export default {
           this.emotions[index].perTotal = this.emotions[index].perTotal + point;
           break;
       }
+
     }
   }
 };

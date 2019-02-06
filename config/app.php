@@ -30,8 +30,8 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Debug Mode
-    |--------------------------------------------------------------------------
+    | Application Debug Mod
+e    |--------------------------------------------------------------------------
     |
     | When your application is in debug mode, detailed error messages with
     | stack traces will be shown on every error that occurs within your
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -146,11 +146,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
-        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
-        willvincent\Rateable\RateableServiceProvider::class,
-        // Barryvdh\Debugbar\ServiceProvider::class,
-        Kamaln7\Toastr\ToastrServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -164,8 +160,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // untuk API
+
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+        willvincent\Rateable\RateableServiceProvider::class,
+        Kamaln7\Toastr\ToastrServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+
     ],
 
     /*
@@ -180,7 +182,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -217,8 +218,10 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => Kamaln7\Toastr\Facades\Toastr::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

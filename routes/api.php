@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,14 +12,14 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['api']], function () {
-    Route::post('/auth/signup', 'AuthController@signup');
-    Route::post('/auth/signin', 'AuthController@signin');
 
-    // Route::group(['middleware' => ['jwt.auth']], function() {
-    //   Route::get('/profile', )
-    // })
-    // }
+    Route::post('/auth/signup', 'AuthController@signup')->name('signup');
+    Route::post('/auth/signin', 'AuthController@signin')->name('signin');
+    Route::get('/auth/signout', 'AuthController@signout')->name('signout');
+
 });
+
+
 
 // API RESOURCE BLOG /api/blog
 // Route::get('/blog', 'BlogController@index')->name('blog.index');
@@ -38,20 +36,27 @@ Route::group(['middleware' => ['api']], function () {
 
 // Route::delete('/blog/{id}', 'BlogController@destroy')->name('blog.destroy');
 
-/*--------------------------------------------
--- API RESOURCE COMMENT BLOG /api/blog-comment
-----------------------------------------------*/ 
+/*--------------------
+-- API USERS /api/user
+----------------------*/
 
-Route::get('/blog-comment','BlogCommentController@index_api');
+// Route::get('/users_index', 'UserController@users_index');
+//
+// Route::get('/users_total', 'UserController@users_total');
 
-Route::post('/blog-comment/{id}/{user_id}', 'BlogCommentController@store')->name('blog.comment.store');
+/*-----------------------------------
+-- API COMMENT BLOG /api/blog-comment
+-------------------------------------*/
 
-Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
 
-Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
+/*------------------------
+--  API ORDERS /api/orders
+--------------------------*/
 
-/*---------------------------------------------
---  API RESOURCE ORDERS /api/orders/{type?}
------------------------------------------------*/ 
-
-Route::get('/orders', 'OrderController@orders_api');
+// Route::get('/orders_index', 'OrderController@orders_index');
+//
+// Route::get('/orders/pending', 'OrderController@orders_pending');
+//
+// Route::get('/orders/delivered', 'OrderController@orders_delivered');
+//
+// Route::post('/orders/toggle/delivered/{boolean}', 'OrderController@toggleDeliver');

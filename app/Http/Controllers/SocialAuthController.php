@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Toastr;
+use Socialite;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
-
-use Toastr;
-use Auth;
-use Socialite;
 
 class SocialAuthController extends Controller
 {
@@ -29,7 +27,7 @@ class SocialAuthController extends Controller
 
         $authUser = $this->findOrCreateUser($user, $service);
 
-        Auth::guard('web')->login($authUser, true);
+        auth()->guard('web')->login($authUser, true);
 
         return redirect('/');
 
@@ -40,24 +38,24 @@ class SocialAuthController extends Controller
 
         $checkUser = User::where('provider_id', $user->id)->first();
 
-        if ($checkUser) 
+        if ($checkUser)
 
             return $checkUser;
 
-        $slug = str_slug($user->name, '-');
+        $name = $user->name;
 
-        $user_check_slug = User::where('slug', $slug)->first();
+        $user_check_name = User::where('name', $user->name)->first();
 
-        if ($user_check_slug != null) 
-            $slug = $slug . '-' .time();
-       
+        if ($user_check_name != null)
+            $name = $name . ' - ' .time();
+
         return User::create([
-            'username' => $user->name,
-            'email'    => $user->email,
+            'name' => $name,
+            'email'=> $user->email,
+			'slug' => str_slug($user->name,'-'),
             'provider' => $service,
             'provider_id' => $user->id,
             'avatar' => str_replace('data:image/png;base64,', '', $user->avatar),
-            'slug' => $slug
         ]);
 
     }
@@ -65,9 +63,9 @@ class SocialAuthController extends Controller
     public function logout()
     {
 
-        Auth::guard('web')->logout();
+        auth()->guard('web')->logout();
 
-        return redirect(route('app.index'));
+        return redirect('/');
 
     }
 

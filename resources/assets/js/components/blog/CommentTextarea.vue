@@ -1,10 +1,10 @@
 <template>
-    <div>
-      <div class="wrapper_textarea_comment">
-        <textarea class="textarea_comment" v-model="subject"></textarea>
-        <a class="button_comment" href="#!" @click.prevent="sentComment()">Comment</a>
-      </div>
-    </div>
+<div>
+  <div class="wrapper-textarea-comment">
+    <textarea placeholder="test" class="textarea-comment" v-model="subject"></textarea>
+    <a class="button-comment" href="#!" @click.prevent="sentComment()">Comment</a>
+  </div>
+</div>
 </template>
 
 <script>
@@ -22,7 +22,6 @@ export default {
   methods: {
     sentComment() {
       let data = {
-        // id: // masalah di id 
         subject: this.subject,
         likes_count: this.likes_count,
         unlikes_count: this.unlikes_count,
@@ -44,25 +43,25 @@ export default {
 </script>
 
 <style scoped>
-.wrapper_textarea_comment {
+.wrapper-textarea-comment {
   display: flex;
   padding: 5px;
   align-items: center;
   margin-right: 8px;
 }
 
-.textarea_comment {
+.textarea-comment {
   padding: 8px;
   color: rgba(37, 37, 37, 0.5);
   resize: none;
   overflow-y: scroll;
 }
 
-.textarea_comment:focus {
+.textarea-comment:focus {
   outline: none;
 }
 
-.button_comment {
+.button-comment {
   display: block;
   text-align: center;
   margin-left: 8px;

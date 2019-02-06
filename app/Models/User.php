@@ -3,21 +3,16 @@
 namespace App\Models;
 
 use Auth;
-use Cache;
 
-use Spatie\Permission\Traits\HasRoles;
-
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends \TCG\Voyager\Models\User
 {
-    use HasRoles;
 
-    use LikesTrait, UnlikesTrait;
-
-    use Notifiable;
+    use LikesTrait, UnlikesTrait, Notifiable;
 
     protected $guarded = ['id'];
 
@@ -48,7 +43,7 @@ class User extends Authenticatable
 
     }
 
-  
+
     public function isOwner()
     {
 
@@ -81,6 +76,14 @@ class User extends Authenticatable
     {
 
       return $this->hasMany('App\Models\Order');
+
+    }
+
+    public function isAdmin()
+    {
+
+       if($this->role_id == 1) return true;
+       return false;
 
     }
 

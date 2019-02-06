@@ -34,26 +34,30 @@
                 }
 
                 let newMessage = {
-                    id: Date.now(),
+                  //id: Date.now(),
                     subject: this.body.trim(),
                     created_at : moment().utc(0).format('YYYY-MM-DD HH:mm:ss'),
                     user: {
-                        username: Laravel.user.username
+                        name: Laravel.user.name
                     }
                 }
                 // message.user.username = laravel.user.username = (Auth::user()->username)
 
                 let backup = this.body.trim()
+
                 Bus.$emit('chat.sent', newMessage)
+                
                 this.body = ''
 
                 axios.post('/messages', {subject: backup})
                     .then(response => {
-                        console.log('masuk di post')
+                 
                     })
                     .catch(() => {
                         this.body = backup
                         Bus.$emit('chat.removed', newMessage)
+                        console.log(newMessage)
+                        console.log(this.body)
                         console.log('ada error')
                     })
             }

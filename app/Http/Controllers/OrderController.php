@@ -11,58 +11,90 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
 
-  public function orders_api($type = '')
+  public function index() 
+  {
+      return view('order.index', ["orders" => auth()->user()->orders()->with('products')->get() ]);
+  }
+
+  public function orders_index()
+  {
+      return Order::with(['products.user'])->get();
+  }
+
+    public function orders_pending()
+  {
+      return Order::with(['products.user'])->where('delivered', '0')->get();
+  }
+
+    public function orders_delivered()
+  {
+     $orders = Order::with(['products.user'])->where('delivered', '1')->get();
+
+     return $orders;
+  }
+
+
+  public function orders() // $type = ''
   {
 
-      if($type == 'pending') {
-      $orders = Order::with(['products'])->where('delivered', '0')->get();
-    } else if ( $type == 'delivered') {
-      $orders = Order::with(['products'])->where('delivered', '1')->get();
-    } else {
-      $orders = Order::with(['products'])->get();
-    }
+    // if($type == 'pending') {
+    //   $orders = Order::where('delivered', '0')->get();
+    // } else if  ( $type == 'delivered') {
+    //   $orders = Order::where('delivered', '1')->get();
+    // } else {
+      // $orders = Order::all();
+    // }
 
-      return $orders;
+    return view('admin/order', ['orders' =>  Order::all()]);
 
   }
 
-  public function orders($type = '')
-  {
+  // public function toggleDeliver(Request $request, $orderId)
+  // {
 
-    if($type == 'pending') {
-      $orders = Order::where('delivered', '0')->get();
-    } else if  ( $type == 'delivered') {
-      $orders = Order::where('delivered', '1')->get();
-    } else {
-      $orders = Order::all();
-    }
+  //   $order = Order::findOrFail($orderId);
 
-    return view('admin/order', ['orders' => $orders]);
+  //   if($request->has('delivered'))  {
 
-  }
+  //     $order->delivered = $request->delivered;
 
-  public function toggleDeliver(Request $request, $orderId)
+  //     Toastr::info('Changed to delivered successfullly');
+  //   }
+  //   else  {
+
+  //     $order->delivered = 0;
+
+  //     Toastr::info('Changed to pending successfullly');
+
+  //   }
+
+  //   $order->save();
+
+  //   return back();
+
+  // }
+
+   public function toggleDeliver(Request $request, $orderId)
   {
 
     $order = Order::findOrFail($orderId);
 
     if($request->has('delivered'))  {
 
-      $order->delivered = $request->delivered; 
+      $order->delivered = $request->delivered;
 
-      Toastr::info('Changed to delivered successfullly');
     }
     else  {
 
       $order->delivered = 0;
 
-      Toastr::info('Changed to pending successfullly');
-
     }
 
     $order->save();
 
-    return back();
+    return json_encode([
+      "message" => "success"
+    ]);
 
   }
 

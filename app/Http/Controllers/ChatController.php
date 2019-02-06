@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-
 use App\Models\Message;
 use App\Events\ChatCreated;
 
@@ -11,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -30,11 +29,12 @@ class ChatController extends Controller
     {
         $message = Message::create([
             'subject' => $request->subject,
-            'user_id' => Auth::user()->id
+            'user_id' => auth()->user()->id
         ]);
 
         broadcast(new ChatCreated($message))->toOthers();
 
-        return $message;
+        return json_encode(["message" => "sent"]);
     }
+
 }

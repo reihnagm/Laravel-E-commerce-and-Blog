@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Gravatar;
+
 use App\Models\User;
+
 use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -22,20 +26,14 @@ class RegisterController extends Controller
 
     }
 
-    public function showRegistrationForm()
-    {
-
-      return redirect(route('app.index'));
-
-    }
 
     protected function validator(array $data)
     {
 
         return Validator::make($data, [
-            'username' => 'required|string|max:15',
-            'email' => 'required|string|email|max:50|unique:users',
-            'password' => 'required|string|min:6|max:255|confirmed',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
         ]);
 
     }
@@ -44,9 +42,10 @@ class RegisterController extends Controller
     {
 
         return User::create([
-            'username' => $data['username'],
-            'slug' => str_slug($data['username'], '-'),
+            'name' => $data['name'],
             'email' => $data['email'],
+            'slug' => str_slug($data['name'], '-'),
+            'avatar' =>  Gravatar::src('wavatar'),
             'password' => Hash::make($data['password']),
         ]);
 

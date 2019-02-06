@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class BlogRequest extends FormRequest
 {
-    
+
     public function authorize()
     {
 
@@ -20,8 +20,7 @@ class BlogRequest extends FormRequest
         return [
             'title' => 'required|max:100',
             'desc'  => 'required',
-            'img' => 'required|file|max:1024',
-            'caption' => 'required',
+            'img' => 'required|image|max:1024',
             'tags' => 'required|min:1|max:3',
         ];
 
@@ -31,11 +30,12 @@ class BlogRequest extends FormRequest
     {
 
         return [
-            'title.required' => 'Title Required',
+            'title.required' => 'Title required',
             'title.max'      => 'Maximal character 100',
-            'desc.required' => 'Description Required',
-            'tags.required' => 'Tags Required',
-            'img.required'  => 'Image Required',
+            'desc.required' => 'Description required',
+            'tags.required' => 'Tags required',
+            'img.image'     => 'File must be type image',
+            'img.required'  => 'Image required',
             'img.max'  => 'Image too large, max 1GB',
             'img.uploaded'  => 'Image failed to upload / image too large',
         ];

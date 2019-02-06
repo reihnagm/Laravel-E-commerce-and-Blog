@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddSlugToBlogsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('blogs', function (Blueprint $table) {
@@ -18,15 +13,10 @@ class AddSlugToBlogsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::table('blogs', function (Blueprint $table) {
-            //
         });
     }
 }

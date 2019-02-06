@@ -1,13 +1,32 @@
 <template>
     <div>
-       <input v-validate="'required|email'" data-vv-as="email" v-model="email" name="email" type="text" autofocus>
-       <span class="errors_email" v-if="errors.first('email')">{{ errors.first('email') }}</span>
-       <input v-validate="'required|password'" data-vv-as="password" v-model="password" name="password" type="password" autofocus>
-       <span v-show="errors.has('password')" class="errors_password">{{ errors.first('password') }}</span>
-        <!-- <input name="email" type="email" v-model.trim="email">
-        <span v-if="msg.email"> {{ msg.email }} </span>
-        <input name="password" type="password" v-model.trim="password">
-        <a href="#!" @click.prevent="login(email, password)"> submit </a> -->
+
+      <div class="is-error" v-show="errors.any()">
+        <div v-if="errors.has('email')">
+          {{ errors.first('email') }}
+        </div>
+        <div v-if="errors.has('password')">
+          {{ errors.first('password') }}
+        </div>
+      </div>
+
+      <span class="is-error" v-if="credentials_not_found.length">
+        {{ credentials_not_found }}
+      </span>
+
+     <div class="field">
+       <form id="login" @submit.prevent="login" method="post" novalidate="true">
+        <label for="email"> E-mail Address </label>
+        <input type="email" v-validate="'required|email'" id="email" v-model="loginUser.email" name="email">
+        <label for="password-field"> Password </label>
+        <div class="wrapper-input-password">
+           <input id="password-field" type="password" v-validate="'required|password'"  v-model="loginUser.password" name="password">
+             <i toggle="#password-field" class="eye-icon"></i>
+        </div>
+        <input type="submit" value="Login">
+       </form>
+     </div>
+
     </div>
 </template>
 
@@ -15,41 +34,41 @@
 export default {
   data() {
     return {
-        email: "",
-        password: "",
-      //   msg: []
-    };
-  },
-//   watch: {
-//     email(value) {
-//       this.email = value;
-//       this.check_email(value);
-//     }
-//   },
-  methods: {
-    // check_email(value) {
-    //   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-    //     this.msg["email"] = "";
-    //   } else {
-    //     this.msg["email"] = "Keep Typing... We are waiting fo r correct Email";
-    //   }
-    // },
-    // check_password(value) {},
-
-    login() {
-      
+      credentials_not_found: '',
+      loginUser: {
+        email: null,
+        password: null
+      }
     }
+  },
+  methods: {
+    login() {
+        axios.post('/login', this.loginUser).then(response => {
+        	location.reload();
+        })
+        .catch(error => {
+          if(error.response.data.errors.email) {
+              error.response.data.errors.email.forEach((data) => {
+                this.credentials_not_found = data
+              })
+           }
+        });
+    },
+    validEmail(email) {
+      var regexp = /[a-zA-Z0-9_]+@[a-zA-Z]+\.(com|net|org)$/;
+      return regexp.test(email);
+    },
+    validPassword(password) {
+      var regexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/;
+      return regexp.test(password)
+    }
+
   }
 };
 </script>
 
 <style scoped>
-.errors_email, 
-.errors_password {
-    margin-top: 5px;
-    padding: 8px; 
-    color: whitesmoke;
-    display: block;
-    background: rgb(255, 100, 100);    
-}
+  input[type="submit"] {
+    cursor: pointer;
+  }
 </style>

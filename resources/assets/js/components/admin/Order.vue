@@ -1,33 +1,49 @@
 <template>
   <div>
-      <div v-for="order in orders" :key="order.id">
-          
-      </div>
+      <br>
+      <a href="#!" @click.prevent="component='order-all'">All Orders</a> /
+      <a href="#!" @click.prevent="component='order-pending'">Pending Orders</a> /
+      <a href="#!" @click.prevent="component='order-delivered'">Delivered Orders</a>
+      <!-- <input @change="status()" type="checkbox" id="checkbox" v-model="checked">
+      <label for="checkbox"> {{ checkedStatus }} </label> -->
+      <br>
+      <br>
+      <component :is="component"></component>
   </div>
 </template>
-
+ 
 <script>
-export default {
-    data() {
-        return  {
-            orders: []
-        }
-    },
-    computed: {
+import OrderAll from "./OrderAll";
+import OrderPending from "./OrderPending";
+import OrderDelivered from "./OrderDelivered";
 
-    },
-    mounted() {
-        axios.get('/api/orders').then((response) => {
-            console.log(response.data)
-           this.orders = response.data
-        })
-    },
-    methods: {
-        
-    },
-}
+export default {
+  components: {
+    "order-all": OrderAll,
+    "order-pending": OrderPending,
+    "order-delivered": OrderDelivered
+  },
+  methods: {
+    status() {
+     if(this.checked) {
+        this.checkedStatus = "Delivered"
+        // axios.post("/api/orders/toggle/delivered/" + this.orderId, {
+        //     checked : this.checked 
+        // })
+     }else {
+       !this.checked 
+        this.checkedStatus = "Cancel delivered"
+     } 
+   },
+  },
+  data() {
+    return {
+      checked: "",
+      checkedStatus:"",
+      component: "order-all"
+    };
+  }
+};
 </script>
 
-<style>
 
-</style>

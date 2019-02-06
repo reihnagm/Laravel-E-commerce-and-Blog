@@ -3,50 +3,40 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Input;
 
 class ProductRequest extends FormRequest
 {
-
     public function authorize()
     {
-
         return true;
-
     }
 
     public function rules()
     {
-
-        $rules = [
+        return [
         'name' => 'required|max:100',
         'desc'  => 'required',
-        'img' => 'required|file|max:1024',
+        'img' => 'required|image|max:1024',
         'categories' => 'required|max:1',
-        'price' => 'required',
         ];
 
-        return $rules;
 
     }
 
     public function messages()
     {
-
-       $messages = [
-        'name.required' => 'Name Required',
-        'name.max'      => 'Maximal Character 100',
-        'desc.required' => 'Description Required',
-        'categories.required' => 'Category Required',
-        'categories.max' => 'Maximal Category 1 Option',
-        'img.uploaded'  => 'Image failed to upload / Image too large, Maximal Size 1GB',
+         return [
+        'name.required' => 'Name required',
+        'name.max'      => 'Maximal character 100',
+        'desc.required' => 'Description required',
+        'categories.required' => 'Category required',
+        'categories.max' => 'Maximal category 1 option',
+        'img.image' =>  'File must be type image',
+        'img.uploaded'  => 'Image failed to upload / image too large, maximal size 1 gb',
         'img.required'  => 'Image Required',
         'img.max'       => 'Maximal Size 1GB',
-        'price.required'=> 'Price Required',
         ];
-   
-        return $messages;
 
+    
     }
-
 }

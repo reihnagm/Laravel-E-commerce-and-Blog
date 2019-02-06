@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Toastr;
+
+use App\Events\NewComment;
 
 use App\Models\User;
 use App\Models\Blog;
@@ -18,48 +19,40 @@ use Illuminate\Http\Request;
 class BlogCommentController extends Controller
 {
 
-    public function index_api() {
+    /*-------------------------------------
+    -- RETURN COLLECTION WITH RELATION USER
+    ---------------------------------------*/
 
-        /*-------------------------------------
-        -- RETURN COLLECTION WITH RELATION USER
-        ---------------------------------------*/ 
-       
-        // $comment ="";
-        // $like = 0;
-        // $unlike = 0;
-        
-         return new BlogCommentCollection(BlogComment::with(['user'])->withCount(['likes', 'unlikes'])->paginate(10));
+    // $comment ="";
+    // $like = 0;
+    // $unlike = 0;
 
-        // foreach($blogComment as $comment) {
-        //     $like  = $comment->likes->count();
-        //     $unlike = $comment->unlikes->count();
-        // } 
-        
-        // return json_encode([
-        //     "data" => $blogComment,
-        //     "like" => $like,
-        //     "unlike"=> $unlike
-        // ]);
+    // foreach($blogComment as $comment) {
+    //     $like  = $comment->likes->count();
+    //     $unlike = $comment->unlikes->count();
+    // }
 
-    }
-    
-    public function index()
+    // return json_encode([
+    //     "data" => $blogComment,
+    //     "like" => $like,
+    //     "unlike"=> $unlike
+    // ]);
+
+
+    public function index($id)
     {
 
-     
-      $blogcomments = BlogComment::with('user','blog','likes','unlikes')->simplePaginate(7);
 
-      return view('user/profile',['blogcomments' => $blogcomments]);
+     return new BlogCommentCollection(BlogComment::where('blog_id',$id)->with(['user'])->withCount(['likes', 'unlikes'])->paginate(10));
 
-    // RETURN API 
+
+      // return view('user/profile',['blogcomments' => $blogcomments]);
+
+    // RETURN API
     //  return new BlogCommentCollection($blogcomment);
-   
+
     }
-    
-    public function create()
-    {
-         
-    }
+
 
     public function store(Request $request, $id, $userId)
     {
@@ -68,38 +61,29 @@ class BlogCommentController extends Controller
             'subject' => 'required',
         ]);
 
-        // $blog = Blog::findOrFail($id);
+        $blog = Blog::findOrFail($id);
 
         $blogcomment = BlogComment::create([
             'subject' => $request->subject,
             'blog_id' => $id,
             'user_id' => $userId
         ]);
- 
-        // if ($blog->user->id != Auth::user()->id) 
-        // {
-        //     Notification::create([
-        //         'user_id'  => Auth::user()->id,
-        //         'blog_id' => $id,
-        //         'subject'  => 'ada komentar dari'.' '. Auth::user()->name,
-        //     ]);
-        // }
 
-        return back();
-        // return json_encode(['message' => 'sentComment']);
+        if ($blog->user->id != auth()->user()->id)
+        {
+            Notification::create([
+                'user_id'  => $blog->user->id,
+                'blog_id' =>  $blog->id,
+                'subject'  => auth()->user()->name .' comments on your blog '.'"'.$blog->title.'"'
+            ]);
+        }
+
+        broadcast(new NewComment($blogcomment))->toOthers();
+
+        return json_encode(['message' => 'comment']);
 
     }
 
-    public function show($id)
-    {
-        
-    }
-
-    public function edit($id)
-    {
-       
-    }
- 
     public function update(Request $request, $id)
     {
 
@@ -109,26 +93,22 @@ class BlogCommentController extends Controller
       "subject" => $request->subject
      ]);
 
-     // Toastr::info('Comment was updated!');when use api is not work
-
       return json_encode([
-         "info" => "updated"
+         "message" => "comment updated"
      ]);
-      
+
     }
-   
+
     public function destroy($id)
     {
 
-     $blogcomment = BlogComment::findOrFail($id);// $request->input('comment_id')
+     $blogcomment = BlogComment::findOrFail($id);
      $blogcomment->delete();
 
-    //  Toastr::info('Comment was deleted!'); when use api is not work
-
      return json_encode([
-         "info" => "deleted"
+         "message" => "comment destroy"
      ]);
-        
+
     }
 
 }

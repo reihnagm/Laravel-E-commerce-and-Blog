@@ -1,8 +1,8 @@
 <template>
     <div>
-     <div class="_column">
+     <div class="column">
          <form action="">
-               <textarea @keydown="handleInput" v-model="subject"> </textarea>
+            <textarea @keydown="handleInput" v-model="subject"> </textarea>
          </form> 
      </div>
     </div>

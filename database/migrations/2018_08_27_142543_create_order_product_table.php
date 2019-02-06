@@ -6,31 +6,26 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOrderProductTable extends Migration
 {
-
     public function up()
     {
-
         Schema::create('order_product', function (Blueprint $table) {
-
             $table->increments('id');
-            $table->Unsignedinteger('product_id');
-            $table->Unsignedinteger('order_id');
-            $table->integer('qty');
-            $table->float('total');
-            $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');
-            $table->foreign('order_id')->on('orders')->references('id')->onDelete('cascade');
+            $table->integer('order_id')->unsigned()->nullable();
+            $table->foreign('order_id')->references('id')
+                  ->on('orders')->onUpdate('cascade')->onDelete('set null');
+
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->foreign('product_id')->references('id')
+                ->on('products')->onUpdate('cascade')->onDelete('set null');
+
+            $table->integer('quantity')->unsigned();
             $table->timestamps();
-
         });
-
     }
 
 
     public function down()
     {
-
         Schema::dropIfExists('order_product');
-
     }
-
 }

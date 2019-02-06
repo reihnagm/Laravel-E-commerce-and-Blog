@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Auth;
-
  trait UnlikesTrait
  {
 
@@ -14,10 +12,10 @@ use Auth;
    
    }
 
-   public function is_unliked()
+   public function isUnliked()
    {
   
-    return $this->unlikes->where('user_id', Auth::user()->id)->count();
+    return $this->unlikes->where('user_id', auth()->user()->id)->count();
   
    }
 

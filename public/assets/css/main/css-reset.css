@@ -2,18 +2,20 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
 
-	-ms-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-o-box-sizing: border-box;
+  transition: 0.5s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-	transition: 0.5s ease;
-	-webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+html {
+  height: 100%;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -29,45 +31,54 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;
+  display: block;
 }
+
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
+
 h1, h2, h3, h4, h5, h6 {
-	font-size: 22px;
+  font-size: 22px;
 }
+
 body {
-	line-height: 1;
-	font-size: 20px;
+  line-height: 1;
+  font-size: 20px;
 }
+
 ol, ul {
-	list-style: none;
+  list-style: none;
 }
+
 blockquote, q {
-	quotes: none;
+  quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+  content: '';
+  content: none;
 }
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
+
 img {
-	display: block;
-	max-width: 100% !important;
-	max-height: 100% !important;
+  display: block;
+  max-width: 100% !important;
+  max-height: 100% !important;
 }

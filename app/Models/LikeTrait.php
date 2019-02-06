@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-
-
-use Auth;
-
  trait LikesTrait
  {
 
@@ -17,10 +13,10 @@ use Auth;
    }
 
 
-   public function is_liked()
+   public function isLiked()
    {
   
-    return $this->likes->where('user_id', Auth::user()->id)->count();
+    return $this->likes->where('user_id', auth()->user()->id)->count();
   
    }
 

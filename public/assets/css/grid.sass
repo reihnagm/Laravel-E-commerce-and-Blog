@@ -1,16 +1,17 @@
-$container-size: 960px
-$default-padding: 0.75%
-$default-margin: 0.75%
+$container-size: 1000px
+$default-padding: 2%
+$default-margin: 2%
 
-._container
+.container
   max-width: $container-size
   margin: 0 auto
 
-._columns
+.columns
+  overflow: hidden
   display: flex
-  &._is_multiline
+  &.is-multiline
       flex-wrap: wrap
-  ._column
+  .column
       padding: $default-padding
       margin: $default-margin
       flex-grow: 1
@@ -20,44 +21,43 @@ $default-margin: 0.75%
       margin-left: 0
       &:last-child
       margin-right: 0
-      &._is_half
+      &.is-half
           width: 50%
           flex: none
-      &._is_one_third
+      &.is-one-third
           width: 33.3333333333%
           flex: none
-      &._is_one_quarter
+      &.is-one-quarter
           width: 25%
           flex: none
-      &._is_one_fifth
+      &.is-one-fifth
           width: 20%
           flex: none
-      &._is_two_thirds
+      &.is-two-thirds
           width: 66.6666666667%
           flex: none
-      &._is_two_fifths
+      &.is-two-fifths
           width: 40%
           flex: none
-      &._is_three_quarters
+      &.is-three-quarters
           width: 75%
           flex: none
-      &._is_three_fifths
+      &.is-three-fifths
           width: 60%
           flex: none
-      &._is_four_fifths
+      &.is-four-fifths
           width: 80%
           flex: none
-      &._is_fullWidth
+      &.is-fullWidth
           width: 100%
           flex: none
 
-    
 
-._mobile_columns
+.mobile-columns
   display: flex
-  &._is_multiline
+  &.mobile-is-multiline
       flex-wrap: wrap
-  ._mobile_column
+  .mobile-column
       padding: $default-padding
       margin: $default-margin
       flex-grow: 1
@@ -67,9 +67,9 @@ $default-margin: 0.75%
       margin-left: 0
       &:_last_child
       margin-right: 0
-      &._is_half
+      &.is-half
           width: 50%
           flex: none
-      &._is_one_third
+      &.is-one-third
           width: 33.3333333333%
           flex: none

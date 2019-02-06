@@ -6,26 +6,22 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmotionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('emotions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('total');
+            $table->unsignedinteger('emotion_id');
+            $table->unsignedinteger('blog_id');
+            $table->unsignedinteger('user_id');
+
+            // $table->foreign('emotion_id')->references('id')->on('emotion_lists')->onDelete('cascade');
+            // $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('emotions');

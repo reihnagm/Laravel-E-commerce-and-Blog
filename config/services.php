@@ -35,22 +35,33 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'braintree' => [
+        'environment' => env('BT_ENVIRONMENT', 'sandbox'),
+        'merchantId' => env('BT_MERCHANT_ID'),
+        'publicKey'   => env('BT_PUBLIC_KEY'),
+        'privateKey'  => env('BT_PRIVATE_KEY'),
+    ],
+
     'bca' => [
-        'client_id' => env('BCA_CLIENT_ID'), // Your BCA Client ID
-        'client_secret' => env('BCA_CLIENT_SECRET'), // Your BCA Client Secret
-        'redirect' =>   env('BCA_CLIENT_URL'), // Your BCA Client Url
+        'client_id' => env('BCA_CLIENT_ID'), 
+        'client_secret' => env('BCA_CLIENT_SECRET'), 
+        'redirect' =>   env('BCA_CLIENT_URL'), 
     ],
 
     'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'), // Your Google Client ID
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'), // Your Google Client Secret
-        'redirect' =>   env('GOOGLE_CLIENT_URL'), // Your Google Client Url
+        'client_id' => env('GOOGLE_CLIENT_ID'), 
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'), 
+        'redirect' =>   env('GOOGLE_CLIENT_URL'), 
     ],
 
     'facebook' => [
-        'client_id'     => env('FACEBOOK_CLIENT_ID'), // Your Facebook Client ID
-        'client_secret' => env('FACEBOOK_CLIENT_SECRET'), // Your Facebook Client Secret
-        'redirect'      => env('FACEBOOK_CLIENT_URL'), // Your Facebook Client Url
+        'client_id'     => env('FACEBOOK_CLIENT_ID'), 
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'), 
+        'redirect'      => env('FACEBOOK_CLIENT_URL'), 
     ],
+	
+	'fixer' => [
+	  'key' => env('FIXER_ID'), 
+	]
 
 ];

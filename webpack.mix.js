@@ -18,7 +18,7 @@ mix.js('resources/assets/js/app.js', 'public/assets/js')
 mix.sass('resources/assets/sass/import.scss', 'public/assets/css/main/main.css', {
   outputStyle:mix.inProduction ? 'compressed':'expanded'
 }).options({
-      processCssUrls: false // false to remove hang PC
+      processCssUrls: false // SET FALSE TO REMOVE HANG PC
    });;
 
 // live update browser

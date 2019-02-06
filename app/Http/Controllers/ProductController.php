@@ -2,166 +2,205 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use File;
 use Toastr;
+use Storage;
 
-use App\Http\Requests\productRequest;
+use Intervention\Image\Constraint;
+use Intervention\Image\Facades\Image;
 
-use App\Models\User;
+use TCG\Voyager\Facades\Voyager;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Notification;
-
 
 class ProductController extends Controller
 {
-
-    public function index() 
+    public function create(Request $request)
     {
-
+        return view('product.create', ["user" => $request->user(), "categories" => Category::all()]);
     }
 
-    public function create()
+    public function store(ProductRequest $request)
     {
+  
+        // STORING IMAGE BLOB 1
+        // if ($request->hasFile('img')) {
+        //      $img = $request->file('img');
+        //      $filename = time(). "-" . $img->getClientOriginalName();
+        //      $image = base64_encode(file_get_contents($request->file('img')));
+        //      $blog->img = $image;
+        //   }
 
-        $user = User::findOrFail(auth()->user()->id);
+        // STORING IMAGE BLOB 2
+        // if ($request->hasFile('img')) {
+        //     $file =Input::file('img');
+        //     $imagedata = file_get_contents($file);
+        //     $base64 = 'data:image/jpeg;base64,'. base64_encode($imagedata);
+        //     $blog->img = $base64;
+        // }
 
-        $notifications = Notification::all();
+        $slug = str_slug($request->name, '-');
 
-        $categories = Category::all();
+        $product = Product::where('slug', $slug)->first();
 
-        return view('product/create',['categories' => $categories, 'notifications' => $notifications, 'user' => $user]);
-
-    }
-
-    public function store(productRequest $request) 
-    {
-
-        $product = Product::create([
-            "name"  => $request->name,
-            "img"   => str_replace('data:image/png;base64,', '', $request->img),
-            "desc"  => $request->desc,
-            "price" => $request->price,
-            "user_id" => auth()->user()->id
-        ]);
-
-
-        if ($request->hasFile('img')) 
-        {
-
-            $img = $request->file('img');
-
-            $filename = time(). "-" . $img->getClientOriginalName();
-
-            $request->img->storeAs('public/products/images', $filename);
-
-            $product->img = $filename;
-
+        if ($product != null) {
+            $slug = $slug . '-' .time();
         }
 
-        $categories = array_unique($request->categories);
+        // IF REQUEST ARRAY MULTIPLE 
+        // GETTING ERROR ARRAY TO STRING CONVERSION
+        // $array  = $request->price; //
+        // $price = implode('', $array); //
 
-        $product->categories()->attach($categories);
+        // COPY FROM VOYAGER UPLOAD IMAGE
+        $fullFilename = null;
+        $resizeHeight = null;
+        $resizeWidth = 1800;
 
-        auth()->user()->products()->save($product);
+        $file = $request->file('img');
 
-        Toastr::info('Product has been added!');
+        $path =  '/'.date('F').date('Y').'/';
+
+        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
+
+        $fullPath = 'products'.$path.$filename.'.'.$file->getClientOriginalExtension();
+
+        $image = Image::make($file)->resize($resizeWidth, $resizeHeight, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode($file->getClientOriginalExtension(), 75);
+
+        Storage::disk('public')->put($fullPath, (string) $image, 'public');
+
+        $fullFilename = $fullPath;
+
+        $product = Product::create([
+        "name" => $request->name,
+        "img"  => $fullFilename,
+        "slug" => $slug,
+        "desc" => $request->desc,
+        "price" => $request->price,
+        "user_id" => auth()->user()->id,
+        ]);
+
+        $product->category()->attach($request->categories);
 
         $product->save();
 
+        auth()->user()->products($product);
+
+        Toastr::info('Successfully created a Product!');
+
         return redirect(route('user.profile'));
 
-
     }
 
-    public function show($id)
+    public function update(ProductRequest $request, $id)
     {
-
-    }
-
-    public function edit($id) 
-    {
-    
-     $user = User::firstOrFail();
-
-     $categories = Category::all();
-
-     $product = Product::where('id', $id)->with(['categories'])->firstOrFail();
-
-     return view('product/edit', ['user' => $user, 'product' => $product, 'categories' => $categories]);
-
-    }
-
-    public function update($id, productRequest $request)
-     {
-
-      $product = Product::findOrFail($id);
-
-      $oldImg = public_path("storage/products/images/{$product->img}");
-
-      if (File::exists($oldImg)) 
-      {
-
-          unlink($oldImg);
-
-      }
-
-      $product->update([
-        "name"  => $request->name,
-        "img"   => str_replace('data:image/png;base64,', '', $request->img),
-        "desc"  => $request->desc,
-        "price" => $request->price,
-        "user_id" => auth()->user()->id
-      ]);
-
-      if ($request->hasFile('img')) {
-
-          $img = $request->file('img');
-
-          $filename = time(). "-" . $img->getClientOriginalName();
-
-          $request->img->storeAs('public/products/images', $filename);
-
-          $product->img = $filename;
-
-      }
-
-      $product->categories()->sync($request->categories);
-
-      auth()->user()->products()->save($product);
-
-      Toastr::info('Product has been updated!');
-
-      $product->update();
-
-      return redirect(route('user.profile'));
-
-     }
-
-
-     public function destroy($id)
-     {
-
+        
         $product = Product::findOrFail($id);
 
-        $productImg = public_path("storage/products/images/{$product->img}");
+        $product_img = Product::findOrFail($id)->first();
 
-        if (File::exists($productImg)) {
+        $oldImg = public_path("storage/{$product_img->img}");
 
-            unlink($productImg);
-
+        // REMOVED FILE EXISTS WHEN DELETE ACTION
+        // AND GETTING NEW IMAGE
+        if (File::exists($oldImg)) {
+            unlink($oldImg);
         }
-        
-        $product->categories()->detach();
+
+        $file = $request->file('img');
+
+        // COPY FROM VOYAGER UPLOAD IMAGE
+        $fullFilename = null;
+        $resizeWidth = 1800;
+        $resizeHeight = null;
+
+        $file = $request->file('img');
+
+        $path =  '/'.date('F').date('Y').'/';
+
+        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
+
+        $fullPath = 'products'.$path.$filename.'.'.$file->getClientOriginalExtension();
+
+        $image = Image::make($file)->resize($resizeWidth, $resizeHeight, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode($file->getClientOriginalExtension(), 75);
+
+        Storage::disk('public')->put($fullPath, (string) $image, 'public');
+
+        $fullFilename = $fullPath;
+
+        $slug = str_slug($request->name, '-');
+
+        $product = Product::where('slug', $slug)->first();
+
+        if ($product != null) {
+            $slug = $slug . '-' .time();
+        }
+
+        $product->update([
+        "name" => $request->name,
+        "img" => $fullFilename ,
+        "slug" => $slug,
+        "desc" => $request->desc,
+        "price" => $request->price,
+        "user_id" => auth()->user()->id
+        ]);
+
+        // STORING IMAGE
+        // if ($request->hasFile('img')) {
+        //
+        //     $img = $request->file('img');
+        //
+        //     $filename = time(). "-" . $img->getClientOriginalName();
+        //
+        //     $request->img->storeAs('public/products/images', $filename);
+        //
+        //     $blog->img = $filename;
+        //
+        // }
+
+        $product->category()->sync($request->categories);
+
+        auth()->user()->products()->save($product);
+
+        Toastr::info('Successfully updated a Product!');
+
+        return redirect(route('home'));
+    }
+
+    public function edit($id, Request $request)
+    {
+        return view('product.edit', ["user" => $request->user(),"product" =>  Product::where('slug', $id)->first(), "categories" => Category::all()]);
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::where('slug', $id)->first();
+
+        $storage = public_path("storage/{$product->img}");
+
+        // IF NOT USE PACKAGE VOYAGER UNCOMMENT
+        // $productImg = public_path("storage/products/images/{$product->img}");
+
+        if (File::exists($storage)) {
+            unlink($storage);
+        }
 
         $product->delete();
 
-        Toastr::info('Product has been removed !');
+        $product->category()->detach();
 
-        return redirect(route('user.profile'));
+        Toastr::info('Successfully deleted a Product!');
 
-     }
-
+        return redirect(route('home'));
+    }
 }

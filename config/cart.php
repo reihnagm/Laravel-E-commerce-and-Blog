@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'tax' => 13,
+    'tax' => 1,
 
     /*
     |--------------------------------------------------------------------------
@@ -56,11 +56,11 @@ return [
 
     'format' => [
 
-        'decimals' => 2,
+        'decimals' => '2',
 
         'decimal_point' => '.',
 
-        'thousand_seperator' => '.',
+        'thousand_seperator' => '', // IF NON WELL FORMED NUMERIC VALUE ENCOUNTERED EMPTY FOR THIS'
 
     ],
 

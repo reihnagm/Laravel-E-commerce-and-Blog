@@ -8,10 +8,15 @@ class Order extends Model
 {
     protected $guarded = ['id'];
 
+    protected $fillable = [
+      'user_id', 'billing_email', 'billing_name', 'billing_address', 'billing_city',
+      'billing_province', 'billing_postalcode', 'billing_phone', 'billing_name_on_card', 'billing_discount', 'billing_discount_code', 'billing_subtotal', 'billing_tax', 'billing_total', 'payment_gateway', 'error',
+  ];
+
     public function products()
     {
 
-      return $this->belongsToMany('App\Models\Product')->withPivot('qty', 'total');
+      return $this->belongsToMany('App\Models\Product')->withPivot('quantity');
 
     }
 
@@ -22,27 +27,28 @@ class Order extends Model
 
     }
 
-    public static function createOrder()
-    {
 
-      $user = Auth::user();
+    // public static function createOrder()
+    // {
 
-      $order = $user->orders()->create([
-        'total' => Cart::total(),
-        'delivered' => 0
-      ]);
+    //   $user = Auth::user();
 
-      $carts = Cart::content();
+    //   $order = $user->orders()->create([
+    //     'total' => Cart::total(),
+    //     'delivered' => 0
+    //   ]);
 
-      foreach ($carts as $cart) {
+    //   $carts = Cart::content();
 
-        $order->orderItems()->attach($cart->id, [
-          'qty' => $cart->qty,
-          'total' => $cart->total * $cart->price
-        ]);
+    //   foreach ($carts as $cart) {
 
-      }
+    //     $order->orderItems()->attach($cart->id, [
+    //       'qty' => $cart->qty,
+    //       'total' => $cart->total * $cart->price
+    //     ]);
 
-    }
+    //   }
+
+    // }
 
 }

@@ -2,28 +2,44 @@
 
 namespace App\Models;
 
-use Auth;
-use willvincent\Rateable\Rateable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+ 
+     protected $guarded = ['id'];
+ 
+    // ADDING USE ADDITIONAL VOYAGER RELATIONSHIP
+     public function userId()
+    {
 
-    use Rateable;
+      return $this->belongsTo('App\Models\User');
 
-    protected $guarded = ['id'];
+    }
 
     public function user()
     {
 
-        return $this->belongsTo('App\Models\User');
+      return $this->belongsTo('App\Models\User');
 
     }
 
-    public function categories()
+    // ADDING USE ADDITIONAL VOYAGER RELATIONSHIP
+    public function categoryId()
     {
 
-        return $this->belongsToMany('App\Models\Category');
+      return $this->belongsToMany('App\Models\Category');
+    // IF NOT USE CONVESION NAME   
+    // return $this->belongsToMany('App\Models\Group', 'product_group');
+
+    }
+
+      public function category()
+    {
+
+      return $this->belongsToMany('App\Models\Category');
+    // IF NOT USE CONVESION NAME  
+    // return $this->belongsToMany('App\Models\Group', 'product_group');
 
     }
 
@@ -31,13 +47,6 @@ class Product extends Model
     {
 
       return $this->hasMany('App\Models\Order');
-
-    }
-
-    public function mightAlsoLike($query)
-    {
-
-      return $query->inRandomOrder()->take(4);
 
     }
 

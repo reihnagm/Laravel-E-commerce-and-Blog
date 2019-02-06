@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="_column">
         <div id="_userComment">
             <img id="_imgComment" src="https://picsum.photos/200">
@@ -21,7 +20,6 @@
 
       <textarea ref="subject" class="_textareaComment"></textarea>
       <input id="_commentBtn" class="_button" type="submit" value="Comment">
-   
    </div>
 </template>
 

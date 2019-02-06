@@ -8,6 +8,5 @@ class EmotionList extends Model
 {
 
     protected $guarded = [];
-
-    
+ 
 }

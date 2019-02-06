@@ -5,7 +5,7 @@
          <img src="https://picsum.photos/200/300" alt="">
          <div>
          <span> {{ blog.user.username }} </span>
-         <p> {{ blog.subject }}  </p> 
+         <p> {{ blog.subject }}  </p>
          </div>
         </div>
 
@@ -14,21 +14,23 @@
 
         <div class="_column" v-for="blogcomment in blogcomments.data" :key="blogcomment.id">
             <div v-if="bloguserid == userid">
-                <div id="_comment_profile" >
-                    <img src="https://picsum.photos/200/300" alt="">
-                    <div>
-                        <span> {{ blogcomment.user.username }} </span>
-                        <p> {{ blogcomment.subject }}  </p> 
-                    </div>
-                </div>
+              <div id="_comment_profile" >
+                  <img src="https://picsum.photos/200/300" alt="">
+                  <div>
+                      <span> {{ blogcomment.user.username }} </span>
+                      <p> {{ blogcomment.subject }}  </p>
+                  </div>
+              </div>
 
             <span v-if="bloguserid == userid">
-                <transition name="bounce">
+              <transition name="bounce">
                 <div v-if="edit" class="_has_range_top">
-                <textarea v-model="subject" id="_textarea_comment" class="_has_range_bottom"> </textarea>
-                <input @click="editComment(blogcomment.id)" class="_button" type="submit" name="submit" value="update comment"> 
+
+                    <textarea v-model="subject" id="_textarea_comment" class="_has_range_bottom"> </textarea>
+                    <input @click="editComment(blogcomment.id)" class="_button" type="submit" name="submit" value="update comment">
+
                 </div>
-                </transition>
+              </transition>
             </span>
 
             <a class="_button _has_range_top" @click="likeComment()" href="#!"> Like </a>
@@ -44,7 +46,7 @@
          <a @click.prevent="fetchDataComment(pagination.prev_page_url)" href="#!" v-bind:class="[{disabled: !pagination.prev_page_url}]" class="_button"> Previous comment </a>
          <span class="_text_gray"> Page {{ pagination.current_page }} of {{ pagination.last_page }} Page </span>
          <a @click.prevent="fetchDataComment(pagination.next_page_url)" href="#!" v-bind:class="[{disabled: !pagination.next_page_url}]" class="_button"> Next comment </a>
-       
+
         <div class="_column _is_half">
           <textarea v-model="subject" id="_textarea_comment" class="_has_range_bottom"></textarea>
           <input @click="submitComment()" class="_button" type="submit" name="submit" value="Comment">
@@ -60,7 +62,7 @@ export default {
     props:['blogid', 'bloguserid', 'userid'],
     data() {
         return {
-            subject: '', 
+            subject: '',
             pagination: [],
             blogcomments: [],
             edit:false
@@ -82,7 +84,7 @@ export default {
        makePagination(meta, links) {
         let pagination = {
          current_page : meta.current_page,
-         last_page : meta.last_page, 
+         last_page : meta.last_page,
          next_page_url : links.next,
          prev_page_url : links.prev
         }
@@ -126,7 +128,7 @@ export default {
               this.subject = ''
           }).catch((err) => {
               console.log(err)
-          }) 
+          })
         }
     //    paginate(url = '') {
     //     axios.get(url ? url: '/blog-comment/paginate').then((res) => {

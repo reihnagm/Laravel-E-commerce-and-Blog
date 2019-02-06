@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="app">
-    <div class="_container">
-        <div class="_columns _is_multiline">
-            <div class="_column _is_three_quarters">
+    <div class="container">
+        <div class="columns is-multiline">
+            <div class="column is-three-quarters">
                 <chat-box></chat-box>
             </div>
-            <div class="_column _is_one_fifth">
+            <div class="column is-one-fifth">
                 <chat-userlists></chat-userlists>
             </div>
         </div>
-    </div>
-</div>    
+    </div>  
 @endsection
