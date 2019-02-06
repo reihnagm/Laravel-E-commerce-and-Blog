@@ -1,33 +1,33 @@
 <template>
-    <div>
+<div>
 
-      <div class="is-error" v-show="errors.any()">
-        <div v-if="errors.has('email')">
-          {{ errors.first('email') }}
-        </div>
-        <div v-if="errors.has('password')">
-          {{ errors.first('password') }}
-        </div>
-      </div>
-
-      <span class="is-error" v-if="credentials_not_found.length">
-        {{ credentials_not_found }}
-      </span>
-
-     <div class="field">
-       <form id="login" @submit.prevent="login" method="post" novalidate="true">
-        <label for="email"> E-mail Address </label>
-        <input type="email" v-validate="'required|email'" id="email" v-model="loginUser.email" name="email">
-        <label for="password-field"> Password </label>
-        <div class="wrapper-input-password">
-           <input id="password-field" type="password" v-validate="'required|password'"  v-model="loginUser.password" name="password">
-             <i toggle="#password-field" class="eye-icon"></i>
-        </div>
-        <input type="submit" value="Login">
-       </form>
-     </div>
-
+  <div class="is-error" v-show="errors.any()">
+    <div v-if="errors.has('email')">
+      {{ errors.first('email') }}
     </div>
+    <div v-if="errors.has('password')">
+      {{ errors.first('password') }}
+    </div>
+  </div>
+
+  <span class="is-error" v-if="credentials_not_found.length">
+    {{ credentials_not_found }}
+  </span>
+
+  <div class="field">
+    <form id="login" @submit.prevent="login" method="post" novalidate="true">
+      <label for="email"> E-mail Address </label>
+      <input type="email" v-validate="'required|email'" id="email" v-model="loginUser.email" name="email">
+      <label for="password-field"> Password </label>
+      <div class="wrapper-input-password">
+        <input id="password-field" type="password" v-validate="'required|password'" v-model="loginUser.password" name="password">
+        <i toggle="#password-field" class="eye-icon"></i>
+      </div>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+</div>
 </template>
 
 <script>
@@ -43,15 +43,15 @@ export default {
   },
   methods: {
     login() {
-        axios.post('/login', this.loginUser).then(response => {
-        	location.reload();
+      axios.post('/login', this.loginUser).then(response => {
+          location.reload();
         })
         .catch(error => {
-          if(error.response.data.errors.email) {
-              error.response.data.errors.email.forEach((data) => {
-                this.credentials_not_found = data
-              })
-           }
+          if (error.response.data.errors.email) {
+            error.response.data.errors.email.forEach((data) => {
+              this.credentials_not_found = data
+            })
+          }
         });
     },
     validEmail(email) {
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style scoped>
-  input[type="submit"] {
-    cursor: pointer;
-  }
+input[type="submit"] {
+  cursor: pointer;
+}
 </style>

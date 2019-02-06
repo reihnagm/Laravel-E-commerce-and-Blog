@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <div class="chat-lists">
-      <div class="messages" v-for="message in messages" :key="message.id">
-        <div class="users">
-          {{ message.user.name }}
-          <span class="time">{{ message.created_at }}</span>
-        </div>
-
-        <div class="message">{{ message.subject }}</div>
+<div>
+  <div class="chat-lists">
+    <div class="messages" v-for="message in messages" :key="message.id">
+      <div class="users">
+        {{ message.user.name }}
+        <span class="time">{{ message.created_at }}</span>
       </div>
+
+      <div class="message">{{ message.subject }}</div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -56,19 +56,19 @@ export default {
 
 <style lang="scss" scoped>
 .messages {
-  margin-top: 5px;
-  .time {
-    font-weight: 800;
-  }
-  .message {
-    font-size: 0.9rem;
-  }
+    margin-top: 5px;
+    .time {
+        font-weight: 800;
+    }
+    .message {
+        font-size: 0.9rem;
+    }
 }
 .chat-lists {
-  max-height: 500px;
-  background: rgb(224, 163, 163);
-  overflow-y: scroll;
-  margin: 7px 0;
-  padding: 8px;
+    max-height: 500px;
+    background: rgb(224, 163, 163);
+    overflow-y: scroll;
+    margin: 7px 0;
+    padding: 8px;
 }
 </style>

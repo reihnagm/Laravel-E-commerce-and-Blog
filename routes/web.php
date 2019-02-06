@@ -155,5 +155,4 @@ Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('chec
 Route::get('/switch/{id?}/', 'CurrencyController@switch')->name('switch.currency');
 
 // ORDER
-Route::get('/order', 'OrderController@index')->name('order.index'); 
-
+Route::get('/order', 'OrderController@index')->name('order.index');

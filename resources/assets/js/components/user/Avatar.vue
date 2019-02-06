@@ -33,13 +33,7 @@ export default {
       };
     },
     upload() {
-      var url = '/change_avatar/' + this.user_id + '/update';
-      var data = {
-        method: "PUT",
-        avatar: this.avatar,
-        _token: window.Laravel.csrfToken
-      };
-      axios.put(url, data).then((response) => {
+      axios.put('/change_avatar/' + this.user_id + '/update').then((response) => {
         toastr.info('Successfully change ava!');
         location.reload();
       }).catch((error) => {

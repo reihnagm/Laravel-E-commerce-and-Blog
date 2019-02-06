@@ -85151,7 +85151,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\ninput[type=\"submit\"][data-v-90fd3a48] {\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=\"submit\"][data-v-90fd3a48] {\r\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -85289,14 +85289,16 @@ var render = function() {
       [
         _vm.errors.has("email")
           ? _c("div", [
-              _vm._v("\n      " + _vm._s(_vm.errors.first("email")) + "\n    ")
+              _vm._v(
+                "\r\n      " + _vm._s(_vm.errors.first("email")) + "\r\n    "
+              )
             ])
           : _vm._e(),
         _vm._v(" "),
         _vm.errors.has("password")
           ? _c("div", [
               _vm._v(
-                "\n      " + _vm._s(_vm.errors.first("password")) + "\n    "
+                "\r\n      " + _vm._s(_vm.errors.first("password")) + "\r\n    "
               )
             ])
           : _vm._e()
@@ -85305,7 +85307,7 @@ var render = function() {
     _vm._v(" "),
     _vm.credentials_not_found.length
       ? _c("span", { staticClass: "is-error" }, [
-          _vm._v("\n    " + _vm._s(_vm.credentials_not_found) + "\n  ")
+          _vm._v("\r\n    " + _vm._s(_vm.credentials_not_found) + "\r\n  ")
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -85974,13 +85976,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
     },
     upload: function upload() {
-      var url = '/change_avatar/' + this.user_id + '/update';
-      var data = {
-        method: "PUT",
-        avatar: this.avatar,
-        _token: window.Laravel.csrfToken
-      };
-      axios.put(url, data).then(function (response) {
+      axios.put('/change_avatar/' + this.user_id + '/update').then(function (response) {
         toastr.info('Successfully change ava!');
         location.reload();
       }).catch(function (error) {
@@ -86206,7 +86202,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           });
           toastr.info('Successfully vote a blog!');
           _this2.emotions[index].perTotal++;
-          // this.modify(emotion_id, 1);
         }
         if (response.data.message == "unvote") {
           _this2.total--;
@@ -86220,9 +86215,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           toastr.info('Successfully updated a vote!');
           _this2.modify(response.data.old_emotion, -1);
           _this2.modify(emotion_id, 1);
-          // this.total--
-          // let index = this.emotions.findIndex(emotion => emotion.id === emotion_id);
-          // this.emotions[index].perTotal++
         }
       }).catch(function (error) {
         if (error.response.data.message = "Trying to get property of non-object") {

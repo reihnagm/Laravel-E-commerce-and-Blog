@@ -13,8 +13,7 @@ Broadcast::channel('channel-chat', function ($user) {
 
 Broadcast::channel('channel-comment', function ($user) {
     return [
-        'id' => $user->id, 
+        'id' => $user->id,
         'name' => $user->name
     ];
 });
-

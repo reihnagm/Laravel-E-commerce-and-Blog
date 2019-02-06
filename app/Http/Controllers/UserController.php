@@ -30,7 +30,6 @@ class UserController extends Controller
 {
     public function profile($id = null)
     {
-     
         if ($id == null) {
             if (auth()->check()) {
                 $user = User::where('slug', auth()->user()->slug)->with(['blogs.user', 'products.user'])->firstOrFail();
@@ -52,18 +51,15 @@ class UserController extends Controller
         }
 
         return view('user/profile', ['user' => $user, 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products]);
-    
     }
 
     public function changeAvatar(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
 
         $path =  '/'.date('F').date('Y').'/';
 
         if ($request->hasFile('avatar')) {
-
             $avatar = $request->file('avatar');
 
             $filename = time(). "-" . $avatar->getClientOriginalName();
@@ -71,7 +67,6 @@ class UserController extends Controller
             $request->avatar->storeAs('public/users/'.$path, $filename);
 
             $user->avatar = $filename;
-
         }
 
         $user->update(["avatar" => $request->avatar]);
@@ -79,8 +74,5 @@ class UserController extends Controller
         return json_encode([
             "message" => "success"
         ]);
-
     }
-
-
 }
