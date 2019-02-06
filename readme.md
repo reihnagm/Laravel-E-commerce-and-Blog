@@ -73,3 +73,7 @@
 
   **Add this on public function boot()**  
   **Schema::defaultStringLength('191')**
+
+- Image not found
+  delete folder **storage** on **public** and open terminal
+  **php artisan storage:link**  

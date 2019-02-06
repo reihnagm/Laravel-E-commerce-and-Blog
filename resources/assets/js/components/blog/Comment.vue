@@ -225,7 +225,9 @@ export default {
       this.editCommentTab = !this.editCommentTab;
     },
     async updateComment(comment_id, comment_new_subject) {
-      axios.put("/blog_comment/" + comment_id + "/update");
+      axios.put("/blog_comment/" + comment_id + "/update", {
+        subject: comment_new_subject
+      });
       await this.$nextTick()
         .then(response => {
           this.getComment();

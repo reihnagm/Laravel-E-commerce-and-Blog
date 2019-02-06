@@ -33,7 +33,9 @@ export default {
       };
     },
     upload() {
-      axios.put('/change_avatar/' + this.user_id + '/update').then((response) => {
+      axios.put('/change_avatar/' + this.user_id + '/update', {
+        avatar: this.avatar
+      }).then((response) => {
         toastr.info('Successfully change ava!');
         location.reload();
       }).catch((error) => {
