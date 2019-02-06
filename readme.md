@@ -28,7 +28,6 @@
 - **have categories**
 - **have slug**
 - **pagination with different url**
-
 - **multiple input dollar and idr**
 - **discount & coupons**
 - **summer note lite version text editor for crud product (desc)**
