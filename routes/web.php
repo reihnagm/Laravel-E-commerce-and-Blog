@@ -78,10 +78,6 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
 // APP INDEX
 Route::get('/', 'HomeController@index')->name('home');
 
-//     Route::get('/orders', 'OrderController@orders')->name('admin.orders');
-//     Route::post('/orders/toggle/delivered/{boolean}', 'OrderController@toggleDeliver')->name('toggle.deliver');
-// });
-
 // SOCIALITE
 Route::get('/redirect/{service}', 'SocialAuthController@redirect');
 Route::get('/callback/{service}', 'SocialAuthController@callback');
@@ -120,16 +116,6 @@ Route::post('/blog_comment/{id}/{user_id}', 'BlogCommentController@store')->name
 Route::put('/blog_comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
 
 Route::delete('/blog_comment/{id}', 'BlogCommentController@destroy')->name('blog.comment.destroy');
-
-// Route::get('/blog-comment','BlogCommentController@index')->name('blog.comment.index');
-
-// Route::post('/blog-comment/{id}', 'BlogCommentController@store')->name('blog.comment.store');
-
-// Route::get('/blog-comment/{id}', 'BlogCommentController@edit')->name('blog.comment.edit');
-
-// Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
-
-// Route::delete('/blog-comment/{id}','BlogCommentController@destroy')->name('blog.comment.destroy');
 
 // LIKE & UNLIKE
 Route::get('/like/{model}/{type}', 'LikeController@like');
@@ -171,6 +157,3 @@ Route::get('/switch/{id?}/', 'CurrencyController@switch')->name('switch.currency
 // ORDER
 Route::get('/order', 'OrderController@index')->name('order.index'); 
 
-// Route::get('/{checkout?}', function() {
-//   return view('homepage/home');
-// })->where('checkout', '[V\w\.-]*'); // fix mode vue router history use Laravel

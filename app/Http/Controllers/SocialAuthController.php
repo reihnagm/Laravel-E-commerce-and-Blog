@@ -52,7 +52,7 @@ class SocialAuthController extends Controller
         return User::create([
             'name' => $name,
             'email'=> $user->email,
-			'slug' => str_slug($user->name,'-'),
+			'slug' => $name,
             'provider' => $service,
             'provider_id' => $user->id,
             'avatar' => str_replace('data:image/png;base64,', '', $user->avatar),

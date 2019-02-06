@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use Toastr;
-use Auth;
 use Socialite;
 
 use App\Http\Controllers\Controller;
@@ -41,12 +40,10 @@ class LoginController extends Controller
       $authUser = $this->findOrCreateUser($user, $provider);
 
       Auth::login($authUser, true);
-
-      return redirect('/');
-
+      
       try {
           $user = Socialite::driver($provider)->user();
-          return view('app-general/app');
+          return redirect('/');
       }
       catch (GuzzleHttp\Exception\ClientException $e) {
            dd($e->response);
@@ -56,6 +53,7 @@ class LoginController extends Controller
     public function findOrCreateUser($user, $provider)
     {
       $authUser = User::where('provider_id', $user->id)->first();
+
       if ($authUser) {
           return $authUser;
       }

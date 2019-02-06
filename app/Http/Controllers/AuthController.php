@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use Cookie;
 
-use Carbon\Carbon;
-
 use Tymon\JWTAuth\Exception\JWTException;
 
 use Illuminate\Http\Request;

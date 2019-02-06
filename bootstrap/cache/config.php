@@ -8,7 +8,7 @@
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:ltqCQXbW3jagwhF+oOCCDttUVS9YeRyru8H5ubfwzWs=',
+    'key' => 'base64:BaXUGyM4e880LAhBq+Oidd33lSl+9wiEQ7yGzjhX6Ig=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -182,7 +182,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -332,7 +332,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\debugbar',
+      'path' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
     ),
@@ -420,12 +420,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\app/public',
         'url' => 'http://localhost:8000/storage',
         'visibility' => 'public',
       ),
@@ -509,13 +509,13 @@
       'single' => 
       array (
         'driver' => 'errorlog',
-        'path' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -567,7 +567,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\e-commerce\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -677,7 +677,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -703,9 +703,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\e-commerce\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\e-commerce\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\Simple-E-commerce-and-Blog-Laravel\\storage\\framework\\views',
   ),
   'voyager' => 
   array (
@@ -880,23 +880,6 @@
   array (
     'proxies' => NULL,
     'headers' => 30,
-  ),
-  'swap' => 
-  array (
-    'options' => 
-    array (
-    ),
-    'services' => 
-    array (
-      'fixer' => 
-      array (
-        'access_key' => 'YOUR_KEY',
-      ),
-    ),
-    'cache' => NULL,
-    'http_client' => NULL,
-    'request_factory' => NULL,
-    'cache_item_pool' => NULL,
   ),
   'gravatar' => 
   array (
