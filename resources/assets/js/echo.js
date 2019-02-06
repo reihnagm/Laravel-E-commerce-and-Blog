@@ -15,4 +15,3 @@ Echo.join("channel-chat")
   .listen("ChatCreated", e => {
     Bus.$emit("chat.sent", e.message);
   });
-

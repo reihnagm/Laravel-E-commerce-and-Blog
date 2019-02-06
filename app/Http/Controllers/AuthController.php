@@ -17,7 +17,6 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
-
         $this->validate($request, [
           'name' => 'required',
           'email' => 'required|string|email|unique:users',
@@ -29,12 +28,10 @@ class AuthController extends Controller
           "email" => $request->json('email'),
           "password" => bcrypt($request->json('password')),
         ]);
-
     }
 
     public function signin(Request $request)
-    { 
-      
+    {
         $credentials = $request->only('email', 'password');
 
         try {
@@ -47,19 +44,13 @@ class AuthController extends Controller
 
         return response()->json([
           'user_id' => $request->user()->id,
-          'jwt_token' => $token 
+          'jwt_token' => $token,
          ])->withCookie('jwt_token', $token, 60)
            ->withCookie('user_id', $request->user()->id, 60);
-
     }
 
-    public function signout() 
+    public function signout()
     {
-
-      return redirect('/')->withCookie(Cookie::forget('jwt_token'));
-
+        return redirect('/')->withCookie(Cookie::forget('jwt_token'));
     }
-
-  
-    
 }

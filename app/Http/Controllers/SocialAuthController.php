@@ -6,8 +6,6 @@ use Toastr;
 use Socialite;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 

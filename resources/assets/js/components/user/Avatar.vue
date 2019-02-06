@@ -21,12 +21,12 @@ export default {
   },
   methods: {
     changeAvatar(e) {
-      var image = e.target.files[0];
+      let image = e.target.files[0];
       this.file = image
       this.read(image);
     },
     read(image) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onload = e => {
         this.avatar = e.target.result;
