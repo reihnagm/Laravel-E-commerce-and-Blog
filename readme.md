@@ -39,3 +39,17 @@
 - **package admin laravel voyager(modified)**
 - **login use google**
 - **login use facebook**
+
+### Install 
+- composer install
+- php artisan key:generate
+- php artisan migrate --seed
+
+### Common Issues
+- Specified key was too long (migrate)  
+  **Go to App/Providers/AppServiceProvider.php**  
+
+  **Add this on public function boot()**  
+  **Schema::defaultStringLength('191');**
+  
+  
