@@ -6,7 +6,7 @@ window.Vue = require("vue");
 
 window.axios = require("axios");
 
-window.numeral = require('numeral');
+window.numeral = require("numeral");
 
 window.axios.defaults.headers.common = {
   "X-CSRF-TOKEN": window.Laravel.csrfToken,
@@ -19,10 +19,9 @@ import { Validator } from "vee-validate";
 import Echo from "laravel-echo";
 
 Validator.extend("name", {
-  getMessage: field =>
-    "The name field is required.",
-  validate: value => !! value
-}); 
+  getMessage: field => "The name field is required.",
+  validate: value => !!value
+});
 
 Validator.extend("password", {
   getMessage: field =>
@@ -31,7 +30,7 @@ Validator.extend("password", {
     var regexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/;
     return regexp.test(value);
   }
-}); 
+});
 
 Vue.use(VeeValidate);
 

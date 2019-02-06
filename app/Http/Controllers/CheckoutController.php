@@ -22,7 +22,6 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-
         $gateway = new paypalService([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchantId'),
@@ -31,8 +30,8 @@ class CheckoutController extends Controller
         ]);
 
         // ALLOW GUEST CHECKOUT
-        if(auth()->user() && request()->is('guestCheckout')) {
-           return redirect(route('checkout.index'));
+        if (auth()->user() && request()->is('guestCheckout')) {
+            return redirect(route('checkout.index'));
         }
 
         try {
@@ -54,51 +53,44 @@ class CheckoutController extends Controller
             'guestNewTax' => getNumbers()->get('guestNewTax'),
             'guestNewTotal' => getNumbers()->get('guestNewTotal'),
         ]);
-
     }
 
     public function store(CheckoutRequest $request)
     {
-      
         $contents = Cart::content()->map(function ($item) {
             return $item->name.' '.$item->qty;
         })->values()->toJson();
 
-        $amount = auth()->check() ? getNumbers()->get('newTotal') : getNumbers()->get('guestNewTotal');  
-
-  
-       
-        // try {
-        //     $charge = Stripe::charges()->create([
-        //         'amount' => $amount,
-        //         'currency' => 'USD',
-        //         'source' => $request->stripeToken,
-        //         'description' => 'Order',
-        //         'receipt_email' => $request->email,
-        //         'metadata' => [
-        //             'contents' => $contents,
-        //             'quantity' => Cart::instance('default')->count(),
-        //             'discount' => collect(session()->get('coupon'))->toJson(),
-        //         ],
-        //     ]);
-
-         session()->forget('coupon');
+        $amount = auth()->check() ? getNumbers()->get('newTotal') : getNumbers()->get('guestNewTotal');
 
 
-         $order = $this->addToOrdersTables($request, null);
 
-        // } catch (CardErrorException $e) {
-            
-        //     Toastr::info($e->getMessage());
-        //     return back();
+        try {
+            $charge = Stripe::charges()->create([
+                'amount' => $amount,
+                'currency' => 'USD',
+                'source' => $request->stripeToken,
+                'description' => 'Order',
+                'receipt_email' => $request->email,
+                'metadata' => [
+                    'contents' => $contents,
+                    'quantity' => Cart::instance('default')->count(),
+                    'discount' => collect(session()->get('coupon'))->toJson(),
+                ],
+            ]);
 
-        // }
+            session()->forget('coupon');
 
+
+            $order = $this->addToOrdersTables($request, null);
+        } catch (CardErrorException $e) {
+            Toastr::info($e->getMessage());
+            return back();
+        }
     }
 
     public function paypalCheckout(Request $request)
     {
-
         $gateway = new paypalService([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchantId'),
@@ -108,7 +100,7 @@ class CheckoutController extends Controller
 
         $nonce = $request->payment_method_nonce;
 
-        $amount = auth()->check() ? getNumbers()->get('newTotal') : getNumbers()->get('guestNewTotal');  
+        $amount = auth()->check() ? getNumbers()->get('newTotal') : getNumbers()->get('guestNewTotal');
 
         $result = $gateway->transaction()->sale([
             'amount' => $amount,
@@ -121,27 +113,20 @@ class CheckoutController extends Controller
         $transaction = $result->transaction;
 
         if ($result->success) {
-            
             Cart::instance('default')->destroy();
-            
-            session()->forget('coupon');
 
+            session()->forget('coupon');
         } else {
-            
             Toastr::info('An error occurred with the message: '.$result->message);
 
             return back();
-
         }
-
     }
 
     protected function addToOrdersTables($request, $error)
     {
+        $subTotal = auth()->check() ? getNumbers()->get('newSubtotal') : getNumbers()->get('guestNewSubTotal');
 
-     
-        $subTotal = auth()->check() ? getNumbers()->get('newSubtotal') : getNumbers()->get('guestNewSubTotal'); 
-     
         $tax = auth()->check() ? getNumbers()->get('newTax') :  getNumbers()->get('guestNewTax');
         $newTotal = auth()->check() ? getNumbers()->get('newTotal') :  getNumbers()->get('guestNewTotal');
 
@@ -163,7 +148,7 @@ class CheckoutController extends Controller
             'error' => $error,
         ]);
 
-         if(auth()->user()) {
+        if (auth()->user()) {
             Cart::instance('default')->destroy();
         } else {
             Cart::instance('guest')->destroy();
@@ -178,7 +163,5 @@ class CheckoutController extends Controller
         }
 
         return $order;
-
     }
-
 }

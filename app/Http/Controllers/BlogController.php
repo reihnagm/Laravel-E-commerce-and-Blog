@@ -27,7 +27,6 @@ use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Notification;
 
-
 class BlogController extends Controller
 {
     public function create(Request $request)
@@ -108,7 +107,6 @@ class BlogController extends Controller
 
     public function show($id)
     {
-
         $blog = Blog::with(['user', 'tags:name', 'comments.user'])->where('slug', $id)->first();
 
         $blogs = Blog::with(['user', 'tags:name'])->paginate(3, ['*'], 'blog-page');
@@ -124,7 +122,6 @@ class BlogController extends Controller
         }
 
         return view('blog.show', ['user' => request()->user(), 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products, 'tags' => $tags]);
-    
     }
 
 
@@ -135,7 +132,6 @@ class BlogController extends Controller
 
     public function update(BlogRequest $request, $id)
     {
-       
         $blog = Blog::findOrFail($id);
 
         $blog_img = Blog::findOrFail($id)->first();
@@ -202,12 +198,10 @@ class BlogController extends Controller
         Toastr::info('Successfully updated a Blog!');
 
         return redirect('/profile');
-
     }
 
     public function destroy($id)
     {
-
         $blog = Blog::findOrFail($id);
 
         $storage = public_path("storage/{$blog->img}");
@@ -226,6 +220,5 @@ class BlogController extends Controller
         Toastr::info('Successfully deleted a Blog!');
 
         return back();
-        
     }
 }

@@ -1,14 +1,15 @@
 <template>
-<div>
-  <div class="wrapper-textarea-comment">
-    <textarea placeholder="test" class="textarea-comment" v-model="subject"></textarea>
-    <a class="button-comment" href="#!" @click.prevent="sentComment()">Comment</a>
+  <div>
+    <div class="wrapper-textarea-comment">
+      <textarea placeholder="test" class="textarea-comment" v-model="subject"></textarea>
+      <a class="button-comment" href="#!" @click.prevent="sentComment()">Comment</a>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 import Bus from "../../bus";
+
 export default {
   props: ["blog_id", "user_id"],
   data() {

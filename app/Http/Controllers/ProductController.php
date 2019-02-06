@@ -26,8 +26,8 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-  
-        // STORING IMAGE BLOB 1
+
+        // ALTERNATIVE STORING IMAGE BLOB 1
         // if ($request->hasFile('img')) {
         //      $img = $request->file('img');
         //      $filename = time(). "-" . $img->getClientOriginalName();
@@ -35,7 +35,7 @@ class ProductController extends Controller
         //      $blog->img = $image;
         //   }
 
-        // STORING IMAGE BLOB 2
+        // ALTERNATIVE STORING IMAGE BLOB 2
         // if ($request->hasFile('img')) {
         //     $file =Input::file('img');
         //     $imagedata = file_get_contents($file);
@@ -51,7 +51,7 @@ class ProductController extends Controller
             $slug = $slug . '-' .time();
         }
 
-        // IF REQUEST ARRAY MULTIPLE 
+        // IF REQUEST ARRAY MULTIPLE
         // GETTING ERROR ARRAY TO STRING CONVERSION
         // $array  = $request->price; //
         // $price = implode('', $array); //
@@ -96,12 +96,10 @@ class ProductController extends Controller
         Toastr::info('Successfully created a Product!');
 
         return redirect(route('user.profile'));
-
     }
 
     public function update(ProductRequest $request, $id)
     {
-        
         $product = Product::findOrFail($id);
 
         $product_img = Product::findOrFail($id)->first();
