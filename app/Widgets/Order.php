@@ -19,13 +19,13 @@ class Order extends BaseDimmer
         $string = 'Orders';
 
         return view('voyager::dimmer', array_merge($this->config,[
-            'icon'   => 'voyager-documentation',
+            'icon'   => 'voyager-down-circled',
             'title'  => "{$count} {$string}",
             'text'   => __('voyager::dimmer.post_text', ['count' => $count,
                 'string' => Str::lower($string)]),
             'button' => [
                 'text' => 'View all orders',
-                'link' => '',
+                'link' => route('voyager.orders.index'),
             ],
             'image' => '/widgets/orders.jpg',
         ]));

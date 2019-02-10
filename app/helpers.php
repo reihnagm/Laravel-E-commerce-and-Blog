@@ -19,8 +19,8 @@ function showDate($date)
 }
 
 function showImage($path)
-{
-    return ($path) && file_exists('storage/'. $path) ? asset('storage/'.$path) : asset('images/not-found.jpg');
+{                                                                                // USE GRAVAR OR YOUR IMAGE NOT FOUND
+    return ($path) && file_exists('storage/'. $path) ? asset('storage/'.$path) : Gravatar::src('wavatar');
 }
 
 function getNumbers()

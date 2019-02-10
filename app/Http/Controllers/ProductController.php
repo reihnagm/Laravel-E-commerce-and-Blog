@@ -107,7 +107,7 @@ class ProductController extends Controller
         $oldImg = public_path("storage/{$product_img->img}");
 
         // REMOVED FILE EXISTS WHEN DELETE ACTION
-        // AND GETTING NEW IMAGE
+        // AND GETTING NEW FILE IMAGE
         if (File::exists($oldImg)) {
             unlink($oldImg);
         }

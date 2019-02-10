@@ -6,7 +6,6 @@ use TCG\Voyager\Models\MenuItem;
 
 class MenuItemsTableSeeder extends Seeder
 {
-
     public function run()
     {
         $menu = Menu::where('name', 'admin')->firstOrFail();
@@ -190,6 +189,22 @@ class MenuItemsTableSeeder extends Seeder
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
+            'title'   => 'Orders',
+            'url'     => '',
+            'route'   => 'voyager.orders.index',
+        ]);
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-down-circled',
+                'color'      => null,
+                'parent_id'  => null,
+                'order'      => 7,
+            ])->save();
+        }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
             'title'   => 'Blogs',
             'url'     => '',
             'route'   => 'voyager.blogs.index',
@@ -232,9 +247,8 @@ class MenuItemsTableSeeder extends Seeder
                 'icon_class' => 'voyager-categories',
                 'color'      => null,
                 'parent_id'  => null,
-                'order'      => 15,
+                'order'      => 16,
             ])->save();
         }
-
     }
 }

@@ -32,11 +32,20 @@
 
     @if(auth()->check())
     <div class="is-left">
-      <avatar :user={{ '"'.$user['avatar']. '"' ? '"'.$user['avatar'].'"' : '"'.Gravatar::src('wavatar').'"' }} :user_id="{{ $user['id'] }}"></avatar>
+     {{-- <img src="{{ showImage($user['avatar'])}}" alt="{{ $user['name'] }}" style="width: 100px;"> --}}
+     <avatar :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}">
+     </avatar>
+    {{-- <form action="{{ route('changeAvatar', $user['id']) }}" method="post" enctype="multipart/form-data">
+       @csrf
+       {{ method_field('PUT') }}
+       <input type="file" name="avatar">
+       <input class="button" type="submit" value="Submit">
+     </form> --}}
     </div>
     <ul>
       @if(Auth::user()->id == $user['id'])
       <li> <h3> {{ $user['name'] }} </h3> </li>
+      <br>
       <li><a href="{{ route('chat.index') }}" target="_blank"> Chat </a></li>
       <li><a href="{{ route('order.index') }}" target="_blank"> Orders </a></li>
       <li><a href="{{ route('notifications.index')}}" target="_blank" class="see-notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
@@ -75,6 +84,5 @@
   @endif
 
   @endif
-
 
 </div>

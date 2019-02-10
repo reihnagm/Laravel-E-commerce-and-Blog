@@ -31,6 +31,8 @@
 
   <link rel="shortcut icon" href="{{ asset('assets/logo/logo.ico') }}" type="image/x-icon">
 
+
+
   <script>
       window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -57,8 +59,10 @@
   </div>
 
 
+
+
   <script src="{{ asset('assets/js/app.js') }}"></script>
-  
+
   @yield('js')
 
   <script src="{{ asset('assets/js/main.js') }}"></script>

@@ -139,10 +139,15 @@ class BlogController extends Controller
         $oldImg = public_path("storage/{$blog_img->img}");
 
         // REMOVED FILE EXISTS WHEN DELETE ACTION
-        // AND GETTING NEW IMAGE
+        // AND GETTING NEW FILE IMAGE
         if (File::exists($oldImg)) {
             unlink($oldImg);
         }
+
+        // COPY FROM VOYAGER UPLOAD IMAGE
+        $fullFilename = null;
+        $resizeWidth = 1800;
+        $resizeHeight = null;
 
         $file = $request->file('img');
 

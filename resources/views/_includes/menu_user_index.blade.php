@@ -37,7 +37,7 @@
   <ul>
     <li>
       @if(auth()->user()->avatar)
-      <img class="profile-menu-ava" src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}">
+      <img class="profile-menu-ava" src="{{ showImage(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}" style="width:100px">
       @else
       <img class="profile-menu-ava" src="{{ Gravatar::src('wavatar') }}" alt="{{ auth()->user()->name }}">
       @endif

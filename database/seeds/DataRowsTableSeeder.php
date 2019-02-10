@@ -6,14 +6,15 @@ use TCG\Voyager\Models\DataType;
 
 class DataRowsTableSeeder extends Seeder
 {
-
     public function run()
     {
         $userDataType = DataType::where('slug', 'users')->firstOrFail();
         $blogDataType = DataType::where('slug', 'blogs')->firstOrFail();
         $tagDataType = DataType::where('slug', 'tags')->firstOrFail();
         $categoryDataType = DataType::where('slug', 'category')->firstOrFail();
+        $orderDataType = DataType::where('slug', 'orders')->firstOrFail();
         $productDataType = DataType::where('slug', 'products')->firstOrFail();
+        $orderDataType = DataType::where('slug', 'orders')->firstOrFail();
         $menuDataType = DataType::where('slug', 'menus')->firstOrFail();
         $roleDataType = DataType::where('slug', 'roles')->firstOrFail();
 
@@ -368,11 +369,11 @@ class DataRowsTableSeeder extends Seeder
             ])->save();
         }
 
-       
+
         /////////////////////////
         // PRODUCTS
         /////////////////////////
-        
+
         $dataRow = $this->dataRow($productDataType, 'id');
         if (!$dataRow->exists) {
             $dataRow->fill([
@@ -502,18 +503,18 @@ class DataRowsTableSeeder extends Seeder
                 'delete'       => 1,
                 'order'        => 7,
                 'details'      => [
-                    'relationship' => [ // ADDING RELATIONSHIP
-                        'key' => 'id', 
+                    'relationship' => [
+                        'key' => 'id',
                         'label' => 'name',
                     ],
                 ],
             ])->save();
         }
 
-        $dataRow = $this->dataRow($productDataType, 'category_id'); 
+        $dataRow = $this->dataRow($productDataType, 'category_id');
         if (!$dataRow->exists) {
             $dataRow->fill([
-                'type'         => 'select_dropdown', // IF BELONGS TO MANY DONT USE SELECT_MULTIPLE ERROR INVALID FOREACH. USE SELECT DROPDOWN
+                'type'         => 'select_dropdown',
                 'display_name' => 'category',
                 'required'     => 1,
                 'browse'       => 1,
@@ -523,14 +524,230 @@ class DataRowsTableSeeder extends Seeder
                 'delete'       => 1,
                 'order'        => 8,
                 'details'      => [
-                    'relationship' => [ // ADDING RELATIONSHIP
-                        'key' => 'id', 
+                    'relationship' => [
+                        'key' => 'id',
                         'label' => 'name',
                     ],
                 ],
             ])->save();
         }
-        
+
+        /////////////////////////
+        // ORDERS
+        /////////////////////////
+
+        $dataRow = $this->dataRow($orderDataType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'id',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'order'        => 1,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_email');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'email',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'order'        => 2,
+            ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_address');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'address',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'order'        => 3,
+            ])->save();
+        }
+
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_province');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'province',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 4,
+              ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_postalcode');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'postal code',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 5,
+              ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_phone');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'phone',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 6,
+              ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_name_on_card');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'name on card',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 7,
+              ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_discount');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'discount',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 8,
+              ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_discount_code');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                  'type'         => 'text',
+                  'display_name' => 'discount code',
+                  'required'     => 1,
+                  'browse'       => 1,
+                  'read'         => 1,
+                  'edit'         => 1,
+                  'add'          => 1,
+                  'delete'       => 1,
+                  'order'        => 9,
+              ])->save();
+        }
+
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_subtotal');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                            'type'         => 'text',
+                            'display_name' => 'sub total',
+                            'required'     => 1,
+                            'browse'       => 1,
+                            'read'         => 1,
+                            'edit'         => 1,
+                            'add'          => 1,
+                            'delete'       => 1,
+                            'order'        => 10,
+                        ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_tax');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                            'type'         => 'text',
+                            'display_name' => 'tax',
+                            'required'     => 1,
+                            'browse'       => 1,
+                            'read'         => 1,
+                            'edit'         => 1,
+                            'add'          => 1,
+                            'delete'       => 1,
+                            'order'        => 11,
+                        ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'billing_total');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                            'type'         => 'text',
+                            'display_name' => 'total',
+                            'required'     => 1,
+                            'browse'       => 1,
+                            'read'         => 1,
+                            'edit'         => 1,
+                            'add'          => 1,
+                            'delete'       => 1,
+                            'order'        => 12,
+                        ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'payment_gateway');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                            'type'         => 'text',
+                            'display_name' => 'paymeny gateway',
+                            'required'     => 1,
+                            'browse'       => 1,
+                            'read'         => 1,
+                            'edit'         => 1,
+                            'add'          => 1,
+                            'delete'       => 1,
+                            'order'        => 13,
+                        ])->save();
+        }
+
+        $dataRow = $this->dataRow($orderDataType, 'shipped');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                            'type'         => 'text',
+                            'display_name' => 'shipped',
+                            'required'     => 1,
+                            'browse'       => 1,
+                            'read'         => 1,
+                            'edit'         => 1,
+                            'add'          => 1,
+                            'delete'       => 1,
+                            'order'        => 14,
+                        ])->save();
+        }
+
         /////////////////////////
         // BLOGS
         /////////////////////////
@@ -681,8 +898,8 @@ class DataRowsTableSeeder extends Seeder
                 'delete'       => 1,
                 'order'        => 8,
                 'details' => [
-                  "relationship" => [ // ADDING RELATIONSHIP
-                    "key" => "id", 
+                  "relationship" => [
+                    "key" => "id",
                     "label" => "name"
                   ],
                 ],
@@ -692,7 +909,7 @@ class DataRowsTableSeeder extends Seeder
         $dataRow = $this->dataRow($blogDataType, 'tag_id');
         if (!$dataRow->exists) {
             $dataRow->fill([
-                'type'         => 'select_dropdown', // IF BELONGS TO MANY DONT USE SELECT_MULTIPLE ERROR INVALID FOREACH USE SELECT DROPDOWN
+                'type'         => 'select_dropdown',
                 'display_name' => 'tag',
                 'required'     => 1,
                 'browse'       => 1,
@@ -702,8 +919,8 @@ class DataRowsTableSeeder extends Seeder
                 'delete'       => 1,
                 'order'        => 9,
                  'details' => [
-                  "relationship" => [ // ADDING RELATIONSHIP
-                    "key" => "id", 
+                  "relationship" => [
+                    "key" => "id",
                     "label" => "name",
                   ],
                 ],
@@ -741,7 +958,7 @@ class DataRowsTableSeeder extends Seeder
             ])->save();
         }
 
-        // GROUPS
+        // CATEGORIES
         $dataRow = $this->dataRow($categoryDataType, 'id');
         if (!$dataRow->exists) {
             $dataRow->fill([
@@ -771,7 +988,6 @@ class DataRowsTableSeeder extends Seeder
               'order'        => 1,
             ])->save();
         }
-
     }
 
 

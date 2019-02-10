@@ -9,13 +9,13 @@ use File;
 use Storage;
 use Toastr;
 use Cart;
+use Validator;
+use Carbon;
 
 use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
 
 use App\Http\Requests\ProductRequest;
-
-use TCG\Voyager\Facades\Voyager;
 
 use App\Models\User;
 use App\Models\Blog;
@@ -53,26 +53,78 @@ class UserController extends Controller
         return view('user/profile', ['user' => $user, 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products]);
     }
 
+    public function checkAvatar($id)
+    {
+       $user = User::findOrFail($id)->first();
+       $avatar = $user->avatar;
+       return $avatar;
+    }
+
     public function changeAvatar(Request $request, $id)
     {
+
         $user = User::findOrFail($id);
+
+        $user_img = User::findOrFail($id)->first();
+
+        $oldImg = public_path("storage/{$user_img->avatar}");
+
+        // REMOVED FILE EXISTS WHEN DELETE ACTION
+        // AND GETTING NEW FILE IMAGE
+        if (File::exists($oldImg)) {
+            unlink($oldImg);
+        }
+
+        // COPY FROM VOYAGER UPLOAD IMAGE
+        $fullFilename = null;
+        $resizeWidth = 1800;
+        $resizeHeight = null;
+
+        $file = $request->avatar;
 
         $path =  '/'.date('F').date('Y').'/';
 
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
+        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
 
-            $filename = time(). "-" . $avatar->getClientOriginalName();
+        $fullPath = 'users'.$path.$filename.'.'.$file->getClientOriginalExtension();
 
-            $request->avatar->storeAs('public/users/'.$path, $filename);
+        $image = Image::make($file)->resize($resizeWidth, $resizeHeight, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode($file->getClientOriginalExtension(), 75);
 
-            $user->avatar = $filename;
-        }
+        Storage::disk('public')->put($fullPath, (string) $image, 'public');
 
-        $user->update(["avatar" => $request->avatar]);
+        $fullFilename = $fullPath;
+
+        // BLOB TO FILE
+        // $exploded = explode(',', $request->avatar);
+        //
+        // $decoded = base64_decode($exploded[1]);
+        //
+        // if (str_contains($exploded[0], 'jpeg')) {
+        //     $extension = "jpg";
+        // } else {
+        //     $extension = "png";
+        // }
+        //
+        // $date =  '/'.date('F').date('Y');
+        //
+        // $filename = str_random().'.'.$extension;
+        //
+        // Storage::makeDirectory('public/users'.$date);
+        //
+        // $path = public_path("storage/users".$date.'/'.$filename);
+        //
+        // file_put_contents($path, $decoded);
+        //
+
+        $user->update([
+          "avatar" => $fullFilename
+        ]);
 
         return json_encode([
-            "message" => "success"
+            "message" => "upload"
         ]);
     }
 }

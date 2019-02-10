@@ -30,7 +30,7 @@
       </div>
 
       @forelse ($products->chunk(3) as $chunk)
-       @foreach ($chunk as $product)
+      @foreach ($chunk as $product)
 
       <div class="column is-one-third">
 
@@ -103,7 +103,6 @@
         <hr>
       </div>
 
-
       {{-- SINGLE LATEST BLOG --}}
 
       @if($blog)
@@ -128,11 +127,11 @@
         </form>
         <br>
         @if(auth()->check())
-         @if(auth()->user()->id == $blog['user']['id'])
-          <a href="#!" class="button" onclick="event.preventDefault(); document.getElementsByClassName('form-blog-delete')[0].submit();"> Delete </a>
-          <a href="{{ route('blog.edit', $blog['slug']) }}" class="button" target="_blank">Edit</a>
-         @endif
-        @endif
+          @if(auth()->user()->id == $blog['user']['id'])
+            <a href="#!" class="button" onclick="event.preventDefault(); document.getElementsByClassName('form-blog-delete')[0].submit();"> Delete </a>
+            <a href="{{ route('blog.edit', $blog['slug']) }}" class="button" target="_blank">Edit</a>
+            @endif
+            @endif
       </section>
 
       {{-- EMOTIONS --}}
@@ -171,10 +170,10 @@
       </div>
       @endif
 
-      </div>
-
-
-      </div>
     </div>
+
+
+  </div>
+</div>
 
 @endsection

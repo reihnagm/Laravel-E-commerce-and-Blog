@@ -107,6 +107,20 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
+        $dataType = $this->dataType('slug', 'orders');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'orders',
+                'display_name_singular' => 'order',
+                'display_name_plural'   => 'orders',
+                'icon'                  => 'voyager-down-circled',
+                'model_name'            => \App\Models\Order::class,
+                'controller'            => '',
+                'generate_permissions'  => 1,
+                'description'           => '',
+            ])->save();
+        }
+
 
     }
 

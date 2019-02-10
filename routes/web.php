@@ -4,6 +4,7 @@
 Auth::routes();
 
 // ADMIN VOYAGER
+// OVERRIDE ROUTE VOYAGER
 Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
 
     // VOYAGER ROUTE
@@ -73,6 +74,14 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::post('/category/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.category.order');
     Route::get('/category/{id}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.category.show');
     Route::delete('/category/{id}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.category.destroy');
+
+    Route::post('/orders', $namespacePrefix .'VoyagerBaseController@store')->name('voyager.orders.store');
+    Route::get('/orders', $namespacePrefix .'VoyagerBaseController@index')->name('voyager.orders.index');
+    Route::get('/orders/create', $namespacePrefix .'VoyagerBaseController@create')->name('voyager.orders.create');
+    Route::get('/orders/order', $namespacePrefix .'VoyagerBaseController@order')->name('voyager.orders.order');
+    Route::post('/orders/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.orders.order');
+    Route::get('/orders/{id}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.orders.show');
+    Route::delete('/orders/{id}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.orders.destroy');
 });
 
 // APP INDEX
@@ -85,8 +94,6 @@ Route::get('/social/account/logout', 'SocialAuthController@logout')->name('socia
 
 // USER PROFILE
 Route::get('/profile/{id?}', 'UserController@profile')->name('user.profile');
-Route::get('/profile/{id}/info', 'UserController@info')->name('user.statistic');
-Route::post('/user/uploadTinymce', 'UserController@uploadTinymce')->name('user.uploadtinymce');
 
 // PRODUCT
 Route::resource('/product', 'ProductController');
@@ -138,7 +145,7 @@ Route::get('/messages', 'ChatController@getMessages');
 Route::post('/messages', 'ChatController@postMessage');
 
 // CHANGE AVATAR USERS
-Route::put('/change_avatar/{user_id}/update', 'UserController@changeAvatar');
+Route::post('/change_avatar/{user_id}/update', 'UserController@changeAvatar')->name('changeAvatar');
 
 // COUPON
 Route::post('/coupon', 'CouponController@store')->name('coupon.store');
