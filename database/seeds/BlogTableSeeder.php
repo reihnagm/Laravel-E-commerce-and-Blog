@@ -16,7 +16,7 @@ class BlogTableSeeder extends Seeder
                 'title' => 'blogs '.$i,
                 'slug' => 'blogs-'.$i,
                 'desc' =>'Lorem '. $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
-                'img' => 'blogs/dummy/mountain.jpg',
+                'img' => 'blogs/dummy/normal_spongebob.jpg',
                 'user_id' => 1,
             ])->tags()->sync([1]);
        }

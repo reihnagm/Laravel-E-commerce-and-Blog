@@ -144,7 +144,6 @@
         <comment :blog_id="{{ $blog['id'] }}"> </comment>
       </div>
 
-
       {{-- RECENTLY BLOGS --}}
 
       <section class="recently-blogs" style="width: 100%;">
@@ -171,7 +170,6 @@
       @endif
 
     </div>
-
 
   </div>
 </div>
