@@ -40,10 +40,11 @@
 
 ### Other
 
-- **multiple conversion currencies (IDR and USD)**
-- **package admin laravel voyager(modified)**
-- **login use google**
-- **login use facebook**
+- **multiple conversion currencies (IDR and USD)**  
+- **package admin laravel voyager(modified)**  
+- **when update image, prevent double image in storage, if exists same image before then delete and getting new image  
+- **login use google**  
+- **login use facebook**  
 
 ### Install
 

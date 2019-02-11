@@ -24,10 +24,10 @@ class ProductTableSeeder extends Seeder
             'desc' =>'Lorem '. $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
             'img' => 'products/dummy/shoes.jpg',
             'user_id' => 1,
-        ])->category()->sync([1]);     
-       
+        ])->category()->sync([1]);
+
     }
 
-}
-	  
+  }
+
 }
