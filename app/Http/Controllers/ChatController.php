@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -36,5 +35,4 @@ class ChatController extends Controller
 
         return json_encode(["message" => "sent"]);
     }
-
 }

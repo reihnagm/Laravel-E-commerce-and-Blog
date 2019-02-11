@@ -27,27 +27,27 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
-        // ALTERNATIVE STORING IMAGE BLOB 1
+        // ALTERNATIVE STORE IMAGE BLOB 1
         // if ($request->hasFile('img')) {
         //      $img = $request->file('img');
         //      $filename = time(). "-" . $img->getClientOriginalName();
         //      $image = base64_encode(file_get_contents($request->file('img')));
-        //      $blog->img = $image;
+        //      $product->img = $image;
         //   }
 
-        // ALTERNATIVE STORING IMAGE BLOB 2
+        // ALTERNATIVE STORE IMAGE BLOB 2
         // if ($request->hasFile('img')) {
         //     $file =Input::file('img');
         //     $imagedata = file_get_contents($file);
         //     $base64 = 'data:image/jpeg;base64,'. base64_encode($imagedata);
-        //     $blog->img = $base64;
+        //     $product->img = $base64;
         // }
 
         $slug = str_slug($request->name, '-');
 
-        $product = Product::where('slug', $slug)->first();
+        $product_slug = Product::where('slug', $slug)->first();
 
-        if ($product != null) {
+        if ($product_slug != null) {
             $slug = $slug . '-' .time();
         }
 
@@ -102,12 +102,13 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $product_img = Product::findOrFail($id)->first();
+        // REMOVED FILE EXISTS WHEN DELETE ACTION
+        // AND GETTING NEW FILE IMAGE
+
+        $product_img = Product::findOrFail($id);
 
         $oldImg = public_path("storage/{$product_img->img}");
 
-        // REMOVED FILE EXISTS WHEN DELETE ACTION
-        // AND GETTING NEW FILE IMAGE
         if (File::exists($oldImg)) {
             unlink($oldImg);
         }
@@ -153,7 +154,7 @@ class ProductController extends Controller
         "user_id" => auth()->user()->id
         ]);
 
-        // STORING IMAGE
+        // DEFAULT STORE IMAGE
         // if ($request->hasFile('img')) {
         //
         //     $img = $request->file('img');
@@ -184,13 +185,13 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $id)->first();
 
-        $storage = public_path("storage/{$product->img}");
+        $product_img = public_path("storage/{$product->img}");
 
-        // IF NOT USE PACKAGE VOYAGER UNCOMMENT
+        // IF NOT USE MEDIA UPLOAD FROM PACKAGE VOYAGER UNCOMMENT
         // $productImg = public_path("storage/products/images/{$product->img}");
 
-        if (File::exists($storage)) {
-            unlink($storage);
+        if (File::exists($product_img)) {
+            unlink($product_img);
         }
 
         $product->delete();

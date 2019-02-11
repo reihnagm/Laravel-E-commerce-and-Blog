@@ -53,19 +53,11 @@ class UserController extends Controller
         return view('user/profile', ['user' => $user, 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products]);
     }
 
-    public function checkAvatar($id)
-    {
-       $user = User::findOrFail($id)->first();
-       $avatar = $user->avatar;
-       return $avatar;
-    }
-
     public function changeAvatar(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
 
-        $user_img = User::findOrFail($id)->first();
+        $user_img = User::findOrFail($id);
 
         $oldImg = public_path("storage/{$user_img->avatar}");
 
@@ -84,7 +76,7 @@ class UserController extends Controller
 
         $path =  '/'.date('F').date('Y').'/';
 
-        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
+        $filename = basename(str_random());
 
         $fullPath = 'users'.$path.$filename.'.'.$file->getClientOriginalExtension();
 
@@ -117,8 +109,7 @@ class UserController extends Controller
         // $path = public_path("storage/users".$date.'/'.$filename);
         //
         // file_put_contents($path, $decoded);
-        //
-
+  
         $user->update([
           "avatar" => $fullFilename
         ]);

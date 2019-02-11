@@ -41,7 +41,10 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::get('/users/order', $namespacePrefix .'VoyagerBaseController@order')->name('voyager.users.order');
     Route::post('/users/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.users.order');
     Route::get('/users/{id}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
-    Route::delete('/users/{id}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.users.destroy');
+    // OVERRIDE
+    Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\' .'UserController@update')->name('voyager.users.update');
+
+    Route::delete('/users/{u}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.users.destroy');
 
     Route::post('/blogs', $namespacePrefix .'VoyagerBaseController@store')->name('voyager.blogs.store');
     Route::get('/blogs', $namespacePrefix .'VoyagerBaseController@index')->name('voyager.blogs.index');

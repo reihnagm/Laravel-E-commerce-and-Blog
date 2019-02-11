@@ -27,7 +27,7 @@ class CartController extends Controller
         } else {
             Cart::instance('guest')->update($id, ['qty' => $request->qty]);
         }
-   
+
         return back();
     }
 
@@ -50,7 +50,7 @@ class CartController extends Controller
     {
         if (auth()->check()) {
 
-        // ADD CART FOR USER WHEN LOGGED IN
+            // ADD CART FOR USER WHEN LOGGED IN
 
             $duplicates = Cart::instance('default')->search(function ($cartItem, $rowId) use ($request) {
                 return $cartItem->id === $request->id;
@@ -63,16 +63,16 @@ class CartController extends Controller
             Cart::instance('default')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'desc' => $request->desc, 'user_id' => auth()->user() ? auth()->user()->id : null ])->associate('App\Models\Product');
         } else {
 
-        // ADD CART FOR USER AS GUEST
-      
+            // ADD CART FOR USER AS GUEST
+
             $duplicates = Cart::instance('guest')->search(function ($cartItem, $rowId) use ($request) {
                 return $cartItem->id === $request->id;
             });
-  
+
             if ($duplicates->isNotEmpty()) {
                 return redirect(route('cart.index'));
             }
-      
+
             Cart::instance('guest')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'desc' => $request->desc, 'user_id' => auth()->user() ? auth()->user()->id : null ])->associate('App\Models\Product');
         }
 

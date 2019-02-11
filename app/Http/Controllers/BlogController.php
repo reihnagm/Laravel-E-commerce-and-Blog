@@ -37,8 +37,7 @@ class BlogController extends Controller
     public function store(BlogRequest $request)
     {
 
-
-        // STORING IMAGE BLOB ALTERNATIVE 1
+        // ALTERNATIVE STORE IMAGE BLOB 1
         // if ($request->hasFile('img')) {
         //      $img = $request->file('img');
         //      $filename = time(). "-" . $img->getClientOriginalName();
@@ -46,7 +45,7 @@ class BlogController extends Controller
         //      $blog->img = $image;
         //   }
 
-        // STORING IMAGE BLOB ALTERNATIVE 2
+        // ALTERNATIVE STORE IMAGE BLOB 2
         // if ($request->hasFile('img')) {
         //     $file =Input::file('img');
         //     $imagedata = file_get_contents($file);
@@ -56,9 +55,9 @@ class BlogController extends Controller
 
         $slug = str_slug($request->title, '-');
 
-        $blog = Blog::where('slug', $slug)->first();
+        $blog_slug = Blog::where('slug', $slug)->first();
 
-        if ($blog != null) {
+        if ($blog_slug != null) {
             $slug = $slug . '-' .time();
         }
 
@@ -83,7 +82,6 @@ class BlogController extends Controller
         Storage::disk('public')->put($fullPath, (string) $image, 'public');
 
         $fullFilename = $fullPath;
-
 
         $blog = Blog::create([
          "title"   => $request->title,
@@ -134,12 +132,13 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        $blog_img = Blog::findOrFail($id)->first();
+        // REMOVED FILE EXISTS WHEN DELETE ACTION
+        // AND GETTING NEW FILE IMAGE
+
+        $blog_img = Blog::findOrFail($id);
 
         $oldImg = public_path("storage/{$blog_img->img}");
 
-        // REMOVED FILE EXISTS WHEN DELETE ACTION
-        // AND GETTING NEW FILE IMAGE
         if (File::exists($oldImg)) {
             unlink($oldImg);
         }
@@ -153,7 +152,7 @@ class BlogController extends Controller
 
         $path =  '/'.date('F').date('Y').'/';
 
-        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
+        $filename = basename($file->getClientOriginalName().'-'.time());
 
         $fullPath = 'blogs'.$path.$filename.'.'.$file->getClientOriginalExtension();
 
@@ -168,9 +167,9 @@ class BlogController extends Controller
 
         $slug = str_slug($request->title, '-');
 
-        $blog = Blog::where('slug', $slug)->first();
+        $blog_slug = Blog::where('slug', $slug)->first();
 
-        if ($blog != null) {
+        if ($blog_slug != null) {
             $slug = $slug . '-' .time();
         }
 
@@ -183,7 +182,7 @@ class BlogController extends Controller
         "user_id" => auth()->user()->id
       ]);
 
-        // STORING IMAGE
+        // DEFAULT STORE IMAGE
         // if ($request->hasFile('img')) {
         //
         //     $img = $request->file('img');
@@ -209,13 +208,16 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        $storage = public_path("storage/{$blog->img}");
+        // REMOVED FILE EXISTS WHEN DELETE ACTION
+        // AND GETTING NEW FILE IMAGE
 
-        // IF NOT USE PACKAGE VOYAGER UNCOMMENT
+        $blog_img = public_path("storage/{$blog->img}");
+
+        // IF NOT USE MEDIA UPLOAD FROM PACKAGE VOYAGER UNCOMMENT
         // $blogImg = public_path("storage/blogs/images/{$blog->img}");
 
-        if (File::exists($storage)) {
-            unlink($storage);
+        if (File::exists($blog_img)) {
+            unlink($blog_img);
         }
 
         $blog->tags()->detach();
