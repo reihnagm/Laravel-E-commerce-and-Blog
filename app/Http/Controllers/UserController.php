@@ -109,7 +109,7 @@ class UserController extends Controller
         // $path = public_path("storage/users".$date.'/'.$filename);
         //
         // file_put_contents($path, $decoded);
-  
+
         $user->update([
           "avatar" => $fullFilename
         ]);

@@ -21,7 +21,7 @@
 
         <div class="field">
           <label for="title">Title* :</label>
-          <input type="text" name="title" value="{{ old('title') }}" id="_title">
+          <input type="text" name="title" value="{{ old('title') }}" id="title">
 
           @if($errors->has('title'))
           <p class="is-error"> {{ $errors->first('title') }}</p>
@@ -46,7 +46,7 @@
 
           {{-- OLD SELECT --}}
           @if (old('tags'))
-          <select id="tags" name="tags[]" multiple>
+          <select id="tags" name="tags[]">
               <option value="0"> Select Tag* : </option>
               @for ($i=0; $i<count(old('tags')); $i++)
               @foreach ($tags as $tag)
@@ -62,7 +62,8 @@
           @else
 
           {{-- DEFAULT SELECT --}}
-          <select name="tags[]" multiple>
+          <label> Tags *(MAX 1)</label>
+          <select name="tags[]">
           @foreach ($tags as $tag)
               <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
           @endforeach
@@ -73,10 +74,12 @@
           <p class="is-error"> {{ $errors->first('tags') }}</p>
           @endif
 
-          <input class="button" type="submit" value="Publish">
+         <input class="button" name="publish" type="submit" value="Publish">
+         <input class="button" name="draft" type="submit" value="Save to Draft">
 
         </div>
     </form>
+
   </div>
 
  </div>

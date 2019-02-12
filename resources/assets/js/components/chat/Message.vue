@@ -6,7 +6,6 @@
         {{ message.user.name }}
         <span class="time">{{ message.created_at }}</span>
       </div>
-
       <div class="message">{{ message.subject }}</div>
     </div>
   </div>

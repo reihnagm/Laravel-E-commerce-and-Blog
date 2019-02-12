@@ -3,7 +3,7 @@
   <h3>Users Online: {{ users.length }}</h3>
   <ul class="box-users-online">
     <li v-for="user in users" :key="user.id">
-      <a target="_blank" :href="'/profile/'+ user.slug">{{ user.name }}</a> 
+      <a target="_blank" :href="'/profile/'+ user.slug">{{ user.name }}</a>
     </li>
   </ul>
   <br>
@@ -11,10 +11,10 @@
   <a class="button" href="/profile">back to Profile</a>
 </div>
 
-<!-- 
+<!--
 user.slug
 user.id
-user.name p 
+user.name p
 THIS DATA GETTING ON channel-chat
  -->
 </template>
@@ -45,7 +45,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 .box-users-online {

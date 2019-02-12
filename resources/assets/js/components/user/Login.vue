@@ -2,17 +2,22 @@
 <div>
 
   <div class="is-error" v-show="errors.any()">
-    <div v-if="errors.has('email')">
+    <span v-if="errors.has('email')">
       {{ errors.first('email') }}
-    </div>
-    <div v-if="errors.has('password')">
+      <br>
+      <hr>
+    </span>
+    <span v-if="errors.has('password')">
       {{ errors.first('password') }}
-    </div>
+      <br>
+      <hr>
+    </span>
   </div>
 
-  <span class="is-error" v-if="credentials_not_found.length">
+
+  <div class="is-error" v-if="credentials_not_found.length">
     {{ credentials_not_found }}
-  </span>
+  </div>
 
   <div class="field">
     <form id="login" @submit.prevent="login" method="post" novalidate="true">

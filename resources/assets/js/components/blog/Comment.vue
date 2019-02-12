@@ -130,7 +130,7 @@ export default {
         });
     },
     cancelLike(comment_id) {
-      axios.get("/cancel_like/" + comment_id + "/2").then(response => {});
+      axios.get("/cancel-like/" + comment_id + "/2").then(response => {});
     },
     unlike(comment_id) {
       axios
@@ -161,17 +161,17 @@ export default {
         });
     },
     cancelUnlike(comment_id) {
-      axios.get("/cancel_unlike/" + comment_id + "/2").then(response => {});
+      axios.get("/cancel-unlike/" + comment_id + "/2").then(response => {});
     },
     changedLikeToUnlike(comment_id) {
-      axios.get("/cancel_unlike/" + comment_id + "/2").then(response => {});
+      axios.get("/cancel-unlike/" + comment_id + "/2").then(response => {});
       let index = this.comments.findIndex(comment => comment.id === comment_id);
       if (this.comments[index].unlikes_count > 0) {
         this.comments[index].unlikes_count--;
       }
     },
     changedUnlikeToLike(comment_id) {
-      axios.get("/cancel_like/" + comment_id + "/2").then(response => {});
+      axios.get("/cancel-like/" + comment_id + "/2").then(response => {});
       let index = this.comments.findIndex(comment => comment.id === comment_id);
       if (this.comments[index].likes_count > 0) {
         this.comments[index].likes_count--;
@@ -181,7 +181,7 @@ export default {
     // COMMENT FEATURE
 
     getComment(url) {
-      url = url || "/blog_comment/" + this.blog_id;
+      url = url || "/blog-comment/" + this.blog_id;
       axios.get(url).then(response => {
         this.comments = response.data.data;
         this.makePagination(response.data.meta, response.data.links);
@@ -199,7 +199,7 @@ export default {
     },
     async sentComment() {
       await axios
-        .post("/blog_comment/" + this.blog_id + "/" + this.auth_user_id, {
+        .post("/blog-comment/" + this.blog_id + "/" + this.auth_user_id, {
           subject: this.subject
         })
         .catch(error => {
@@ -211,7 +211,7 @@ export default {
       });
     },
     async deleteComment(comment_id) {
-      axios.delete("/blog_comment/" + comment_id);
+      axios.delete("/blog-comment/" + comment_id);
       await this.$nextTick()
         .then(response => {
           this.getComment();
@@ -225,7 +225,7 @@ export default {
       this.editCommentTab = !this.editCommentTab;
     },
     async updateComment(comment_id, comment_new_subject) {
-      axios.put("/blog_comment/" + comment_id + "/update", {
+      axios.put("/blog-comment/" + comment_id + "/update", {
         subject: comment_new_subject
       });
       await this.$nextTick()

@@ -85227,6 +85227,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -85288,25 +85293,33 @@ var render = function() {
       },
       [
         _vm.errors.has("email")
-          ? _c("div", [
+          ? _c("span", [
               _vm._v(
-                "\r\n      " + _vm._s(_vm.errors.first("email")) + "\r\n    "
-              )
+                "\r\n      " + _vm._s(_vm.errors.first("email")) + "\r\n      "
+              ),
+              _c("br"),
+              _vm._v(" "),
+              _c("hr")
             ])
           : _vm._e(),
         _vm._v(" "),
         _vm.errors.has("password")
-          ? _c("div", [
+          ? _c("span", [
               _vm._v(
-                "\r\n      " + _vm._s(_vm.errors.first("password")) + "\r\n    "
-              )
+                "\r\n      " +
+                  _vm._s(_vm.errors.first("password")) +
+                  "\r\n      "
+              ),
+              _c("br"),
+              _vm._v(" "),
+              _c("hr")
             ])
           : _vm._e()
       ]
     ),
     _vm._v(" "),
     _vm.credentials_not_found.length
-      ? _c("span", { staticClass: "is-error" }, [
+      ? _c("div", { staticClass: "is-error" }, [
           _vm._v("\r\n    " + _vm._s(_vm.credentials_not_found) + "\r\n  ")
         ])
       : _vm._e(),
@@ -85499,7 +85512,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\ninput[type=\"submit\"][data-v-78207880] {\n  cursor: pointer;\n}\n.form-register[data-v-78207880] {\n  padding-top: 20px;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=\"submit\"][data-v-78207880] {\r\n  cursor: pointer;\n}\n.form-register[data-v-78207880] {\r\n  padding-top: 20px;\n}\n", ""]);
 
 // exports
 
@@ -85510,6 +85523,9 @@ exports.push([module.i, "\ninput[type=\"submit\"][data-v-78207880] {\n  cursor: 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -85629,46 +85645,35 @@ var render = function() {
           _vm.errors.has("name")
             ? _c("span", [
                 _vm._v(
-                  "\n        " + _vm._s(_vm.errors.first("name")) + "\n      "
+                  "\r\n      " + _vm._s(_vm.errors.first("name")) + "\r\n    "
                 )
               ])
             : _vm._e(),
           _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _vm.errors.has("email")
             ? _c("span", [
                 _vm._v(
-                  "\n        " + _vm._s(_vm.errors.first("email")) + "\n      "
-                )
+                  "\r\n      " + _vm._s(_vm.errors.first("email")) + "\r\n    "
+                ),
+                _c("br"),
+                _vm._v(" "),
+                _c("hr")
               ])
             : _vm._e(),
           _vm._v(" "),
           _vm.errors.has("password")
             ? _c("span", [
                 _vm._v(
-                  "\n        " +
+                  "\r\n      " +
                     _vm._s(_vm.errors.first("password")) +
-                    "\n      "
+                    "\r\n    "
                 )
               ])
             : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.name_required.length
-      ? _c("span", { staticClass: "is-error" }, [
-          _vm._v("\n      " + _vm._s(_vm.name_required) + "\n    ")
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.email_required.length
-      ? _c("span", { staticClass: "is-error" }, [
-          _vm._v("\n      " + _vm._s(_vm.email_required) + "\n    ")
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.password_required.length
-      ? _c("span", { staticClass: "is-error" }, [
-          _vm._v("\n      " + _vm._s(_vm.password_required) + "\n    ")
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -85964,19 +85969,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["avatar_user", "avatar_gravatar", "user_id"],
+  props: ["avatar_user", "avatar_gravatar", "auth_user", "user_id"],
   data: function data() {
     return {
       avatar: this.avatar_user,
@@ -86017,11 +86012,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var blob = new Blob();
       var blobFile = this.blobToFile(blob, e.target.files[0]);
       // this.file = blobFile.name
-      // // 'IMAGE.JPG'
-      // // console.log(blobFile.name.name);
-      // // ALTERNATIVE CAN USE E.TARGET.FILES[0]
+      // 'IMAGE.JPG'
+      // console.log(blobFile.name.name);
+      // ALTERNATIVE CAN USE E.TARGET.FILES[0]
       var image = blobFile.name;
-      // // CHECK IMAGE, IF EXISTS THEN SHOW BUTTON UPLOAD IMAGE
+      // CHECK IMAGE, IF EXISTS THEN SHOW BUTTON UPLOAD IMAGE
       this.checkFile = e.target.files[0];
       this.read(image);
     },
@@ -86036,28 +86031,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     // formSubmit() {
+
     // DEFINE FORM
     // let formAva = document.getElementById('formAva')
-    //
+
     // // GET IMAGE BLOB
     // let imageUrl = this.avatar
-    //
+
     // // SPLIT THE BASE64 STRING IN DATA AND CONTENTTYPE
     // let block = imageUrl.split(";");
-    //
+
     // // GET THE CURRENT TYPE
     // let contentType = block[0].split(":")[1]; // IN THIS CASE "IMAGE/JEPG"
-    //
+
     // // GET THE REAL BASE64 CONTENT OF THE FILE
     // let realData = block[1].split(",")[1]; // INTHIS CASE "iVBORw0KGg...."
-    //
+
     // // CONVERT TO BLOB
     // let blob = this.b64toBlob(realData, contentType);
-    //
+
     // // CREATE A FORMDATA AND APPEND THE FILE
     // let fd = new FormData(formAva);
     // fd.append("avatar", blob);
-
 
     // let vm = this;
     //
@@ -86066,8 +86061,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //     'content-type': 'multipart/form-data'
     //   }
     // }
-
-    // console.log(formData)
 
     // let url = '/change_avatar/' + this.user_id + '/update';
 
@@ -86093,11 +86086,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // },
     upload: function upload() {
       var formData = new FormData();
-
       formData.append('avatar', this.avatar, this.avatar.name);
-      axios.post('/change_avatar/' + this.user_id + '/update', formData).then(function (response) {
+      axios.post('/change-avatar/' + this.user_id + '/update', formData).then(function (response) {
         toastr.info('Successfully change ava!');
-        // location.reload();
+        location.reload();
       }).catch(function (error) {
         console.log(error.response);
         toastr.info('Something error happened!');
@@ -86148,22 +86140,48 @@ var render = function() {
     _vm.avatar
       ? _c("div", [
           _vm.image
-            ? _c("div", [_c("img", { attrs: { src: _vm.image } })])
-            : _c("div", [_c("img", { attrs: { src: _vm.avatar } })])
+            ? _c("div", [
+                _c("img", {
+                  staticStyle: { width: "100px" },
+                  attrs: { src: _vm.image }
+                })
+              ])
+            : _c("div", [
+                _c("img", {
+                  staticStyle: { width: "100px" },
+                  attrs: { src: _vm.avatar }
+                })
+              ])
         ])
-      : _c("div", [_c("img", { attrs: { src: _vm.gravatar } })]),
+      : _c("div", [
+          _c("img", {
+            staticStyle: { width: "100px" },
+            attrs: { src: _vm.gravatar }
+          })
+        ]),
     _vm._v(" "),
-    _c("input", { attrs: { type: "file" }, on: { change: _vm.changeAvatar } }),
+    _vm.auth_user
+      ? _c("span", [
+          _c("input", {
+            attrs: { type: "file" },
+            on: { change: _vm.changeAvatar }
+          })
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _c(
-      "a",
-      {
-        staticClass: "button",
-        attrs: { href: "#!" },
-        on: { click: _vm.upload }
-      },
-      [_vm._v(" Upload ")]
-    )
+    _vm.checkFile
+      ? _c("span", [
+          _c(
+            "a",
+            {
+              staticClass: "button",
+              attrs: { href: "#!" },
+              on: { click: _vm.upload }
+            },
+            [_vm._v(" Upload ")]
+          )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -86746,7 +86764,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       });
     },
     cancelLike: function cancelLike(comment_id) {
-      axios.get("/cancel_like/" + comment_id + "/2").then(function (response) {});
+      axios.get("/cancel-like/" + comment_id + "/2").then(function (response) {});
     },
     unlike: function unlike(comment_id) {
       var _this2 = this;
@@ -86773,10 +86791,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       });
     },
     cancelUnlike: function cancelUnlike(comment_id) {
-      axios.get("/cancel_unlike/" + comment_id + "/2").then(function (response) {});
+      axios.get("/cancel-unlike/" + comment_id + "/2").then(function (response) {});
     },
     changedLikeToUnlike: function changedLikeToUnlike(comment_id) {
-      axios.get("/cancel_unlike/" + comment_id + "/2").then(function (response) {});
+      axios.get("/cancel-unlike/" + comment_id + "/2").then(function (response) {});
       var index = this.comments.findIndex(function (comment) {
         return comment.id === comment_id;
       });
@@ -86785,7 +86803,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       }
     },
     changedUnlikeToLike: function changedUnlikeToLike(comment_id) {
-      axios.get("/cancel_like/" + comment_id + "/2").then(function (response) {});
+      axios.get("/cancel-like/" + comment_id + "/2").then(function (response) {});
       var index = this.comments.findIndex(function (comment) {
         return comment.id === comment_id;
       });
@@ -86800,7 +86818,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     getComment: function getComment(url) {
       var _this3 = this;
 
-      url = url || "/blog_comment/" + this.blog_id;
+      url = url || "/blog-comment/" + this.blog_id;
       axios.get(url).then(function (response) {
         _this3.comments = response.data.data;
         _this3.makePagination(response.data.meta, response.data.links);
@@ -86825,7 +86843,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post("/blog_comment/" + this.blog_id + "/" + this.auth_user_id, {
+                return axios.post("/blog-comment/" + this.blog_id + "/" + this.auth_user_id, {
                   subject: this.subject
                 }).catch(function (error) {
                   console.log(error.response);
@@ -86859,7 +86877,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                axios.delete("/blog_comment/" + comment_id);
+                axios.delete("/blog-comment/" + comment_id);
                 _context2.next = 3;
                 return this.$nextTick().then(function (response) {
                   _this5.getComment();
@@ -86893,7 +86911,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                axios.put("/blog_comment/" + comment_id + "/update", {
+                axios.put("/blog-comment/" + comment_id + "/update", {
                   subject: comment_new_subject
                 });
                 _context3.next = 3;
@@ -88351,7 +88369,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -88522,7 +88539,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\ntextarea[data-v-2a41e098] {\n  width: 100%;\n  height: 50px;\n  border: none;\n  outline: none;\n  border-bottom: 1px solid gray;\n}\ntextarea[data-v-2a41e098]:hover,\ntextarea[data-v-2a41e098]:focus {\n  border-bottom: 1px solid gray;\n}\n", ""]);
+exports.push([module.i, "\ntextarea[data-v-2a41e098] {\n  width: 100%;\n  height: 50px;\n  border: none;\n  outline: none;\n  border-bottom: 1px solid gray;\n}\ntextarea[data-v-2a41e098]:focus,\ntextarea[data-v-2a41e098]:hover {\n  border-bottom: 1px solid gray;\n}\n", ""]);
 
 // exports
 
@@ -88544,60 +88561,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            body: null
-        };
+  data: function data() {
+    return {
+      body: null
+    };
+  },
+
+  methods: {
+    handleInput: function handleInput(e) {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        this.submit();
+      }
     },
+    submit: function submit() {
+      var _this = this;
 
-    methods: {
-        handleInput: function handleInput(e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-                e.preventDefault();
-                this.submit();
-            }
-        },
-        submit: function submit() {
-            var _this = this;
+      if (!this.body || this.body.trim() === '') {
+        return;
+      }
 
-            if (!this.body || this.body.trim() === '') {
-                return;
-            }
-
-            var newMessage = {
-                //id: Date.now(),
-                subject: this.body.trim(),
-                created_at: __WEBPACK_IMPORTED_MODULE_0_moment___default()().utc(0).format('YYYY-MM-DD HH:mm:ss'),
-                user: {
-                    name: Laravel.user.name
-                }
-                // message.user.username = laravel.user.username = (Auth::user()->username)
-
-            };var backup = this.body.trim();
-
-            __WEBPACK_IMPORTED_MODULE_1__bus__["a" /* default */].$emit('chat.sent', newMessage);
-
-            this.body = '';
-
-            axios.post('/messages', { subject: backup }).then(function (response) {}).catch(function () {
-                _this.body = backup;
-                __WEBPACK_IMPORTED_MODULE_1__bus__["a" /* default */].$emit('chat.removed', newMessage);
-                console.log(newMessage);
-                console.log(_this.body);
-                console.log('ada error');
-            });
+      var newMessage = {
+        //id: Date.now(),
+        subject: this.body.trim(),
+        created_at: __WEBPACK_IMPORTED_MODULE_0_moment___default()().utc(0).format('YYYY-MM-DD HH:mm:ss'),
+        user: {
+          name: Laravel.user.name
         }
+        // message.user.username = laravel.user.username = (Auth::user()->username)
+
+      };var backup = this.body.trim();
+
+      __WEBPACK_IMPORTED_MODULE_1__bus__["a" /* default */].$emit('chat.sent', newMessage);
+
+      this.body = '';
+
+      axios.post('/messages', {
+        subject: backup
+      }).then(function (response) {}).catch(function () {
+        _this.body = backup;
+        __WEBPACK_IMPORTED_MODULE_1__bus__["a" /* default */].$emit('chat.removed', newMessage);
+        console.log(newMessage);
+        console.log(_this.body);
+        console.log('ada error');
+      });
     }
+  }
 });
 
 /***/ }),
@@ -88877,30 +88891,28 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("form", { attrs: { action: "#" } }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.body,
-              expression: "body"
-            }
-          ],
-          attrs: { placeholder: "Chat here.." },
-          domProps: { value: _vm.body },
-          on: {
-            keydown: _vm.handleInput,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.body = $event.target.value
-            }
+    _c("div", { staticClass: "form-group" }, [
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.body,
+            expression: "body"
           }
-        })
-      ])
+        ],
+        attrs: { placeholder: "Chat here.." },
+        domProps: { value: _vm.body },
+        on: {
+          keydown: _vm.handleInput,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.body = $event.target.value
+          }
+        }
+      })
     ])
   ])
 }

@@ -105,7 +105,7 @@
 
       {{-- SINGLE LATEST BLOG --}}
 
-      @if($blog)
+      @if($blog['draft'] === 0)
       <section class="blog">
         <h2 class="blog-title"> {!! title_case($blog['title']) !!} </h2>
         @foreach ($blog->tags as $tag)

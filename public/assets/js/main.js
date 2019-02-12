@@ -83,7 +83,7 @@ $(document).ready(function() {
 
     var model_type = _this.attr('model-type')
     var model_id = _this.attr('model-id')
-    var url = "/cancel_like/" + model_id + "/" + model_type
+    var url = "/cancel-like/" + model_id + "/" + model_type
 
     $.get(url, () => {
 
@@ -117,7 +117,7 @@ $(document).ready(function() {
 
     var model_type = _this.attr('model-type')
     var model_id = _this.attr('model-id')
-    var url = "/cancel_unlike/" + model_id + "/" + model_type
+    var url = "/cancel-unlike/" + model_id + "/" + model_type
 
     $.get(url, () => {
 
@@ -147,7 +147,7 @@ $(document).ready(function() {
 
   function markAsRead(id) {
     $.ajax({
-      url: '/mark_as_read/' + id,
+      url: '/mark-as-read/' + id,
       method: "GET",
     }).done(function(success) {
       console.log(success)
@@ -185,7 +185,7 @@ $(document).ready(function() {
     precision: 2,
     thousands: '.',
     decimal: '.',
-    prefix:'$ ',
+    prefix: '$ ',
     allowNegative: false,
     affixesStay: false
   });
@@ -194,37 +194,34 @@ $(document).ready(function() {
     precision: 3,
     thousands: '.',
     decimal: '.',
-    prefix:'Rp. ',
+    prefix: 'Rp. ',
     allowNegative: false,
     affixesStay: false
   });
 
   var price_usd = $("#price-usd");
   var price_rp = $("#price-rp");
-  
-
 
   $("#currency").on("change", function() {
     var currency = this.value;
     switch (currency) {
       case "usd":
-	   var string = numeral(price_usd);
-	   console.log(string);
-      price_usd.css('display', 'block');
-      price_rp.css('display', 'none');
-      break;
+        var string = numeral(price_usd);
+        console.log(string);
+        price_usd.css('display', 'block');
+        price_rp.css('display', 'none');
+        break;
       case "rupiah":
-      price_usd.css('display', 'none');
-      price_rp.css('display', 'block');
-      break;
-    default:
+        price_usd.css('display', 'none');
+        price_rp.css('display', 'block');
+        break;
+      default:
     }
     // var prefix = currency == "usd"; // or ["usd","yen",...].indexOf(curr); for more
     // var sign = currency == "usd" ? "$" : "rupiah";
 
   }).change();
-  
-  
+
   // JQUERY TICKER
   // $('.ticker').ticker();
 
@@ -246,6 +243,6 @@ $(document).ready(function() {
     $('.hamburger-menu').toggleClass('change')
     $('.mobile-nav-menu').toggleClass('left')
   })
-  
- 			
+
+
 });

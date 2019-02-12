@@ -1,47 +1,37 @@
 <template>
- <div>
+<div>
 
+  <div v-if="avatar">
+    <div v-if="image">
+      <img :src="image" style="width: 100px;">
+    </div>
+    <div v-else>
+      <img :src="avatar" style="width: 100px;">
+    </div>
+  </div>
+  <div v-else>
+    <img :src="gravatar" style="width: 100px;">
+  </div>
 
-<div v-if="avatar">
-   <div v-if="image">
-     <img :src="image">
-   </div>
-   <div v-else>
-     <img :src="avatar">
-   </div>
- </div>
- <div v-else>
-   <img :src="gravatar">
- </div>
+ <span v-if="auth_user">
+  <input type="file" @change="changeAvatar">
+ </span>
 
-
-  <!-- <img :src="'http://localhost:8000/storage/users/'+ getMonth + getYear + '/' + avatar"> -->
-
-  <input type="file"  @change="changeAvatar">
-
-  <a href="#!" class="button" @click="upload"> Upload </a>
-
-  <!-- <form id="formAva" @submit.prevent="formSubmit()" enctype="multipart/form-data">
-    <img :src="avatar">
-    <input type="file" accept="image/*" @change="changeAvatar">
-    <input type="submit" class="button" value="Submit">
-  </form> -->
-
-  <!-- <span v-if="checkFile">
+  <span v-if="checkFile">
     <a href="#!" class="button" @click="upload"> Upload </a>
-  </span> -->
+  </span>
 
- </div>
+</div>
 </template>
 
 <script>
 export default {
-  props: ["avatar_user", "avatar_gravatar", "user_id"],
+  props: ["avatar_user", "avatar_gravatar", "auth_user", "user_id"],
   data() {
     return {
       avatar: this.avatar_user,
       gravatar: this.avatar_gravatar,
-      image:"",
+      image: "",
       checkFile: ""
     };
   },
@@ -76,11 +66,11 @@ export default {
       let blob = new Blob();
       let blobFile = this.blobToFile(blob, e.target.files[0]);
       // this.file = blobFile.name
-      // // 'IMAGE.JPG'
-      // // console.log(blobFile.name.name);
-      // // ALTERNATIVE CAN USE E.TARGET.FILES[0]
+      // 'IMAGE.JPG'
+      // console.log(blobFile.name.name);
+      // ALTERNATIVE CAN USE E.TARGET.FILES[0]
       let image = blobFile.name;
-      // // CHECK IMAGE, IF EXISTS THEN SHOW BUTTON UPLOAD IMAGE
+      // CHECK IMAGE, IF EXISTS THEN SHOW BUTTON UPLOAD IMAGE
       this.checkFile = e.target.files[0];
       this.read(image);
     },
@@ -92,28 +82,28 @@ export default {
       }
     },
     // formSubmit() {
+
     // DEFINE FORM
     // let formAva = document.getElementById('formAva')
-    //
+
     // // GET IMAGE BLOB
     // let imageUrl = this.avatar
-    //
+
     // // SPLIT THE BASE64 STRING IN DATA AND CONTENTTYPE
     // let block = imageUrl.split(";");
-    //
+
     // // GET THE CURRENT TYPE
     // let contentType = block[0].split(":")[1]; // IN THIS CASE "IMAGE/JEPG"
-    //
+
     // // GET THE REAL BASE64 CONTENT OF THE FILE
     // let realData = block[1].split(",")[1]; // INTHIS CASE "iVBORw0KGg...."
-    //
+
     // // CONVERT TO BLOB
     // let blob = this.b64toBlob(realData, contentType);
-    //
+
     // // CREATE A FORMDATA AND APPEND THE FILE
     // let fd = new FormData(formAva);
     // fd.append("avatar", blob);
-
 
     // let vm = this;
     //
@@ -122,8 +112,6 @@ export default {
     //     'content-type': 'multipart/form-data'
     //   }
     // }
-
-    // console.log(formData)
 
     // let url = '/change_avatar/' + this.user_id + '/update';
 
@@ -149,11 +137,10 @@ export default {
     // },
     upload() {
       const formData = new FormData();
-
       formData.append('avatar', this.avatar, this.avatar.name)
-      axios.post('/change_avatar/' + this.user_id + '/update', formData).then(response => {
+      axios.post('/change-avatar/' + this.user_id + '/update', formData).then(response => {
         toastr.info('Successfully change ava!');
-        // location.reload();
+        location.reload();
       }).catch((error) => {
         console.log(error.response)
         toastr.info('Something error happened!');

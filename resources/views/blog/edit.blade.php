@@ -48,7 +48,7 @@
         @endif
 
         {{-- OLD SELECT --}}
-        <select id="tags" name="tags[]" multiple>
+        <select id="tags" name="tags[]">
             @foreach ($tags as $tag)
              @foreach ($blog->tags as $oldtag)
                 <option value="{{ $tag->id }}"
@@ -66,7 +66,8 @@
         <p class="is-error"> {{ $errors->first('tags') }}</p>
         @endif
 
-        <input class="button" type="submit" value="Save Edit">
+        <input class="button" type="submit" name="edit" value="Save Edit">
+        <input class="button" type="submit" name="draft" value="Save to Draft">
 
         </div>
     </form>

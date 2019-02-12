@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('email')->nullable(); // unique() prevent to duplicate if use socialite remove it
+            $table->string('email')->nullable(); // UNIQUE() PREVENT TO DUPLICATE IF USE SCOIALITE REMOVE IT
             $table->string('password')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();

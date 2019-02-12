@@ -1,5 +1,9 @@
 @include('_includes/menu_user_mobile')
 
+@php
+  $draft = \App\Models\Blog::where("user_id", auth()->user()->id)->where("draft", 1)->count();
+@endphp
+
 <a class="cart hidden-in-mobile" href="{{ route('checkout.index') }}">
   @if(auth()->check())
   <h2 class="cart-count">{{ Cart::instance('default')->count() }}</h2>
@@ -32,30 +36,26 @@
 
     @if(auth()->check())
     <div class="is-left">
-     {{-- <img src="{{ showImage($user['avatar'])}}" alt="{{ $user['name'] }}" style="width: 100px;"> --}}
-     <avatar :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}">
-     </avatar>
-    {{-- <form action="{{ route('changeAvatar', $user['id']) }}" method="post" enctype="multipart/form-data">
-       @csrf
-       {{ method_field('PUT') }}
-       <input type="file" name="avatar">
-       <input class="button" type="submit" value="Submit">
-     </form> --}}
+     <avatar :auth_user="{{ auth()->check() }}" :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}"></avatar>
     </div>
     <ul>
       @if(Auth::user()->id == $user['id'])
-      <li> <h3> {{ $user['name'] }} </h3> </li>
+      <li> <h3> <a href="{{ route('user.profile') }}"> {{ $user['name'] }}  </a></h3> </li>
       <br>
       <li><a href="{{ route('chat.index') }}" target="_blank"> Chat </a></li>
       <li><a href="{{ route('order.index') }}" target="_blank"> Orders </a></li>
       <li><a href="{{ route('notifications.index')}}" target="_blank" class="see-notif"> Notification ({{ Auth::user()->notifications->where('seen', 0)->count() }})</a></li>
       <li><a href="{{ route('product.create') }}" target="_blank"> Create your own Product </a></li>
       <li><a href="{{ route('blog.create') }}" target="_blank"> Create a Blog</a></li>
+
+      <li><a href="{{ route('blog.draft') }}" target="_blank"> Draft ({{$draft}}) </a></li>
       <li><a href="{{ route('home') }}" target="_blank"> Back to homepage </a></li>
       <li><a href="{{ route('social.logout') }}"> Logout </a></li>
       @endif
     @endif
     @if(auth()->guest())
+    <avatar :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}"></avatar>
+    <li> <h3> {{ $user['name'] }} </h3> </li>
     <li><a href="{{ route('home') }}"> Back to homepage </a></li>
     @endif
    </ul>
@@ -63,21 +63,23 @@
   @else
 
   <div class="is-left">
-    <img class="profile-menu-ava" src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}">
+  <avatar :auth_user="{{ auth()->check() }}" :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}"></avatar>
   </div>
-
   @if(auth()->check())
   <ul>
     @if(Auth::user()->id == $user['id'])
-    <li> <h3> {{ $user['name'] }} </h3> </li>
+    <li> <h3> <a href="{{ route('user.profile') }}"> {{ $user['name'] }}  </a> </h3> </li>
     <li><a href="{{ route('chat.index') }}" target="_blank"> Chat </a></li>
     <li><a href="{{ route('notifications.index')}}" target="_blank" class="see-notif"> Notification ({{ auth()->user()->notifications->where('seen', 0)->count() }})</a></li>
     <li><a href="{{ route('product.create') }}" target="_blank"> Create your own Product </a></li>
     <li><a href="{{ route('blog.create') }}" target="_blank"> Create a Blog</a></li>
+    <li><a href="{{ route('blog.draft') }}" target="_blank"> Draft ({{$draft}}) </a></li>
     <li><a href="{{ route('home') }}" target="_blank"> Back to homepage </a></li>
     <li><a href="{{ route('social.logout') }}"> Logout </a></li>
     @endif
    @if(auth()->guest())
+   <avatar :auth_user="{{ auth()->check() }}" :avatar_user="{{ "'". showImage($user['avatar']) ."'" }}" :avatar_gravatar="{{ "'". Gravatar::src('wavatar') ."'" }}" :user_id="{{ $user['id'] }}"></avatar>
+   <li> <h3> {{ $user['name'] }} </h3> </li>
    <li><a href="{{ route('home') }}" target="_blank"> Back to homepage </a></li>
    @endif
   </ul>

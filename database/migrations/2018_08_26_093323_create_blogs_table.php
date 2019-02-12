@@ -15,11 +15,11 @@ class CreateBlogsTable extends Migration
             $table->unsignedInteger('tag_id')->nullable();
             $table->string('caption')->nullable();
             $table->Longtext('desc');
+            $table->boolean('draft')->default(0);
             $table->timestamps();
         });
 
         DB::statement("ALTER TABLE blogs ADD img MEDIUMBLOB");
-
     }
 
     public function down()

@@ -41,6 +41,7 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::get('/users/order', $namespacePrefix .'VoyagerBaseController@order')->name('voyager.users.order');
     Route::post('/users/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.users.order');
     Route::get('/users/{id}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
+
     // OVERRIDE
     Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\' .'UserController@update')->name('voyager.users.update');
 
@@ -104,7 +105,7 @@ Route::resource('/product', 'ProductController');
 // CART
 Route::resource('/cart', 'CartController');
 Route::post('/cart/addCart', 'CartController@addCart')->name('cart.add');
-Route::post('/move_to_cart/{id}', 'CartController@moveToCart')->name('move.to.cart');
+Route::post('/move-to-cart/{id}', 'CartController@moveToCart')->name('move.to.cart');
 Route::post('/switchToSaveForLater/{id}', 'CartController@switchToSaveForLater')->name('cart.saveForLater');
 Route::get('/emptySaveForLater', 'CartController@emptySaveForLater')->name('empty.saveForLater');
 
@@ -116,39 +117,46 @@ Route::get('/blog/filter/{id}', 'HomeController@blogFilter')->name('blog.filter'
 Route::get('/product/filter/{id}', 'HomeController@productFilter')->name('product.filter');
 
 // BLOG
-Route::resource('/blog', 'BlogController');
+Route::post('/blog', 'BlogController@store')->name('blog.store');
+Route::get('/blog/draft','BlogController@draft')->name('blog.draft');
+Route::post('/blog/publish','BlogController@publish')->name('blog.publish');
+Route::post('/blog/save-to-draft','BlogController@saveToDraft')->name('blog.save.to.draft');
+Route::put('/blog/update-draft','BlogController@updateDraft')->name('blog.update.draft');
+Route::get('/blog/create', 'BlogController@create')->name('blog.create');
+Route::get('/blog/{id}', 'BlogController@show')->name('blog.show');
+Route::get('/blog/{id}/edit', 'BlogController@edit')->name('blog.edit');
+Route::put('/blog/{id}', 'BlogController@update')->name('blog.update');
+Route::delete('/blog/{id}', 'BlogController@destroy')->name('blog.destroy');
+
 
 // BLOG COMMENT
-Route::get('/blog_comment/{id}', 'BlogCommentController@index')->name('blog.comment.index');
-
-Route::post('/blog_comment/{id}/{user_id}', 'BlogCommentController@store')->name('blog.comment.store');
-
-Route::put('/blog_comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
-
-Route::delete('/blog_comment/{id}', 'BlogCommentController@destroy')->name('blog.comment.destroy');
+Route::get('/blog-comment/{id}', 'BlogCommentController@index')->name('blog.comment.index');
+Route::post('/blog-comment/{id}/{user}', 'BlogCommentController@store')->name('blog.comment.store');
+Route::put('/blog-comment/{id}/update', 'BlogCommentController@update')->name('blog.comment.update');
+Route::delete('/blog-comment/{id}', 'BlogCommentController@destroy')->name('blog.comment.destroy');
 
 // LIKE & UNLIKE
-Route::get('/like/{model}/{type}', 'LikeController@like');
-Route::get('/cancel_like/{model}/{type}', 'LikeController@unlike');
+Route::get('/like/{model}/{type}', 'LikeController@like')->name('like');
+Route::get('/cancel-like/{model}/{type}', 'LikeController@unlike')->name('cancel.like');
 
-Route::get('/unlike/{model}/{type}', 'UnlikeController@unlike');
-Route::get('/cancel_unlike/{model}/{type}', 'UnlikeController@cancelUnlike');
+Route::get('/unlike/{model}/{type}', 'UnlikeController@unlike')->name('unlike');
+Route::get('/cancel-unlike/{model}/{type}', 'UnlikeController@cancelUnlike')->name('cancel.unlike');
 
 // EMOTION
-Route::get('/emotions/{blog_id}', 'EmotionController@index');
-Route::get('/emotions/{emotion_id}/{blog_id}', 'EmotionController@save');
+Route::get('/emotions/{blog}', 'EmotionController@index');
+Route::get('/emotions/{emotion}/{blog}', 'EmotionController@save');
 
 // NOTIFICATION
 Route::get('/notification', 'NotificationController@index')->name('notifications.index');
-Route::get('/mark_as_read/{id}', 'NotificationController@markAsRead');
+Route::get('/mark-as-read/{id}', 'NotificationController@markAsRead')->name('notifications.get');
 
 // CHAT
 Route::get('/chat', 'ChatController@index')->name('chat.index');
-Route::get('/messages', 'ChatController@getMessages');
-Route::post('/messages', 'ChatController@postMessage');
+Route::get('/messages', 'ChatController@getMessages')->name('chat.get');
+Route::post('/messages', 'ChatController@postMessage')->name('chat.post');
 
 // CHANGE AVATAR USERS
-Route::post('/change_avatar/{user_id}/update', 'UserController@changeAvatar')->name('changeAvatar');
+Route::post('/change-avatar/{user}/update', 'UserController@changeAvatar')->name('changeAvatar');
 
 // COUPON
 Route::post('/coupon', 'CouponController@store')->name('coupon.store');
