@@ -16,6 +16,7 @@
 - **have image**
 - **have tags**
 - **have slug**
+- **draft**
 - **pagination with different url**
 - **have a single page**
 - **emotions vote with percentage bar (vue js)**
