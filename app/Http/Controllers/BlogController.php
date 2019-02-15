@@ -53,38 +53,37 @@ class BlogController extends Controller
         //     $blog->img = $base64;
         // }
 
-            $slug = str_slug($request->title, '-');
+        $slug = str_slug($request->title, '-');
 
-            $blog_slug = Blog::where('slug', $slug)->first();
+        $blog_slug = Blog::where('slug', $slug)->first();
 
-            if ($blog_slug != null) {
-                $slug = $slug . '-' .time();
-            }
+        if ($blog_slug != null) {
+            $slug = $slug . '-' .time();
+        }
 
-            // COPY FROM VOYAGER UPLOAD IMAGE
-            $fullFilename = null;
-            $resizeWidth = 1800;
-            $resizeHeight = null;
+        // COPY FROM VOYAGER UPLOAD IMAGE
+        $fullFilename = null;
+        $resizeWidth = 1800;
+        $resizeHeight = null;
 
-            $file = $request->file('img');
+        $file = $request->file('img');
 
-            $path =  '/'.date('F').date('Y').'/';
+        $path =  '/'.date('F').date('Y').'/';
 
-            $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
+        $filename = basename($file->getClientOriginalName().'-'.time(), '.'.$file->getClientOriginalExtension());
 
-            $fullPath = 'blogs'.$path.$filename.'.'.$file->getClientOriginalExtension();
+        $fullPath = 'blogs'.$path.$filename.'.'.$file->getClientOriginalExtension();
 
-            $image = Image::make($file)->resize($resizeWidth, $resizeHeight, function (Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->encode($file->getClientOriginalExtension(), 75);
+        $image = Image::make($file)->resize($resizeWidth, $resizeHeight, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode($file->getClientOriginalExtension(), 75);
 
-            Storage::disk('public')->put($fullPath, (string) $image, 'public');
+        Storage::disk('public')->put($fullPath, (string) $image, 'public');
 
-            $fullFilename = $fullPath;
+        $fullFilename = $fullPath;
 
         if ($request->has('publish')) {
-
             $blog = Blog::create([
          "title"   => $request->title,
          "img"     => $fullFilename,
@@ -100,7 +99,7 @@ class BlogController extends Controller
 
             auth()->user()->blogs()->save($blog);
 
-            Toastr::info('Successfully created a Blog!');
+            Toastr::info('Successfully Created a Blog!');
         } else {
             $this->saveToDraft($request, $slug, $fullFilename);
         }
@@ -178,9 +177,8 @@ class BlogController extends Controller
             $slug = $slug . '-' .time();
         }
 
-      if($request->has('edit')) {
-
-        $blog->update([
+        if ($request->has('edit')) {
+            $blog->update([
         "title"  => $request->title,
         "slug" => $slug,
         "img"   => $fullFilename,
@@ -189,28 +187,27 @@ class BlogController extends Controller
         "user_id" => auth()->user()->id
       ]);
 
-        // DEFAULT STORE IMAGE
-        // if ($request->hasFile('img')) {
-        //
-        //     $img = $request->file('img');
-        //
-        //     $filename = time(). "-" . $img->getClientOriginalName();
-        //
-        //     $request->img->storeAs('public/blogs/images', $filename);
-        //
-        //     $blog->img = $filename;
-        //
-        // }
+            // DEFAULT STORE IMAGE
+            // if ($request->hasFile('img')) {
+            //
+            //     $img = $request->file('img');
+            //
+            //     $filename = time(). "-" . $img->getClientOriginalName();
+            //
+            //     $request->img->storeAs('public/blogs/images', $filename);
+            //
+            //     $blog->img = $filename;
+            //
+            // }
 
-        $blog->tags()->sync($request->tags);
+            $blog->tags()->sync($request->tags);
 
-        auth()->user()->blogs()->save($blog);
+            auth()->user()->blogs()->save($blog);
 
-          Toastr::info('Successfully updated a Blog!');
-
-      } else {
-        $this->updateDraft($blog, $request, $slug, $fullFilename);
-      }
+            Toastr::info('Successfully Updated a Blog!');
+        } else {
+            $this->updateDraft($blog, $request, $slug, $fullFilename);
+        }
 
         return redirect('/profile');
     }
@@ -235,7 +232,7 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        Toastr::info('Successfully deleted a Blog!');
+        Toastr::info('Successfully Deleted a Blog!');
 
         return back();
     }
@@ -261,8 +258,7 @@ class BlogController extends Controller
 
     public function updateDraft($blog, $requestDraftData, $slug, $fullFilename)
     {
-
-      $blog->update([
+        $blog->update([
         "title" => $requestDraftData->title,
         "slug"  => $slug,
         "img" => $fullFilename,
@@ -272,27 +268,26 @@ class BlogController extends Controller
         "user_id" => auth()->user()->id
       ]);
 
-      $blog->tags()->sync($requestDraftData->tags);
+        $blog->tags()->sync($requestDraftData->tags);
 
-      auth()->user()->blogs()->save($blog);
+        auth()->user()->blogs()->save($blog);
 
-      Toastr::info('Successfully updated a Draft!');
-
+        Toastr::info('Successfully Updated a Draft!');
     }
 
     public function draft()
     {
-       return view("blog.draft", ["blogs" => Blog::where("user_id", auth()->user()->id)->where("draft", 1)->paginate(5)]);
+        return view("blog.draft", ["blogs" => Blog::where("user_id", auth()->user()->id)->where("draft", 1)->paginate(5)]);
     }
 
     public function publish()
     {
-       $blog = Blog::where("draft", 1)->update([
+        $blog = Blog::where("draft", 1)->update([
          "draft" => 0
        ]);
 
-       Toastr::info('Successfully published a Blog!');
+        Toastr::info('Successfully Published a Blog!');
 
-       return back();
+        return back();
     }
 }

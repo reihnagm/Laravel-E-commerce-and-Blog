@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         if ($id == null) {
             if (auth()->check()) {
-                $user = User::where('slug', auth()->user()->slug)->with(['blogs.user', 'products.user'])->firstOrFail();
+                $user = User::where('slug', auth()->user()->slug)->with(['blogs.user', 'products.user'])->first();
             }
         } else {
             $user = User::where('slug', $id)->first();
@@ -53,7 +53,7 @@ class UserController extends Controller
         return view('user/profile', ['user' => $user, 'blog' => $blog, 'blogs' => $blogs, 'comments' => $comments, 'products' => $products]);
     }
 
-    public function changeAvatar(Request $request, $id)
+    public function changeUserAvatar(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
@@ -115,7 +115,31 @@ class UserController extends Controller
         ]);
 
         return json_encode([
-            "message" => "upload"
+            "message" => "Successfully Change a Avatar!"
         ]);
+    }
+
+    public function changeUserName(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update([
+        "name" => $request->name
+      ]);
+
+        return json_encode([
+        "message" => "Successfully Change a Name!"
+      ]);
+    }
+
+    public function viewSetting()
+    {
+        return view('user.setting');
+    }
+
+    public function changeEmailAndPassword(Request $request)
+    {
+
+
     }
 }

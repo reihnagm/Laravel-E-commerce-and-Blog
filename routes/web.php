@@ -3,6 +3,12 @@
 // AUTH
 Auth::routes();
 
+// PASSWORD RESET
+// Route::get('/password/reset/{token}', '\\App\\Http\\Controllers\\Auth\\'. 'PasswordController@showResetForm');
+// Route::post('/password/email', '\\App\\Http\\Controllers\\Auth\\'. 'PasswordController@sendResetLinkEmail')->name('password.email');
+// Route::post('/password/reset', '\\App\\Http\\Controllers\\Auth\\'. 'PasswordController@reset')->name('password.reset');
+// Route::get('/password/reset', '\\App\\Http\\Controllers\\Auth\\'. 'PasswordController@showLinkRequestForm')->name('password.reset');
+
 // ADMIN VOYAGER
 // OVERRIDE ROUTE VOYAGER
 Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
@@ -40,7 +46,7 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::get('/users/create', $namespacePrefix .'VoyagerBaseController@create')->name('voyager.users.create');
     Route::get('/users/order', $namespacePrefix .'VoyagerBaseController@order')->name('voyager.users.order');
     Route::post('/users/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.users.order');
-    Route::get('/users/{id}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
+    Route::get('/users/{user}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
 
     // OVERRIDE
     Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\' .'UserController@update')->name('voyager.users.update');
@@ -97,7 +103,11 @@ Route::get('/callback/{service}', 'SocialAuthController@callback');
 Route::get('/social/account/logout', 'SocialAuthController@logout')->name('social.logout');
 
 // USER PROFILE
-Route::get('/profile/{id?}', 'UserController@profile')->name('user.profile');
+Route::get('/user/profile/setting', 'UserController@viewSetting')->name('user.setting');
+Route::post('/user/profile/change-user-and-password', 'UserController@changeEmailAndPassword')->name('change.user.email.and.password');
+Route::get('/user/profile/{id?}', 'UserController@profile')->name('user.profile');
+Route::put('/user/{user}/change-username/update', 'UserController@changeUserName')->name('change.user.name');
+Route::post('/user/{user}/change-avatar/update', 'UserController@changeUserAvatar')->name('change.user.avatar');
 
 // PRODUCT
 Route::resource('/product', 'ProductController');
@@ -128,7 +138,6 @@ Route::get('/blog/{id}/edit', 'BlogController@edit')->name('blog.edit');
 Route::put('/blog/{id}', 'BlogController@update')->name('blog.update');
 Route::delete('/blog/{id}', 'BlogController@destroy')->name('blog.destroy');
 
-
 // BLOG COMMENT
 Route::get('/blog-comment/{id}', 'BlogCommentController@index')->name('blog.comment.index');
 Route::post('/blog-comment/{id}/{user}', 'BlogCommentController@store')->name('blog.comment.store');
@@ -154,9 +163,6 @@ Route::get('/mark-as-read/{id}', 'NotificationController@markAsRead')->name('not
 Route::get('/chat', 'ChatController@index')->name('chat.index');
 Route::get('/messages', 'ChatController@getMessages')->name('chat.get');
 Route::post('/messages', 'ChatController@postMessage')->name('chat.post');
-
-// CHANGE AVATAR USERS
-Route::post('/change-avatar/{user}/update', 'UserController@changeAvatar')->name('changeAvatar');
 
 // COUPON
 Route::post('/coupon', 'CouponController@store')->name('coupon.store');

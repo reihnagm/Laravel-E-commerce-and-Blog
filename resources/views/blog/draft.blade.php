@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Basuketto | Blog Draft')
-
-@section('description', 'Draft blog website Basuketto')
-
 @section('content')
 <section class="container">
   <div class="columns">
@@ -46,7 +42,7 @@
                   @csrf
                   <input class="button" type="submit" value="Publish">
                 </form> <br>
-                <a class="button" href="{{ route('blog.edit', $blog['slug']) }}"> Edit </a> <br>  <br>
+                <a class="button" href="{{ route('blog.edit', $blog['slug']) }}"> Edit </a> <br> <br>
                 <form action="{{ route('blog.destroy', $blog['id']) }}" method="post">
                   @csrf
                   {{ method_field('DELETE') }}
@@ -64,8 +60,6 @@
       </div>
 
     </div>
-
-
 
   </div>
 </section>

@@ -62,16 +62,16 @@ $(document).ready(function() {
   });
 
   $(document).on('click touchstart', '.before-liked', function() {
-    var _this = $(this)
+    let _this = $(this)
 
-    var model_type = _this.attr('model-type')
-    var model_id = _this.attr('model-id')
-    var url = "/like/" + model_id + "/" + model_type
+    let model_type = _this.attr('model-type')
+    let model_id = _this.attr('model-id')
+    let url = "/like/" + model_id + "/" + model_type
 
     $.get(url, () => {
 
       _this.addClass('after-liked').removeClass('before-liked')
-      var likeNumber = _this.parents('.option-like-unlike-wrapper').find('.like-number')
+      let likeNumber = _this.parents('.option-like-unlike-wrapper').find('.like-number')
       likeNumber.html(parseInt(likeNumber.html()) + 1)
 
     })
@@ -79,16 +79,15 @@ $(document).ready(function() {
   })
 
   $(document).on('click touchstart', '.after-liked', function() {
-    var _this = $(this)
-
-    var model_type = _this.attr('model-type')
-    var model_id = _this.attr('model-id')
-    var url = "/cancel-like/" + model_id + "/" + model_type
+    let _this = $(this)
+    let model_type = _this.attr('model-type')
+    let model_id = _this.attr('model-id')
+    let url = "/cancel-like/" + model_id + "/" + model_type
 
     $.get(url, () => {
 
       _this.removeClass('after-liked').addClass('before-liked')
-      var likeNumber = this.parents('.option-like-unlike-wrapper').find('.like-number')
+      let likeNumber = this.parents('.option-like-unlike-wrapper').find('.like-number')
       likeNumber.html(parseInt(likeNumber.html()) - 1)
 
     })
@@ -113,16 +112,16 @@ $(document).ready(function() {
   })
 
   $(document).on('click touchstart', '._after_unliked', function() {
-    var _this = $(this)
+    let _this = $(this)
 
-    var model_type = _this.attr('model-type')
-    var model_id = _this.attr('model-id')
-    var url = "/cancel-unlike/" + model_id + "/" + model_type
+    let model_type = _this.attr('model-type')
+    let model_id = _this.attr('model-id')
+    let url = "/cancel-unlike/" + model_id + "/" + model_type
 
     $.get(url, () => {
 
       _this.removeClass('_after_unliked').addClass('before-unliked')
-      var unlikeNumber = _this.parents('.option-unlike-wrapper').find('.unlike-number')
+      let unlikeNumber = _this.parents('.option-unlike-wrapper').find('.unlike-number')
       unlikeNumber.html(parseInt(unlikeNumber.html()) - 1)
 
     });
@@ -130,29 +129,53 @@ $(document).ready(function() {
   });
 
   $(document).on('click touchstart', '.submitComment', function() {
-    var html = '';
-    var subject = $('#subject').val();
-    var blog_id = $(this).attr('blog-id');
-    var data = [subject, blog_id, html];
+    let html = '';
+    let subject = $('#subject').val();
+    let blog_id = $(this).attr('blog-id');
+    let data = [subject, blog_id, html];
     sendToAjax(...data)
   });
 
   // MARK AS READ NOTIFICATION
 
   $(document).on('click touchstart', '.get-notif', function() {
-    var _this = $(this)
-    var id = _this.attr('notif-id')
-    markAsRead(id)
+    let _this = $(this);
+    let id = _this.attr('notif-id');
+    markAsRead(id);
   });
+
+  $(document).on('click touchstart', '#change-username', function() {
+    let id = $('#value-change-username').attr('data-user-id');
+    $('.show-change-username').css('display', 'block');
+    submitChangeUsername(id)
+  })
+
+  function submitChangeUsername(id) {
+    $(document).on('click touchstart', '#submit-change-username', function() {
+      let name = $('#value-change-username').val();
+      $.ajax({
+        method: 'PUT',
+        url: '/user/' + id + '/change-username/update',
+        data: {
+          name: name
+        },
+      }).done((success) => {
+        toastr.info('Successfully Updated a Name!');
+        location.reload();
+      }).fail((error) => {
+        console.log(error);
+      })
+    })
+  }
 
   function markAsRead(id) {
     $.ajax({
       url: '/mark-as-read/' + id,
-      method: "GET",
+      method: 'GET',
     }).done(function(success) {
-      console.log(success)
+      console.log(success);
     }).fail(function(error) {
-      console.log(error)
+      console.log(error);
     })
   }
 
@@ -168,7 +191,7 @@ $(document).ready(function() {
   // PASSWORD EYE
   $(".eye-icon").click(function() {
     $(this).toggleClass("eye-icon eye-icon-slash");
-    var input = $($(this).attr("toggle"));
+    let input = $($(this).attr("toggle"));
     if (input.attr("type") == "password") {
       input.attr("type", "text");
     } else {
@@ -240,9 +263,8 @@ $(document).ready(function() {
 
   // MOBILE MENU
   $(document).on('click', '.hamburger-menu', function(e) {
-    $('.hamburger-menu').toggleClass('change')
-    $('.mobile-nav-menu').toggleClass('left')
+    $('.hamburger-menu').toggleClass('change');
+    $('.mobile-nav-menu').toggleClass('left');
   })
-
 
 });

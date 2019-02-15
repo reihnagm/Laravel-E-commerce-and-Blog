@@ -1,4 +1,4 @@
-<a class="cart hidden-in-mobile" href="{{ route('checkout.index') }}">
+ <a class="cart hidden-in-mobile" href="{{ route('checkout.index') }}">
   @if(auth()->check())
   <h2 class="cart-count">{{ Cart::instance('default')->count() }}</h2>
   <div class="cart-wrapper">
@@ -27,7 +27,6 @@
 @if(!empty(Cart::count()) && auth()->guest())
 	<a href="{{ route('guestCheckout') }}" class="checkout-as-guest"> Checkout as guest </a>
 @endif
-
 
 <hr class="hidden-in-mobile">
 
@@ -60,7 +59,9 @@
 <nav class="nav">
   <login></login>
 
-  <span> don't have a account? </span> <br>
+  <a href="{{ route('password.request') }}">Forgot your Password ?</a>
+  <br> <br>
+  <span> Don't have a Account ? </span> <br>
 
   <register></register>
 

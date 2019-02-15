@@ -16,7 +16,7 @@
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-   @yield('css')
+  @yield('css')
 
   <link rel="stylesheet" href="{{ asset('assets/slick/slick-theme.css') }}">
 
@@ -34,17 +34,19 @@
 
 
   <script>
-      window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-            'auth' => auth()->check() ? auth()->check() : null, // CHECK LOGIN
-            'auth_id' =>  auth()->check() ? auth()->user()->id : null, // AUTH USER ID
-            'user' => [
-                'name' => auth()->check() ? auth()->user()->name : null
-            ]
-        ]) !!};
+    window.Laravel = @php echo json_encode([
+        'csrfToken' => csrf_token(),
+        'auth' => auth() -> check() ? auth() -> check() : null, // CHECK LOGIN
+        'auth_id' => auth() -> check() ? auth() -> user() -> id : null, // AUTH USER ID
+        'user' => [
+          'name' => auth() -> check() ? auth() -> user() -> name : null
+        ]
+      ]); @endphp
+
   </script>
 
 </head>
+
 <body>
 
   <div id="app">
@@ -52,7 +54,7 @@
     @include('_partials/header')
 
     {{-- CONTENT --}}
-     @yield('content')
+    @yield('content')
 
     {{-- FOOTER --}}
     @include('_partials/footer')
@@ -78,7 +80,8 @@
 
   {!! Toastr::render() !!}
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
- </body>
+</body>
+
 </html>

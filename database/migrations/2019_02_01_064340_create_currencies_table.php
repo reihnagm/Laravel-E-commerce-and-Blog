@@ -6,23 +6,18 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCurrenciesTable extends Migration
 {
-   
     public function up()
     {
-        
-		Schema::create('currencies', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('name');
-			$table->boolean('active');
+            $table->string('name');
+            $table->boolean('active');
         });
-		
     }
 
    
     public function down()
     {
-		
         Schema::dropIfExists('currencies');
-    
-	}
+    }
 }

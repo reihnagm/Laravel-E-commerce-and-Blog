@@ -138,7 +138,7 @@ export default {
     upload() {
       const formData = new FormData();
       formData.append('avatar', this.avatar, this.avatar.name)
-      axios.post('/change-avatar/' + this.user_id + '/update', formData).then(response => {
+      axios.post('/user/'+ this.user_id +'/change-avatar/update', formData).then(response => {
         toastr.info('Successfully change ava!');
         location.reload();
       }).catch((error) => {

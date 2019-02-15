@@ -93,7 +93,7 @@ class ProductController extends Controller
 
         auth()->user()->products($product);
 
-        Toastr::info('Successfully created a Product!');
+        Toastr::info('Successfully Created a Product!');
 
         return redirect(route('user.profile'));
     }
@@ -171,7 +171,7 @@ class ProductController extends Controller
 
         auth()->user()->products()->save($product);
 
-        Toastr::info('Successfully updated a Product!');
+        Toastr::info('Successfully Updated a Product!');
 
         return redirect(route('home'));
     }
@@ -198,7 +198,7 @@ class ProductController extends Controller
 
         $product->category()->detach();
 
-        Toastr::info('Successfully deleted a Product!');
+        Toastr::info('Successfully Deleted a Product!');
 
         return redirect(route('home'));
     }

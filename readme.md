@@ -6,6 +6,9 @@
 
 - **default ava gravatar**
 - **update profile ava (vue js)**
+- **change username**
+- **change email**
+- **change password**
 - **order product**
 - **chat realtime with all (public)**
 - **notification _no realtime_ (user commment a blog, getting a like and unlike and user voting emotion)**

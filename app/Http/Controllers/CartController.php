@@ -76,7 +76,7 @@ class CartController extends Controller
             Cart::instance('guest')->add($request->id, $request->name, 1, $request->price, ['image' => $request->img, 'money' => $request->price, 'desc' => $request->desc, 'user_id' => auth()->user() ? auth()->user()->id : null ])->associate('App\Models\Product');
         }
 
-        Toastr::info('Item was added to your Cart!');
+        Toastr::info('Item was Added to your Cart!');
 
         return back();
     }
@@ -89,7 +89,7 @@ class CartController extends Controller
 
         Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price, ['image' => str_replace('data:image/png;base64,', '', $request->img)])->associate('App\Models\Product');
 
-        Toastr::info('Item has been Saved For Later!');
+        Toastr::info('Item has been Saved for later!');
 
         return back();
     }
@@ -98,7 +98,7 @@ class CartController extends Controller
     {
         Cart::instance('saveForLater')->destroy();
 
-        Toastr::info('Item has been removed!');
+        Toastr::info('Item has been Deleted!');
 
         return back();
     }
@@ -119,7 +119,7 @@ class CartController extends Controller
 
         Cart::instance('saveForLater')->remove($id);
 
-        Toastr::info('Item has been moved to Cart!');
+        Toastr::info('Item has been Moved to Cart!');
 
         return back();
     }

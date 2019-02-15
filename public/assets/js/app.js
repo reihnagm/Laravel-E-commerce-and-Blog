@@ -86087,7 +86087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     upload: function upload() {
       var formData = new FormData();
       formData.append('avatar', this.avatar, this.avatar.name);
-      axios.post('/change-avatar/' + this.user_id + '/update', formData).then(function (response) {
+      axios.post('/user/' + this.user_id + '/change-avatar/update', formData).then(function (response) {
         toastr.info('Successfully change ava!');
         location.reload();
       }).catch(function (error) {
@@ -86361,7 +86361,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           var index = _this2.emotions.findIndex(function (emotion) {
             return emotion.id === emotion_id;
           });
-          toastr.info('Successfully vote a blog!');
+          toastr.info('Successfully Vote a Blog!');
           _this2.emotions[index].perTotal++;
         }
         if (response.data.message == "unvote") {
@@ -86369,17 +86369,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           var _index = _this2.emotions.findIndex(function (emotion) {
             return emotion.id === emotion_id;
           });
-          toastr.info('Successfully cancel a vote!');
+          toastr.info('Successfully Cancel a Vote!');
           _this2.emotions[_index].perTotal--;
         }
         if (response.data.message == "changed") {
-          toastr.info('Successfully updated a vote!');
+          toastr.info('Successfully Updated a Vote!');
           _this2.modify(response.data.old_emotion, -1);
           _this2.modify(emotion_id, 1);
         }
       }).catch(function (error) {
         if (error.response.data.message = "Trying to get property of non-object") {
-          toastr.info("You must Login before vote Emotions!");
+          toastr.info("you must Login Before Vote Emotions!");
         }
         console.log(error.response);
       });
@@ -87747,7 +87747,9 @@ var render = function() {
             _c("div", { staticClass: "container-user-comment clearfix" }, [
               _c("img", {
                 staticClass: "comment-ava",
-                attrs: { src: comment.user.avatar }
+                attrs: {
+                  src: "http://localhost:8000/storage/" + comment.user.avatar
+                }
               })
             ]),
             _vm._v(" "),

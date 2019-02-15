@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('author', 'Basuketto')
-
-@section('description', 'Profile Basuketto')
-
-@section('title', 'Basuketto | Profile')
-
 @section('content')
 
 <div class="container">

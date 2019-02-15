@@ -2,7 +2,7 @@
   <div>
     <div class="container-commnent" v-for="comment in comments" :key="comment.id">
       <div class="container-user-comment clearfix">
-        <img class="comment-ava" :src="comment.user.avatar">
+        <img class="comment-ava" :src="'http://localhost:8000/storage/'+ comment.user.avatar">
       </div>
       <span class="comment-username">{{ comment.user.name }}</span>
       <span class="comment-subject">{{ comment.subject }}</span>

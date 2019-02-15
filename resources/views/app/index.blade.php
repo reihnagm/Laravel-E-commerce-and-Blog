@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('author', 'Basuketto, basuketto')
-
-@section('description', 'Homepage Website Basuketto')
-
-@section('title', 'Basuketto | Homepage')
-
 @section('content')
 <div class="container">
   <div class="columns">

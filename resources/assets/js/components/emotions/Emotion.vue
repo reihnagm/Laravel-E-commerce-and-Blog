@@ -115,7 +115,7 @@ export default {
             let index = this.emotions.findIndex(
               emotion => emotion.id === emotion_id
             );
-            toastr.info('Successfully vote a blog!')
+            toastr.info('Successfully Vote a Blog!')
             this.emotions[index].perTotal++;
           }
           if (response.data.message == "unvote") {
@@ -123,17 +123,17 @@ export default {
             let index = this.emotions.findIndex(
               emotion => emotion.id === emotion_id
             );
-            toastr.info('Successfully cancel a vote!')
+            toastr.info('Successfully Cancel a Vote!')
             this.emotions[index].perTotal--;
           }
           if (response.data.message == "changed") {
-            toastr.info('Successfully updated a vote!')
+            toastr.info('Successfully Updated a Vote!')
             this.modify(response.data.old_emotion, -1);
             this.modify(emotion_id, 1);
           }
         }).catch((error) => {
           if (error.response.data.message = "Trying to get property of non-object") {
-            toastr.info("You must Login before vote Emotions!");
+            toastr.info("you must Login Before Vote Emotions!");
           }
           console.log(error.response)
         });
