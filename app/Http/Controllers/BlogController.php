@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\BlogPublished;
 use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogResource as BlogCollection;
-
 use App\Models\User;
 use App\Models\Blog;
 use App\Models\BlogComment;
@@ -204,7 +203,7 @@ class BlogController extends Controller
 
             auth()->user()->blogs()->save($blog);
 
-            Toastr::info('Successfully Updated a Blog!');
+            Toastr::info('Successfully Updated Blog!');
         } else {
             $this->updateDraft($blog, $request, $slug, $fullFilename);
         }
@@ -232,7 +231,7 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        Toastr::info('Successfully Deleted a Blog!');
+        Toastr::info('Successfully Deleted Blog!');
 
         return back();
     }
@@ -272,7 +271,7 @@ class BlogController extends Controller
 
         auth()->user()->blogs()->save($blog);
 
-        Toastr::info('Successfully Updated a Draft!');
+        Toastr::info('Successfully Updated Draft!');
     }
 
     public function draft()
@@ -286,7 +285,7 @@ class BlogController extends Controller
          "draft" => 0
        ]);
 
-        Toastr::info('Successfully Published a Blog!');
+        Toastr::info('Successfully Published Blog!');
 
         return back();
     }

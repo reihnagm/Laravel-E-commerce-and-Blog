@@ -38,7 +38,8 @@ class LoginController extends Controller
         try {
             $user = Socialite::driver($provider)->user();
             return redirect('/');
-        } catch (GuzzleHttp\Exception\ClientException $e) {
+        }
+        catch (GuzzleHttp\Exception\ClientException $e) {
             dd($e->response);
         }
     }

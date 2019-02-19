@@ -15,14 +15,17 @@
       </div>
 
       <div class="column">
-        <form action="{{ route('change.user.email.and.password')}}" method="post">
+        <form action="{{ route('change.user.email.and.password', request()->user()->id)}}" method="post">
           @csrf
         <div class="field">
           <label for="e-mail">Change E-mail</label>
-          <input id="e-mail" type="text" name="e-mail" value="{{ request()->user()->email }}">
+          <input id="e-mail" type="text" name="email" value="{{ old('email') }}">
+          @if($errors->has('email'))
+          <p class="is-error"> {{ $errors->first('email') }}</p>
+          @endif
           <label for="change-password">Change Password</label>
           <div class="wrapper-input-password">
-            <input id="change-password" type="password" name="password">
+            <input id="change-password" type="password" name="password" value="{{ old('password') }}">
             <i toggle="#change-password" class="eye-icon"></i>
           </div>
         </div>

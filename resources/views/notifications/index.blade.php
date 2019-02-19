@@ -17,7 +17,7 @@
               <a style="color: #2a397a;" href="{{ route('blog.show', $notification->blog->slug) }}">{{ $notification->subject }} </a>
             </p>
           @empty
-          <p> There are no notification found.</p>
+          <p> There are no Notification Found.</p>
           @endforelse
           {{ $notifications->links() }}
         </div>

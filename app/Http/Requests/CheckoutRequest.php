@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CheckoutRequest extends FormRequest
 {
-
     public function authorize()
     {
         return true;
@@ -15,7 +14,6 @@ class CheckoutRequest extends FormRequest
 
     public function rules()
     {
-
         $emailValidation = auth()->user() ? 'required|email': 'required|email|unique:users';
 
         return [
@@ -32,7 +30,7 @@ class CheckoutRequest extends FormRequest
 
     public function messages()
     {
-      return [
+        return [
         'email.unique' => 'You have already have an account with this email address. Please <a class="button" href="/"> login </a> to continue'
       ];
     }

@@ -1,5 +1,9 @@
 <?php
 
+use App\Exports\UsersExport;
+
+use Maatwebsite\Excel\Facades\Excel;
+
 // AUTH
 Auth::routes();
 
@@ -47,9 +51,10 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::get('/users/order', $namespacePrefix .'VoyagerBaseController@order')->name('voyager.users.order');
     Route::post('/users/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.users.order');
     Route::get('/users/{user}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
-
+    Route::post('/users', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
     // OVERRIDE
-    Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\' .'UserController@update')->name('voyager.users.update');
+    Route::post('/users','\\App\\Http\\Controllers\\Voyager\\'.'UserController@store')->name('voyager.users.store');
+    Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\'.'UserController@update')->name('voyager.users.update');
 
     Route::delete('/users/{u}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.users.destroy');
 
@@ -104,8 +109,8 @@ Route::get('/social/account/logout', 'SocialAuthController@logout')->name('socia
 
 // USER PROFILE
 Route::get('/user/profile/setting', 'UserController@viewSetting')->name('user.setting');
-Route::post('/user/profile/change-user-and-password', 'UserController@changeEmailAndPassword')->name('change.user.email.and.password');
-Route::get('/user/profile/{id?}', 'UserController@profile')->name('user.profile');
+Route::post('/user/profile/{user}/change-email-and-password', 'UserController@changeEmailAndPassword')->name('change.user.email.and.password');
+Route::get('/user/profile/{user?}', 'UserController@profile')->name('user.profile');
 Route::put('/user/{user}/change-username/update', 'UserController@changeUserName')->name('change.user.name');
 Route::post('/user/{user}/change-avatar/update', 'UserController@changeUserAvatar')->name('change.user.avatar');
 
@@ -180,3 +185,8 @@ Route::get('/switch/{id?}/', 'CurrencyController@switch')->name('switch.currency
 
 // ORDER
 Route::get('/order', 'OrderController@index')->name('order.index');
+
+// DOWNLOADS
+Route::get('/download', function() {
+  return Excel::download(new UsersExport, 'users.xlsx');
+});

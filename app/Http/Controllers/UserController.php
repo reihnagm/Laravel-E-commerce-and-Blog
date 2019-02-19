@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use File;
 use Storage;
@@ -16,6 +18,7 @@ use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ChangeEmailAndPasswordRequest;
 
 use App\Models\User;
 use App\Models\Blog;
@@ -115,7 +118,7 @@ class UserController extends Controller
         ]);
 
         return json_encode([
-            "message" => "Successfully Change a Avatar!"
+            "message" => "Successfully Changed Avatar!"
         ]);
     }
 
@@ -137,9 +140,25 @@ class UserController extends Controller
         return view('user.setting');
     }
 
-    public function changeEmailAndPassword(Request $request)
+    public function changeEmailAndPassword(ChangeEmailAndPasswordRequest $request, $id)
     {
+        $user = User::findOrFail($id);
 
+        if (trim(isset($request->password)) == "") {
+            $data = $user->password;
+        } else {
+            $data = Hash::make($request->password);
+        }
 
+        $user->update([
+          "email" => $request->email,
+          "password"=> $data
+        ]);
+
+        $user->setRememberToken(Str::random(60));
+
+        Toastr::info('Successfully Changed Settings!');
+
+        return back();
     }
 }
