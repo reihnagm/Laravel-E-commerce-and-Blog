@@ -1,4 +1,4 @@
-### Simple E-commerce and Blog Laravel
+### E-commerce and Blog Laravel
 
 ## Feature Include's
 
