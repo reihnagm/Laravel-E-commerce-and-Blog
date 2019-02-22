@@ -250,5 +250,20 @@ class MenuItemsTableSeeder extends Seeder
                 'order'      => 16,
             ])->save();
         }
+      $menuItem = MenuItem::firstOrNew([
+          'menu_id' => $menu->id,
+          'title'   => 'Export',
+          'url'     => '',
+          'route'   => 'voyager.exports.index',
+      ]);
+      if (!$menuItem->exists) {
+          $menuItem->fill([
+              'target'     => '_self',
+              'icon_class' => 'voyager-upload',
+              'color'      => null,
+              'parent_id'  => null,
+              'order'      => 16,
+          ])->save();
+      }
     }
 }

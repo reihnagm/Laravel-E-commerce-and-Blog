@@ -25,10 +25,11 @@ class DatabaseSeeder extends Seeder
       $this->call(PermissionsTableSeeder::class);
       $this->call(PermissionRoleTableSeeder::class);
       $this->call(TagTableSeeder::class);
+      $this->call(ExportTableSeeder::class);
       $this->call(BlogTableSeeder::class);
       $this->call(CategoryTableSeeder::class);
       $this->call(ProductTableSeeder::class);
-      $this->call(EmotionListsTableSeeder::class);
+      $this->call(EmotionListTableSeeder::class);
       $this->call(CouponsTableSeeder::class);
 	    $this->call(CurrencyTableSeeder::class);
       $this->call(SettingsTableSeeder::class);

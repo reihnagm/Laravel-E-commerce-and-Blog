@@ -124,6 +124,7 @@ e    |--------------------------------------------------------------------------
         /*
          * Laravel Framework Service Providers...
          */
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -167,7 +168,8 @@ e    |--------------------------------------------------------------------------
         Kamaln7\Toastr\ToastrServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-
+        Ixudra\Curl\CurlServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -221,7 +223,10 @@ e    |--------------------------------------------------------------------------
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => Kamaln7\Toastr\Facades\Toastr::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Curl'   => Ixudra\Curl\Facades\Curl::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

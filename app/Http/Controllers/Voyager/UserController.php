@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Voyager;
 use File;
 use Storage;
 
-use App\Http\Requests\UserRequest;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;

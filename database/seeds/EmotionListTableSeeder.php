@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 use Faker\Factory as Faker;
 
-class EmotionListsTableSeeder extends Seeder
+class EmotionListTableSeeder extends Seeder
 {
 
     public function run()

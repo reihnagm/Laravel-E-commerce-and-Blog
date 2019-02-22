@@ -22,6 +22,17 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
     ),
   ),
+  'barryvdh/laravel-dompdf' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PDF' => 'Barryvdh\\DomPDF\\Facade',
+    ),
+  ),
   'cartalyst/stripe-laravel' => 
   array (
     'providers' => 
@@ -67,6 +78,17 @@
     'aliases' => 
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
+  ),
+  'ixudra/curl' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Ixudra\\Curl\\CurlServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Curl' => 'Ixudra\\Curl\\Facades\\Curl',
     ),
   ),
   'jhoff/blade-vue-directive' => 

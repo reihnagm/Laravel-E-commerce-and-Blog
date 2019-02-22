@@ -45,6 +45,7 @@
       30 => 'Kamaln7\\Toastr\\ToastrServiceProvider',
       31 => 'Intervention\\Image\\ImageServiceProvider',
       32 => 'Tymon\\JWTAuth\\Providers\\JWTAuthServiceProvider',
+      33 => 'Ixudra\\Curl\\CurlServiceProvider',
     ),
     'aliases' => 
     array (
@@ -88,6 +89,7 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
       'Toastr' => 'Kamaln7\\Toastr\\Facades\\Toastr',
       'Image' => 'Intervention\\Image\\Facades\\Image',
+      'Curl' => 'Ixudra\\Curl\\Facades\\Curl',
     ),
   ),
   'auth' => 
@@ -666,6 +668,10 @@
       'client_secret' => '94c3654ff68d0d3d5b96b8761c00b817',
       'redirect' => 'http://localhost:8000/callback/facebook',
     ),
+    'rajaongkir' => 
+    array (
+      'rajaongkir_api_key' => 'd2cc8814c3c0bfaae572ab7a54fcc998',
+    ),
     'fixer' => 
     array (
       'key' => NULL,
@@ -854,6 +860,16 @@
       'heading_row' => 
       array (
         'formatter' => 'slug',
+      ),
+      'csv' => 
+      array (
+        'delimiter' => ',',
+        'enclosure' => '"',
+        'line_ending' => '
+',
+        'use_bom' => false,
+        'include_separator_line' => false,
+        'excel_compatibility' => false,
       ),
     ),
     'extension_detector' => 

@@ -5,7 +5,6 @@ use TCG\Voyager\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
 {
-
     public function run()
     {
         $keys = [
@@ -40,5 +39,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::generateFor('categories');
 
         Permission::generateFor('settings');
+
+        Permission::generateFor('exports');
     }
 }

@@ -31,8 +31,6 @@
 
   <link rel="shortcut icon" href="{{ asset('assets/logo/logo.ico') }}" type="image/x-icon">
 
-
-
   <script>
     window.Laravel = @php echo json_encode([
         'csrfToken' => csrf_token(),
@@ -59,9 +57,6 @@
     {{-- FOOTER --}}
     @include('_partials/footer')
   </div>
-
-
-
 
   <script src="{{ asset('assets/js/app.js') }}"></script>
 

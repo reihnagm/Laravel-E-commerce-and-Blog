@@ -43,25 +43,28 @@ return [
     ],
 
     'bca' => [
-        'client_id' => env('BCA_CLIENT_ID'), 
-        'client_secret' => env('BCA_CLIENT_SECRET'), 
-        'redirect' =>   env('BCA_CLIENT_URL'), 
+        'client_id' => env('BCA_CLIENT_ID'),
+        'client_secret' => env('BCA_CLIENT_SECRET'),
+        'redirect' =>   env('BCA_CLIENT_URL'),
     ],
 
     'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'), 
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'), 
-        'redirect' =>   env('GOOGLE_CLIENT_URL'), 
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' =>   env('GOOGLE_CLIENT_URL'),
     ],
 
     'facebook' => [
-        'client_id'     => env('FACEBOOK_CLIENT_ID'), 
-        'client_secret' => env('FACEBOOK_CLIENT_SECRET'), 
-        'redirect'      => env('FACEBOOK_CLIENT_URL'), 
+        'client_id'     => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect'      => env('FACEBOOK_CLIENT_URL'),
     ],
-	
+    'rajaongkir' => [
+       'rajaongkir_api_key' => env('RAJAONGKIR_API_KEY')
+    ],
+
 	'fixer' => [
-	  'key' => env('FIXER_ID'), 
+	  'key' => env('FIXER_ID'),
 	]
 
 ];

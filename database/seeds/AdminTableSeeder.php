@@ -9,17 +9,15 @@ class AdminTableSeeder extends Seeder
 
     public function run()
     {
-
-            User::create([
-              'name' => 'Admin',
-              'email'=> 'admin@admin.admin',
-              'role_id' => 1,
-              'slug' => 'admin',
-              'remember_token' => str_random(60),
-              'password' => bcrypt('SUper&&4'),
-              'avatar' => Gravatar::src('wavatar'),
-            ]);  
-       
+        User::create([
+          'name' => 'admin',
+          'email'=> 'admin@gmail.com',
+          'role_id' => 1,
+          'slug' => 'admin',
+          'remember_token' => str_random(60),
+          'password' => bcrypt('SUper&&4'),
+          'avatar' => Gravatar::src('wavatar'),
+        ]);
     }
 
 }

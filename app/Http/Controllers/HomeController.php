@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Ixudra\Curl\Facades\Curl;
+
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Product;
@@ -14,9 +16,15 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-	
-        return view('app.index', ["user"=> $request->user(), "products" => Product::with(['user', 'category'])->paginate(3, ['*'], 'product-page'), "categories" => Category::all(), "tags" => $tags = Tag::all(), "blogs" => Blog::with(['user', 'tags'])->paginate(3, ['*'], 'blog-page')]); 
-	
+
+        // $response = Curl::to('https://api.rajaongkir.com/starter/province')
+        //     ->withHeader('key: d2cc8814c3c0bfaae572ab7a54fcc998')
+        //     ->get();
+        //
+        // dd($response);
+
+        return view('app.index', ["user"=> $request->user(), "products" => Product::with(['user', 'category'])->paginate(3, ['*'], 'product-page'), "categories" => Category::all(), "tags" => $tags = Tag::all(), "blogs" => Blog::with(['user', 'tags'])->paginate(3, ['*'], 'blog-page')]);
+
     }
 
     public function blogProductSearch(Request $request)

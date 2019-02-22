@@ -2,8 +2,6 @@
 
 use App\Exports\UsersExport;
 
-use Maatwebsite\Excel\Facades\Excel;
-
 // AUTH
 Auth::routes();
 
@@ -52,11 +50,12 @@ Route::group(["middleware" => "admin", "prefix" => "admin"], function () {
     Route::post('/users/order', $namespacePrefix .'VoyagerBaseController@update_order')->name('voyager.users.order');
     Route::get('/users/{user}', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
     Route::post('/users', $namespacePrefix .'VoyagerBaseController@show')->name('voyager.users.show');
+    Route::delete('/users/{u}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.users.destroy');
+
     // OVERRIDE
+    Route::get('/exports', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@index')->name('voyager.exports.index');;
     Route::post('/users','\\App\\Http\\Controllers\\Voyager\\'.'UserController@store')->name('voyager.users.store');
     Route::put('/users/{user}','\\App\\Http\\Controllers\\Voyager\\'.'UserController@update')->name('voyager.users.update');
-
-    Route::delete('/users/{u}', $namespacePrefix .'VoyagerBaseController@destroy')->name('voyager.users.destroy');
 
     Route::post('/blogs', $namespacePrefix .'VoyagerBaseController@store')->name('voyager.blogs.store');
     Route::get('/blogs', $namespacePrefix .'VoyagerBaseController@index')->name('voyager.blogs.index');
@@ -181,12 +180,28 @@ Route::get('/guestCheckout', 'CheckoutController@index')->name('guestCheckout');
 Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
 
 // CURRENCY MONEY
-Route::get('/switch/{id?}/', 'CurrencyController@switch')->name('switch.currency');
+Route::get('/switch-currency/{id?}/', 'CurrencyController@switch')->name('switch.currency');
 
 // ORDER
 Route::get('/order', 'OrderController@index')->name('order.index');
 
-// DOWNLOADS
-Route::get('/download', function() {
-  return Excel::download(new UsersExport, 'users.xlsx');
-});
+// SELECT EXPORT
+Route::get('/select-want-to-export/{file?}/', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@selectExport')->name('select.want.to.export');
+
+// EXCEL
+Route::get('/download/users-excel', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@usersDownloadExcel')->name('download.users.excel');
+Route::get('/download/blogs-excel', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@blogsDownloadExcel')->name('download.blogs.excel');
+Route::get('/download/products-excel', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@productsDownloadExcel')->name('download.products.excel');
+Route::get('/download/orders-excel', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@ordersDownloadExcel')->name('download.orders.excel');
+
+// PDF
+Route::get('/download/users-pdf', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@usersDownloadPdf')->name('download.users.pdf');
+Route::get('/download/blogs-pdf', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@blogsDownloadPdf')->name('download.blogs.pdf');
+Route::get('/download/products-pdf', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@productsDownloadPdf')->name('download.products.pdf');
+Route::get('/download/orders-pdf', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@ordersDownloadPdf')->name('download.orders.pdf');
+
+// CSV
+Route::get('/download/users-csv', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@usersDownloadCsv')->name('download.users.csv');
+Route::get('/download/blogs-csv', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@blogsDownloadCsv')->name('download.blogs.csv');
+Route::get('/download/products-csv', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@productsDownloadCsv')->name('download.products.csv');
+Route::get('/download/orders-csv', '\\App\\Http\\Controllers\\Voyager\\'. 'ExportController@ordersDownloadCsv')->name('download.orders.csv');

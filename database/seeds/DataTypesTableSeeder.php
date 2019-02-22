@@ -5,7 +5,6 @@ use TCG\Voyager\Models\DataType;
 
 class DataTypesTableSeeder extends Seeder
 {
-
     public function run()
     {
         $dataType = $this->dataType('slug', 'users');
@@ -121,7 +120,33 @@ class DataTypesTableSeeder extends Seeder
             ])->save();
         }
 
+        $dataType = $this->dataType('slug', 'orders');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'orders',
+                'display_name_singular' => 'order',
+                'display_name_plural'   => 'orders',
+                'icon'                  => 'voyager-down-circled',
+                'model_name'            => \App\Models\Order::class,
+                'controller'            => '',
+                'generate_permissions'  => 1,
+                'description'           => '',
+            ])->save();
+        }
 
+        $dataType = $this->dataType('slug', 'exports');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'exports',
+                'display_name_singular' => 'export',
+                'display_name_plural'   => 'exports',
+                'icon'                  => '',
+                'model_name'            => '',
+                'controller'            => '',
+                'generate_permissions'  => 1,
+                'description'           => '',
+            ])->save();
+        }
     }
 
     /**
