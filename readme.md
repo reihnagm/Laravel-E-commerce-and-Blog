@@ -1,4 +1,4 @@
-### Laravel E-commerce and Blog 
+### Laravel E-commerce and Blog
 
 ## Feature Include's
 
@@ -47,7 +47,7 @@
 
 - **multiple conversion currencies (IDR and USD)**  
 - **package admin laravel voyager(modified)**  
-- **export to file (EXCEL, PDF, CSV)**
+- **export to file (EXCEL, PDF, CSV)**    
 - **when update image, prevent double image in storage, if exists same image before then delete and getting new image  
 - **login use google**  
 - **login use facebook**  

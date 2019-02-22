@@ -76,22 +76,6 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithMapping, Wit
         return Product::select('id', 'name', 'desc', 'price', 'created_at', 'user_id', 'slug')->get();
     }
 
-    // public function sheets(): array
-    // {
-    //     $sheets = [];
-    //
-    //     for ($month = 1; $month <= 12; $month++) {
-    //         $sheets[] = new UsersPerMonthSheet();
-    //     }
-    //
-    //     return $sheets;
-    // }
-
-    // public function query()
-    // {
-    //     return User::orderBy('id');
-    // }
-
     public function map($product): array
     {
         return [
@@ -102,7 +86,6 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithMapping, Wit
           showDate($product->created_at),
           $product->user_id,
           $product->slug
-          // Date::dateTimeToExcel($user->created_at)
         ];
     }
 
@@ -119,11 +102,4 @@ class ProductsExport implements FromCollection, ShouldAutoSize, WithMapping, Wit
         ];
     }
 
-
-    // public function columnFormats(): array
-    // {
-    //     return [
-    //     'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-    //   ];
-    // }
 }
