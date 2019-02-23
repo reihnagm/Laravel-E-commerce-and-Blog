@@ -40,8 +40,8 @@
 
 ### Integrate Payment
 
-- **Stripe**
-- **Paypal**
+- **stripe**
+- **paypal**
 
 ### Other
 
@@ -49,7 +49,7 @@
 - **package admin laravel voyager(modified)**  
 - **export to file (EXCEL, PDF, CSV)**  
 - **when update image, prevent double image in storage, if exists same image before then delete and getting new image**
-- **login use google**  
+- **login use google**    
 - **login use facebook**  
 
 ### Install
@@ -75,12 +75,12 @@
 
 ### Common Issues
 
-- Specified key was too long (migrate)  
+- specified key was too long (migrate)  
   **Go to App/Providers/AppServiceProvider.php**
 
   **Add this on public function boot()**  
   **Schema::defaultStringLength('191')**
 
-- Image not found  
+- image not found  
   delete folder **storage** on **public** and open terminal
   **php artisan storage:link**  
