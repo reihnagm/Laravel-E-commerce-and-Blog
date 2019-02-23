@@ -1,6 +1,6 @@
 ### Laravel E-commerce and Blog
 
-## Feature Include's
+## Feature Includes
 
 ### Profile
 
