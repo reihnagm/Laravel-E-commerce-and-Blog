@@ -76,9 +76,9 @@
 ### Common Issues
 
 - specified key was too long (migrate)  
-  **Go to App/Providers/AppServiceProvider.php**
+  **go to App/Providers/AppServiceProvider.php**
 
-  **Add this on public function boot()**  
+  **add this on public function boot()**  
   **Schema::defaultStringLength('191')**
 
 - image not found  
